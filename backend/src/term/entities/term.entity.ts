@@ -1,6 +1,6 @@
-import { Philosopher } from '@/philosopher/entities/philosopher.entity';
-import { Question } from '@/question/entities/question.entity';
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Philosopher } from '../../philosopher/entities/philosopher.entity';
+import { Question } from '../../question/entities/question.entity';
 
 @Entity()
 export class Term {
@@ -10,7 +10,7 @@ export class Term {
   @Column()
   term: string;
 
-  @Column({ type: 'text' })
+  @Column('text')
   definition: string;
 
   @ManyToMany(() => Philosopher, (philosopher) => philosopher.terms)

@@ -17,11 +17,6 @@ export class SeedService {
   ) {}
 
   async seed() {
-    // Clear existing data
-    await this.philosopherRepository.delete({});
-    await this.questionRepository.delete({});
-    await this.termRepository.delete({});
-
     // Create terms
     const terms = await this.termRepository.save([
       {

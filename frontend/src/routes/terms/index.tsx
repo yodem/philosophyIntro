@@ -37,9 +37,7 @@ function TermsComponent() {
                             <Typography variant="h5" gutterBottom>
                                 {term.term}
                             </Typography>
-                            <Typography variant="body1">
-                                {term.definition}
-                            </Typography>
+                            <div dangerouslySetInnerHTML={{ __html: term.definition }} />
                         </CardContent>
                     </Card>
                 </Grid>

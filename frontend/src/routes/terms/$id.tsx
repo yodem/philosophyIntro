@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { termsApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Chip, Divider, List, ListItem, ListItemText } from '@mui/material';
+import { RichTextEditor } from '../../components/RichTextEditor';
+import { useState, useEffect } from 'react';
 
 function TermSkeleton() {
     return (
@@ -18,13 +20,37 @@ function TermSkeleton() {
 }
 
 export const Route = createFileRoute('/terms/$id')({
-    loader: ({ params }) => termsApi.getOne(Number(params.id)),
+    loader: async ({ params }) => {
+        try {
+            const term = await termsApi.getOne(Number(params.id));
+            if (!term) throw new Error('Term not found');
+            return term;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    },
     pendingComponent: TermSkeleton,
     component: TermComponent,
 });
 
 function TermComponent() {
     const term = Route.useLoaderData();
+    const [description, setDescription] = useState(term?.definition || '');
+
+    useEffect(() => {
+        if (term) {
+            setDescription(term.definition);
+        }
+    }, [term]);
+
+    if (!term) {
+        return <Typography variant="h6">Term not found</Typography>;
+    }
+
+    const handleSave = async () => {
+        await termsApi.update(term.id, { ...term, definition: description });
+    };
 
     return (
         <Box p={2}>
@@ -33,9 +59,8 @@ function TermComponent() {
                     <Typography variant="h4" gutterBottom>
                         {term.term}
                     </Typography>
-                    <Typography variant="body1" paragraph>
-                        {term.definition}
-                    </Typography>
+                    <RichTextEditor content={description} onChange={setDescription} />
+                    <button onClick={handleSave}>Save</button>
 
                     {term.philosophers && term.philosophers.length > 0 && (
                         <>

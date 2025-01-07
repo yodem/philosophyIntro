@@ -22,6 +22,14 @@ export const philosophersApi = {
       console.error(error);
     }
   },
+  update: async (id: number, data: Partial<Philosopher>) => {
+    try {
+      const res = await api.patch<Philosopher>(`/philosophers/${id}`, data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export const questionsApi = {
@@ -41,6 +49,14 @@ export const questionsApi = {
       console.error(error);
     }
   },
+  update: async (id: number, data: Partial<Question>) => {
+    try {
+      const res = await api.patch<Question>(`/questions/${id}`, data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export const termsApi = {
@@ -55,6 +71,14 @@ export const termsApi = {
   getOne: async (id: number) => {
     try {
       const res = await api.get<Term>(`/terms/${id}`);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  update: async (id: number, data: Partial<Term>) => {
+    try {
+      const res = await api.patch<Term>(`/terms/${id}`, data);
       return res.data;
     } catch (error) {
       console.error(error);

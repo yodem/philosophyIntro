@@ -1,6 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { questionsApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Chip, Avatar, Divider } from '@mui/material';
+import { RichTextEditor } from '../../components/RichTextEditor';
+import { useState, useEffect } from 'react';
 
 function QuestionSkeleton() {
     return (
@@ -22,13 +24,37 @@ function QuestionSkeleton() {
 }
 
 export const Route = createFileRoute('/questions/$id')({
-    loader: ({ params }) => questionsApi.getOne(Number(params.id)),
+    loader: async ({ params }) => {
+        try {
+            const question = await questionsApi.getOne(Number(params.id));
+            if (!question) throw new Error('Question not found');
+            return question;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
+    },
     pendingComponent: QuestionSkeleton,
     component: QuestionComponent,
 });
 
 function QuestionComponent() {
     const question = Route.useLoaderData();
+    const [description, setDescription] = useState(question?.description || '');
+
+    useEffect(() => {
+        if (question) {
+            setDescription(question.description);
+        }
+    }, [question]);
+
+    if (!question) {
+        return <Typography variant="h6">Question not found</Typography>;
+    }
+
+    const handleSave = async () => {
+        await questionsApi.update(question.id, { ...question, description });
+    };
 
     return (
         <Box p={2}>
@@ -37,9 +63,8 @@ function QuestionComponent() {
                     <Typography variant="h4" gutterBottom>
                         {question.question}
                     </Typography>
-                    <Typography variant="body1" paragraph>
-                        {question.description}
-                    </Typography>
+                    <RichTextEditor content={description} onChange={setDescription} />
+                    <button onClick={handleSave}>Save</button>
 
                     {question.philosophers && question.philosophers.length > 0 && (
                         <>
