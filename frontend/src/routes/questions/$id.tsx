@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { questionsApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Chip, Avatar, Divider } from '@mui/material';
-import { RichTextEditor } from '../../components/RichTextEditor';
-import { useState, useEffect } from 'react';
+import { EditableRichText } from '../../components/EditableRichText';
 
 function QuestionSkeleton() {
     return (
@@ -40,20 +39,13 @@ export const Route = createFileRoute('/questions/$id')({
 
 function QuestionComponent() {
     const question = Route.useLoaderData();
-    const [description, setDescription] = useState(question?.description || '');
-
-    useEffect(() => {
-        if (question) {
-            setDescription(question.description);
-        }
-    }, [question]);
 
     if (!question) {
         return <Typography variant="h6">Question not found</Typography>;
     }
 
-    const handleSave = async () => {
-        await questionsApi.update(question.id, { ...question, description });
+    const handleSave = async (content: string) => {
+        await questionsApi.update(question.id, { ...question, description: content });
     };
 
     return (
@@ -63,8 +55,7 @@ function QuestionComponent() {
                     <Typography variant="h4" gutterBottom>
                         {question.question}
                     </Typography>
-                    <RichTextEditor content={description} onChange={setDescription} />
-                    <button onClick={handleSave}>Save</button>
+                    <EditableRichText initialContent={question.description} onSave={handleSave} />
 
                     {question.philosophers && question.philosophers.length > 0 && (
                         <>

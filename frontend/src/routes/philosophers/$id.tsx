@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { philosophersApi } from '../../api';
 import { Card, CardContent, Skeleton, Typography, Chip, Box, Divider } from '@mui/material';
-import { RichTextEditor } from '../../components/RichTextEditor';
-import { useState, useEffect } from 'react';
+import { EditableRichText } from '../../components/EditableRichText';
 
 function PhilosopherSkeleton() {
   return (
@@ -37,20 +36,13 @@ export const Route = createFileRoute('/philosophers/$id')({
 
 function PhilosopherComponent() {
   const philosopher = Route.useLoaderData();
-  const [description, setDescription] = useState(philosopher?.bio || philosopher?.description || '');
-
-  useEffect(() => {
-    if (philosopher) {
-      setDescription(philosopher.bio || philosopher.description);
-    }
-  }, [philosopher]);
 
   if (!philosopher) {
     return <Typography variant="h6">Philosopher not found</Typography>;
   }
 
-  const handleSave = async () => {
-    await philosophersApi.update(philosopher.id, { ...philosopher, description });
+  const handleSave = async (content: string) => {
+    await philosophersApi.update(philosopher.id, { ...philosopher, description: content });
   };
 
   return (
@@ -63,8 +55,7 @@ function PhilosopherComponent() {
           <Typography color="text.secondary" gutterBottom>
             {philosopher.birthYear} - {philosopher.deathYear}
           </Typography>
-          <RichTextEditor content={description} onChange={setDescription} />
-          <button onClick={handleSave}>Save</button>
+          <EditableRichText initialContent={philosopher.bio || philosopher.description} onSave={handleSave} />
 
           {philosopher.terms && philosopher.terms.length > 0 && (
             <>

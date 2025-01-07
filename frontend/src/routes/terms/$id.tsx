@@ -1,8 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { termsApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Chip, Divider, List, ListItem, ListItemText } from '@mui/material';
-import { RichTextEditor } from '../../components/RichTextEditor';
-import { useState, useEffect } from 'react';
+import { EditableRichText } from '../../components/EditableRichText';
 
 function TermSkeleton() {
     return (
@@ -36,20 +35,13 @@ export const Route = createFileRoute('/terms/$id')({
 
 function TermComponent() {
     const term = Route.useLoaderData();
-    const [description, setDescription] = useState(term?.definition || '');
-
-    useEffect(() => {
-        if (term) {
-            setDescription(term.definition);
-        }
-    }, [term]);
 
     if (!term) {
         return <Typography variant="h6">Term not found</Typography>;
     }
 
-    const handleSave = async () => {
-        await termsApi.update(term.id, { ...term, definition: description });
+    const handleSave = async (content: string) => {
+        await termsApi.update(term.id, { ...term, definition: content });
     };
 
     return (
@@ -59,8 +51,7 @@ function TermComponent() {
                     <Typography variant="h4" gutterBottom>
                         {term.term}
                     </Typography>
-                    <RichTextEditor content={description} onChange={setDescription} />
-                    <button onClick={handleSave}>Save</button>
+                    <EditableRichText initialContent={term.definition} onSave={handleSave} />
 
                     {term.philosophers && term.philosophers.length > 0 && (
                         <>
