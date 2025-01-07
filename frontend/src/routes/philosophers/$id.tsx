@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { philosophersApi, termsApi, questionsApi } from '../../api';
-import { Card, CardContent, Skeleton, Typography, Box, Divider } from '@mui/material';
+import { Card, CardContent, Skeleton, Typography, Box } from '@mui/material';
 import { EditableRichText } from '../../components/EditableRichText';
 import { AutocompleteWithButton } from '../../components/AutocompleteWithButton';
 import { useState } from 'react';
 import { Term, Question, UpdatePhilosopherDto } from '@/types';
-import { RouterChip } from '../../components/routerComponents/RouterChip';
+import { RelatedItems } from '../../components/RelatedItems';
 
 function PhilosopherSkeleton() {
   return (
@@ -126,41 +126,19 @@ function PhilosopherComponent() {
             onSave={handleSaveAdditionalData}
           />
 
-          {philosopher.terms && philosopher.terms.length > 0 && (
-            <>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6" gutterBottom>Key Terms</Typography>
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                {philosopher.terms.map(term => (
-                  <RouterChip
-                    key={term.id}
-                    label={term.term}
-                    variant="outlined"
-                    to={"/terms/$id"}
-                    params={{ id: term.id.toString() }}
-                  />
-                ))}
-              </Box>
-            </>
-          )}
+          <RelatedItems
+            title="Key Terms"
+            items={philosopher.terms || []}
+            getLabel={(item) => item.term}
+            getLink={(item) => ({ to: "/terms/$id", params: { id: item.id.toString() } })}
+          />
 
-          {philosopher.questions && philosopher.questions.length > 0 && (
-            <>
-              <Divider sx={{ my: 2 }} />
-              <Typography variant="h6" gutterBottom>Key Questions</Typography>
-              <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-                {philosopher.questions.map(question => (
-                  <RouterChip
-                    key={question.id}
-                    label={question.question}
-                    variant='outlined'
-                    to={"/questions/$id"}
-                    params={{ id: question.id.toString() }}
-                  />
-                ))}
-              </Box>
-            </>
-          )}
+          <RelatedItems
+            title="Key Questions"
+            items={philosopher.questions || []}
+            getLabel={(item) => item.question}
+            getLink={(item) => ({ to: "/questions/$id", params: { id: item.id.toString() } })}
+          />
         </CardContent>
       </Card>
     </Box>
