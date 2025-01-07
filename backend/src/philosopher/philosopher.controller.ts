@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { PhilosopherService } from './philosopher.service';
 import { CreatePhilosopherDto } from './dto/create-philosopher.dto';
 import { UpdatePhilosopherDto } from './dto/update-philosopher.dto';
 
-@Controller('philosopher')
+@Controller('philosophers')
 export class PhilosopherController {
   constructor(private readonly philosopherService: PhilosopherService) {}
 
@@ -23,7 +31,10 @@ export class PhilosopherController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePhilosopherDto: UpdatePhilosopherDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePhilosopherDto: UpdatePhilosopherDto,
+  ) {
     return this.philosopherService.update(+id, updatePhilosopherDto);
   }
 

@@ -7,6 +7,7 @@ async function bootstrap() {
 
   // Initialize database with seed data
   const databaseInitService = app.get(DatabaseInitService);
+  app.enableCors();
   await databaseInitService.init();
 
   await app.listen(process.env.PORT ?? 3000);
