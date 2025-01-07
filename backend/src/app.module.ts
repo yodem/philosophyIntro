@@ -8,6 +8,7 @@ import { PhilosopherModule } from './philosopher/philosopher.module';
 import { TermModule } from './term/term.module';
 import { UserModule } from './user/user.module';
 import { QuestionModule } from './question/question.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { QuestionModule } from './question/question.module';
     TermModule,
     UserModule,
     QuestionModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

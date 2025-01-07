@@ -27,6 +27,9 @@ export class User {
   @Column({ default: 'user' })
   role: string; // Roles: 'user', 'moderator', 'admin'
 
+  @Column({ type: 'simple-array', default: 'user' })
+  roles: string[];
+
   @Column({ type: 'json', nullable: true })
   profileSettings: Record<string, any>; // Store user-specific settings as JSON
 
