@@ -3,11 +3,15 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PhilosopherModule } from './question/philosopher/philosopher.module';
 import { PhilosopherModule } from './philosopher/philosopher.module';
 import { TermModule } from './term/term.module';
 import { UserModule } from './user/user.module';
 import { QuestionModule } from './question/question.module';
+import { Philosopher } from './philosopher/entities/philosopher.entity';
+import { Term } from './term/entities/term.entity';
+import { Question } from './question/entities/question.entity';
+import { SeedModule } from './seed/seed.module';
+import { DatabaseInitModule } from './database/database-init.module';
 
 @Module({
   imports: [
@@ -23,7 +27,7 @@ import { QuestionModule } from './question/question.module';
         username: configService.get<string>('DATABASE_USERNAME'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [],
+        entities: [Philosopher, Term, Question],
         synchronize: true,
       }),
       inject: [ConfigService],
@@ -32,6 +36,8 @@ import { QuestionModule } from './question/question.module';
     TermModule,
     UserModule,
     QuestionModule,
+    SeedModule,
+    DatabaseInitModule,
   ],
   controllers: [AppController],
   providers: [AppService],
