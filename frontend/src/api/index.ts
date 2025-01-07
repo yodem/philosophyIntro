@@ -1,5 +1,12 @@
 import axios from "axios";
-import { Philosopher, Question, Term } from "../types";
+import {
+  Philosopher,
+  Question,
+  Term,
+  UpdatePhilosopherDto,
+  UpdateQuestionDto,
+  UpdateTermDto,
+} from "../types";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -22,7 +29,7 @@ export const philosophersApi = {
       console.error(error);
     }
   },
-  update: async (id: number, data: Partial<Philosopher>) => {
+  update: async (id: number, data: UpdatePhilosopherDto) => {
     try {
       const res = await api.patch<Philosopher>(`/philosophers/${id}`, data);
       return res.data;
@@ -49,7 +56,7 @@ export const questionsApi = {
       console.error(error);
     }
   },
-  update: async (id: number, data: Partial<Question>) => {
+  update: async (id: number, data: UpdateQuestionDto) => {
     try {
       const res = await api.patch<Question>(`/questions/${id}`, data);
       return res.data;
@@ -76,7 +83,7 @@ export const termsApi = {
       console.error(error);
     }
   },
-  update: async (id: number, data: Partial<Term>) => {
+  update: async (id: number, data: UpdateTermDto) => {
     try {
       const res = await api.patch<Term>(`/terms/${id}`, data);
       return res.data;

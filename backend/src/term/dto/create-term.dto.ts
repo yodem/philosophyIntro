@@ -1,4 +1,10 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsArray,
+  IsNumber,
+} from 'class-validator';
 
 export class CreateTermDto {
   @IsString()
@@ -8,4 +14,14 @@ export class CreateTermDto {
   @IsString()
   @IsNotEmpty()
   definition: string;
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  questions?: number[];
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  philosophers?: number[];
 }

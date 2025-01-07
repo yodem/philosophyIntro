@@ -15,6 +15,8 @@ export interface CreatePhilosopherDto {
   deathYear?: number;
   bio?: string;
   description: string;
+  terms?: number[];
+  questions?: number[];
 }
 
 export type UpdatePhilosopherDto = Partial<CreatePhilosopherDto>;
@@ -30,6 +32,8 @@ export interface Question {
 export interface CreateQuestionDto {
   question: string;
   description: string;
+  terms?: number[];
+  philosophers?: number[];
 }
 
 export type UpdateQuestionDto = Partial<CreateQuestionDto>;
@@ -45,6 +49,8 @@ export interface Term {
 export interface CreateTermDto {
   term: string;
   definition: string;
+  questions?: number[];
+  philosophers?: number[];
 }
 
 export type UpdateTermDto = Partial<CreateTermDto>;

@@ -1,5 +1,5 @@
 import { Button, ButtonProps } from "@mui/material";
-import { createLink, LinkComponent } from '@tanstack/react-router';
+import { createLink, LinkComponent, useLocation } from '@tanstack/react-router';
 import { forwardRef } from "react";
 
 interface MUILinkProps extends Omit<ButtonProps, 'href'> {
@@ -15,5 +15,9 @@ const MUILinkComponent = forwardRef<HTMLAnchorElement, MUILinkProps>(
 const CreatedLinkComponent = createLink(MUILinkComponent)
 
 export const RouterButton: LinkComponent<typeof MUILinkComponent> = (props) => {
-    return <CreatedLinkComponent preload={'intent'} {...props} />
+    const { to } = props
+    const location = useLocation()
+    return <CreatedLinkComponent sx={{
+        bgcolor: (theme) => location.pathname.includes(to as string) ? theme.palette.primary.light : 'inherit',
+    }} preload={'intent'} {...props} />
 }
