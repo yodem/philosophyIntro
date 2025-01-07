@@ -16,6 +16,15 @@ export class Philosopher {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  birthYear: number;
+
+  @Column({ nullable: true })
+  deathYear: number;
+
+  @Column('text', { nullable: true })
+  bio: string;
+
   @Column({ type: 'text' })
   description: string;
 
