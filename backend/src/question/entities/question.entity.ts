@@ -25,4 +25,10 @@ export class Question {
   @ManyToMany(() => Term, (term) => term.questions)
   @JoinTable()
   terms: Term[];
+
+  @Column('simple-array')
+  philosophicalPeriod: string[];
+
+  @Column('simple-array')
+  philosophicalAffiliation: string[];
 }

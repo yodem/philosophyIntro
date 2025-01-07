@@ -19,6 +19,12 @@ export class Philosopher {
   @Column({ type: 'text' })
   description: string;
 
+  @Column('simple-array')
+  philosophicalPeriod: string[];
+
+  @Column('simple-array')
+  philosophicalAffiliation: string[];
+
   @ManyToMany(() => Question, (question) => question.philosophers)
   @JoinTable()
   questions: Question[];
