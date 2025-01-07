@@ -11,14 +11,90 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as AboutImport } from './routes/about'
+import { Route as AdminImport } from './routes/_admin'
 import { Route as IndexImport } from './routes/index'
+import { Route as UsersIndexImport } from './routes/users/index'
+import { Route as TermsIndexImport } from './routes/terms/index'
+import { Route as QuestionsIndexImport } from './routes/questions/index'
+import { Route as PhilosophersIndexImport } from './routes/philosophers/index'
+import { Route as UsersIdImport } from './routes/users/$id'
+import { Route as TermsIdImport } from './routes/terms/$id'
+import { Route as QuestionsIdImport } from './routes/questions/$id'
+import { Route as PhilosophersIdImport } from './routes/philosophers/$id'
+import { Route as AdminPanelImport } from './routes/_admin/panel'
 
 // Create/Update Routes
+
+const AboutRoute = AboutImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminRoute = AdminImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const UsersIndexRoute = UsersIndexImport.update({
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TermsIndexRoute = TermsIndexImport.update({
+  id: '/terms/',
+  path: '/terms/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const QuestionsIndexRoute = QuestionsIndexImport.update({
+  id: '/questions/',
+  path: '/questions/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PhilosophersIndexRoute = PhilosophersIndexImport.update({
+  id: '/philosophers/',
+  path: '/philosophers/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const UsersIdRoute = UsersIdImport.update({
+  id: '/users/$id',
+  path: '/users/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const TermsIdRoute = TermsIdImport.update({
+  id: '/terms/$id',
+  path: '/terms/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const QuestionsIdRoute = QuestionsIdImport.update({
+  id: '/questions/$id',
+  path: '/questions/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PhilosophersIdRoute = PhilosophersIdImport.update({
+  id: '/philosophers/$id',
+  path: '/philosophers/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminPanelRoute = AdminPanelImport.update({
+  id: '/panel',
+  path: '/panel',
+  getParentRoute: () => AdminRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -32,39 +108,216 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AdminImport
+      parentRoute: typeof rootRoute
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/_admin/panel': {
+      id: '/_admin/panel'
+      path: '/panel'
+      fullPath: '/panel'
+      preLoaderRoute: typeof AdminPanelImport
+      parentRoute: typeof AdminImport
+    }
+    '/philosophers/$id': {
+      id: '/philosophers/$id'
+      path: '/philosophers/$id'
+      fullPath: '/philosophers/$id'
+      preLoaderRoute: typeof PhilosophersIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/questions/$id': {
+      id: '/questions/$id'
+      path: '/questions/$id'
+      fullPath: '/questions/$id'
+      preLoaderRoute: typeof QuestionsIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/terms/$id': {
+      id: '/terms/$id'
+      path: '/terms/$id'
+      fullPath: '/terms/$id'
+      preLoaderRoute: typeof TermsIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/users/$id': {
+      id: '/users/$id'
+      path: '/users/$id'
+      fullPath: '/users/$id'
+      preLoaderRoute: typeof UsersIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/philosophers/': {
+      id: '/philosophers/'
+      path: '/philosophers'
+      fullPath: '/philosophers'
+      preLoaderRoute: typeof PhilosophersIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/questions/': {
+      id: '/questions/'
+      path: '/questions'
+      fullPath: '/questions'
+      preLoaderRoute: typeof QuestionsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/terms/': {
+      id: '/terms/'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
+interface AdminRouteChildren {
+  AdminPanelRoute: typeof AdminPanelRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminPanelRoute: AdminPanelRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof AdminRouteWithChildren
+  '/about': typeof AboutRoute
+  '/panel': typeof AdminPanelRoute
+  '/philosophers/$id': typeof PhilosophersIdRoute
+  '/questions/$id': typeof QuestionsIdRoute
+  '/terms/$id': typeof TermsIdRoute
+  '/users/$id': typeof UsersIdRoute
+  '/philosophers': typeof PhilosophersIndexRoute
+  '/questions': typeof QuestionsIndexRoute
+  '/terms': typeof TermsIndexRoute
+  '/users': typeof UsersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof AdminRouteWithChildren
+  '/about': typeof AboutRoute
+  '/panel': typeof AdminPanelRoute
+  '/philosophers/$id': typeof PhilosophersIdRoute
+  '/questions/$id': typeof QuestionsIdRoute
+  '/terms/$id': typeof TermsIdRoute
+  '/users/$id': typeof UsersIdRoute
+  '/philosophers': typeof PhilosophersIndexRoute
+  '/questions': typeof QuestionsIndexRoute
+  '/terms': typeof TermsIndexRoute
+  '/users': typeof UsersIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_admin': typeof AdminRouteWithChildren
+  '/about': typeof AboutRoute
+  '/_admin/panel': typeof AdminPanelRoute
+  '/philosophers/$id': typeof PhilosophersIdRoute
+  '/questions/$id': typeof QuestionsIdRoute
+  '/terms/$id': typeof TermsIdRoute
+  '/users/$id': typeof UsersIdRoute
+  '/philosophers/': typeof PhilosophersIndexRoute
+  '/questions/': typeof QuestionsIndexRoute
+  '/terms/': typeof TermsIndexRoute
+  '/users/': typeof UsersIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | ''
+    | '/about'
+    | '/panel'
+    | '/philosophers/$id'
+    | '/questions/$id'
+    | '/terms/$id'
+    | '/users/$id'
+    | '/philosophers'
+    | '/questions'
+    | '/terms'
+    | '/users'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | ''
+    | '/about'
+    | '/panel'
+    | '/philosophers/$id'
+    | '/questions/$id'
+    | '/terms/$id'
+    | '/users/$id'
+    | '/philosophers'
+    | '/questions'
+    | '/terms'
+    | '/users'
+  id:
+    | '__root__'
+    | '/'
+    | '/_admin'
+    | '/about'
+    | '/_admin/panel'
+    | '/philosophers/$id'
+    | '/questions/$id'
+    | '/terms/$id'
+    | '/users/$id'
+    | '/philosophers/'
+    | '/questions/'
+    | '/terms/'
+    | '/users/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  AboutRoute: typeof AboutRoute
+  PhilosophersIdRoute: typeof PhilosophersIdRoute
+  QuestionsIdRoute: typeof QuestionsIdRoute
+  TermsIdRoute: typeof TermsIdRoute
+  UsersIdRoute: typeof UsersIdRoute
+  PhilosophersIndexRoute: typeof PhilosophersIndexRoute
+  QuestionsIndexRoute: typeof QuestionsIndexRoute
+  TermsIndexRoute: typeof TermsIndexRoute
+  UsersIndexRoute: typeof UsersIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdminRoute: AdminRouteWithChildren,
+  AboutRoute: AboutRoute,
+  PhilosophersIdRoute: PhilosophersIdRoute,
+  QuestionsIdRoute: QuestionsIdRoute,
+  TermsIdRoute: TermsIdRoute,
+  UsersIdRoute: UsersIdRoute,
+  PhilosophersIndexRoute: PhilosophersIndexRoute,
+  QuestionsIndexRoute: QuestionsIndexRoute,
+  TermsIndexRoute: TermsIndexRoute,
+  UsersIndexRoute: UsersIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -77,11 +330,58 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/"
+        "/",
+        "/_admin",
+        "/about",
+        "/philosophers/$id",
+        "/questions/$id",
+        "/terms/$id",
+        "/users/$id",
+        "/philosophers/",
+        "/questions/",
+        "/terms/",
+        "/users/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/_admin": {
+      "filePath": "_admin.tsx",
+      "children": [
+        "/_admin/panel"
+      ]
+    },
+    "/about": {
+      "filePath": "about.tsx"
+    },
+    "/_admin/panel": {
+      "filePath": "_admin/panel.tsx",
+      "parent": "/_admin"
+    },
+    "/philosophers/$id": {
+      "filePath": "philosophers/$id.tsx"
+    },
+    "/questions/$id": {
+      "filePath": "questions/$id.tsx"
+    },
+    "/terms/$id": {
+      "filePath": "terms/$id.tsx"
+    },
+    "/users/$id": {
+      "filePath": "users/$id.tsx"
+    },
+    "/philosophers/": {
+      "filePath": "philosophers/index.tsx"
+    },
+    "/questions/": {
+      "filePath": "questions/index.tsx"
+    },
+    "/terms/": {
+      "filePath": "terms/index.tsx"
+    },
+    "/users/": {
+      "filePath": "users/index.tsx"
     }
   }
 }
