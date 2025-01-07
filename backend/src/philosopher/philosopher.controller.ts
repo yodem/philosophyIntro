@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { PhilosopherService } from './philosopher.service';
 import { CreatePhilosopherDto } from './dto/create-philosopher.dto';
 import { UpdatePhilosopherDto } from './dto/update-philosopher.dto';
@@ -13,8 +22,20 @@ export class PhilosopherController {
   }
 
   @Get()
-  findAll() {
-    return this.philosopherService.findAll();
+  findAll(
+    @Query('search') search?: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+    @Query('period') period?: string[],
+    @Query('affiliation') affiliation?: string[],
+  ) {
+    return this.philosopherService.findAll(
+      search,
+      page,
+      limit,
+      period,
+      affiliation,
+    );
   }
 
   @Get(':id')
@@ -23,7 +44,10 @@ export class PhilosopherController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePhilosopherDto: UpdatePhilosopherDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updatePhilosopherDto: UpdatePhilosopherDto,
+  ) {
     return this.philosopherService.update(+id, updatePhilosopherDto);
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, FindManyOptions, Like, In } from 'typeorm';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
@@ -17,8 +17,30 @@ export class QuestionService {
     return this.questionRepository.save(question);
   }
 
-  findAll(): Promise<Question[]> {
-    return this.questionRepository.find();
+  findAll(
+    search?: string,
+    page?: number,
+    limit?: number,
+    period?: string[],
+    affiliation?: string[],
+  ): Promise<Question[]> {
+    const options: FindManyOptions<Question> = {};
+    const where: any = {};
+    if (search) {
+      where.text = Like(`%${search}%`);
+    }
+    if (period && period.length > 0) {
+      where.philosophicalPeriod = In(period);
+    }
+    if (affiliation && affiliation.length > 0) {
+      where.philosophicalAffiliation = In(affiliation);
+    }
+    options.where = where;
+    if (page && limit) {
+      options.skip = (page - 1) * limit;
+      options.take = limit;
+    }
+    return this.questionRepository.find(options);
   }
 
   async findOne(id: number): Promise<Question> {

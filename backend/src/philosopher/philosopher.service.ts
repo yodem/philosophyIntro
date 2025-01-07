@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, FindManyOptions, Like, In } from 'typeorm';
 import { CreatePhilosopherDto } from './dto/create-philosopher.dto';
 import { UpdatePhilosopherDto } from './dto/update-philosopher.dto';
 import { Philosopher } from './entities/philosopher.entity';
@@ -19,8 +19,30 @@ export class PhilosopherService {
     return this.philosopherRepository.save(philosopher);
   }
 
-  findAll(): Promise<Philosopher[]> {
-    return this.philosopherRepository.find();
+  findAll(
+    search?: string,
+    page?: number,
+    limit?: number,
+    period?: string[],
+    affiliation?: string[],
+  ): Promise<Philosopher[]> {
+    const options: FindManyOptions<Philosopher> = {};
+    const where: any = {};
+    if (search) {
+      where.name = Like(`%${search}%`);
+    }
+    if (period && period.length > 0) {
+      where.philosophicalPeriod = In(period);
+    }
+    if (affiliation && affiliation.length > 0) {
+      where.philosophicalAffiliation = In(affiliation);
+    }
+    options.where = where;
+    if (page && limit) {
+      options.skip = (page - 1) * limit;
+      options.take = limit;
+    }
+    return this.philosopherRepository.find(options);
   }
 
   async findOne(id: number): Promise<Philosopher> {

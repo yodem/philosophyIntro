@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { TermService } from './term.service';
 import { CreateTermDto } from './dto/create-term.dto';
 import { UpdateTermDto } from './dto/update-term.dto';
@@ -13,8 +22,14 @@ export class TermController {
   }
 
   @Get()
-  findAll() {
-    return this.termService.findAll();
+  findAll(
+    @Query('search') search?: string,
+    @Query('page') page?: number,
+    @Query('limit') limit?: number,
+    @Query('period') period?: string[],
+    @Query('affiliation') affiliation?: string[],
+  ) {
+    return this.termService.findAll(search, page, limit, period, affiliation);
   }
 
   @Get(':id')
