@@ -19,8 +19,11 @@ import { Route as TermsIndexImport } from './routes/terms/index'
 import { Route as QuestionsIndexImport } from './routes/questions/index'
 import { Route as PhilosophersIndexImport } from './routes/philosophers/index'
 import { Route as UsersIdImport } from './routes/users/$id'
+import { Route as TermsNewImport } from './routes/terms/new'
 import { Route as TermsIdImport } from './routes/terms/$id'
+import { Route as QuestionsNewImport } from './routes/questions/new'
 import { Route as QuestionsIdImport } from './routes/questions/$id'
+import { Route as PhilosophersNewImport } from './routes/philosophers/new'
 import { Route as PhilosophersIdImport } from './routes/philosophers/$id'
 import { Route as AdminPanelImport } from './routes/_admin/panel'
 
@@ -73,15 +76,33 @@ const UsersIdRoute = UsersIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const TermsNewRoute = TermsNewImport.update({
+  id: '/terms/new',
+  path: '/terms/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const TermsIdRoute = TermsIdImport.update({
   id: '/terms/$id',
   path: '/terms/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
+const QuestionsNewRoute = QuestionsNewImport.update({
+  id: '/questions/new',
+  path: '/questions/new',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const QuestionsIdRoute = QuestionsIdImport.update({
   id: '/questions/$id',
   path: '/questions/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PhilosophersNewRoute = PhilosophersNewImport.update({
+  id: '/philosophers/new',
+  path: '/philosophers/new',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -136,6 +157,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PhilosophersIdImport
       parentRoute: typeof rootRoute
     }
+    '/philosophers/new': {
+      id: '/philosophers/new'
+      path: '/philosophers/new'
+      fullPath: '/philosophers/new'
+      preLoaderRoute: typeof PhilosophersNewImport
+      parentRoute: typeof rootRoute
+    }
     '/questions/$id': {
       id: '/questions/$id'
       path: '/questions/$id'
@@ -143,11 +171,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuestionsIdImport
       parentRoute: typeof rootRoute
     }
+    '/questions/new': {
+      id: '/questions/new'
+      path: '/questions/new'
+      fullPath: '/questions/new'
+      preLoaderRoute: typeof QuestionsNewImport
+      parentRoute: typeof rootRoute
+    }
     '/terms/$id': {
       id: '/terms/$id'
       path: '/terms/$id'
       fullPath: '/terms/$id'
       preLoaderRoute: typeof TermsIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/terms/new': {
+      id: '/terms/new'
+      path: '/terms/new'
+      fullPath: '/terms/new'
+      preLoaderRoute: typeof TermsNewImport
       parentRoute: typeof rootRoute
     }
     '/users/$id': {
@@ -206,8 +248,11 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/panel': typeof AdminPanelRoute
   '/philosophers/$id': typeof PhilosophersIdRoute
+  '/philosophers/new': typeof PhilosophersNewRoute
   '/questions/$id': typeof QuestionsIdRoute
+  '/questions/new': typeof QuestionsNewRoute
   '/terms/$id': typeof TermsIdRoute
+  '/terms/new': typeof TermsNewRoute
   '/users/$id': typeof UsersIdRoute
   '/philosophers': typeof PhilosophersIndexRoute
   '/questions': typeof QuestionsIndexRoute
@@ -221,8 +266,11 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/panel': typeof AdminPanelRoute
   '/philosophers/$id': typeof PhilosophersIdRoute
+  '/philosophers/new': typeof PhilosophersNewRoute
   '/questions/$id': typeof QuestionsIdRoute
+  '/questions/new': typeof QuestionsNewRoute
   '/terms/$id': typeof TermsIdRoute
+  '/terms/new': typeof TermsNewRoute
   '/users/$id': typeof UsersIdRoute
   '/philosophers': typeof PhilosophersIndexRoute
   '/questions': typeof QuestionsIndexRoute
@@ -237,8 +285,11 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/_admin/panel': typeof AdminPanelRoute
   '/philosophers/$id': typeof PhilosophersIdRoute
+  '/philosophers/new': typeof PhilosophersNewRoute
   '/questions/$id': typeof QuestionsIdRoute
+  '/questions/new': typeof QuestionsNewRoute
   '/terms/$id': typeof TermsIdRoute
+  '/terms/new': typeof TermsNewRoute
   '/users/$id': typeof UsersIdRoute
   '/philosophers/': typeof PhilosophersIndexRoute
   '/questions/': typeof QuestionsIndexRoute
@@ -254,8 +305,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/panel'
     | '/philosophers/$id'
+    | '/philosophers/new'
     | '/questions/$id'
+    | '/questions/new'
     | '/terms/$id'
+    | '/terms/new'
     | '/users/$id'
     | '/philosophers'
     | '/questions'
@@ -268,8 +322,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/panel'
     | '/philosophers/$id'
+    | '/philosophers/new'
     | '/questions/$id'
+    | '/questions/new'
     | '/terms/$id'
+    | '/terms/new'
     | '/users/$id'
     | '/philosophers'
     | '/questions'
@@ -282,8 +339,11 @@ export interface FileRouteTypes {
     | '/about'
     | '/_admin/panel'
     | '/philosophers/$id'
+    | '/philosophers/new'
     | '/questions/$id'
+    | '/questions/new'
     | '/terms/$id'
+    | '/terms/new'
     | '/users/$id'
     | '/philosophers/'
     | '/questions/'
@@ -297,8 +357,11 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   AboutRoute: typeof AboutRoute
   PhilosophersIdRoute: typeof PhilosophersIdRoute
+  PhilosophersNewRoute: typeof PhilosophersNewRoute
   QuestionsIdRoute: typeof QuestionsIdRoute
+  QuestionsNewRoute: typeof QuestionsNewRoute
   TermsIdRoute: typeof TermsIdRoute
+  TermsNewRoute: typeof TermsNewRoute
   UsersIdRoute: typeof UsersIdRoute
   PhilosophersIndexRoute: typeof PhilosophersIndexRoute
   QuestionsIndexRoute: typeof QuestionsIndexRoute
@@ -311,8 +374,11 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   AboutRoute: AboutRoute,
   PhilosophersIdRoute: PhilosophersIdRoute,
+  PhilosophersNewRoute: PhilosophersNewRoute,
   QuestionsIdRoute: QuestionsIdRoute,
+  QuestionsNewRoute: QuestionsNewRoute,
   TermsIdRoute: TermsIdRoute,
+  TermsNewRoute: TermsNewRoute,
   UsersIdRoute: UsersIdRoute,
   PhilosophersIndexRoute: PhilosophersIndexRoute,
   QuestionsIndexRoute: QuestionsIndexRoute,
@@ -334,8 +400,11 @@ export const routeTree = rootRoute
         "/_admin",
         "/about",
         "/philosophers/$id",
+        "/philosophers/new",
         "/questions/$id",
+        "/questions/new",
         "/terms/$id",
+        "/terms/new",
         "/users/$id",
         "/philosophers/",
         "/questions/",
@@ -362,11 +431,20 @@ export const routeTree = rootRoute
     "/philosophers/$id": {
       "filePath": "philosophers/$id.tsx"
     },
+    "/philosophers/new": {
+      "filePath": "philosophers/new.tsx"
+    },
     "/questions/$id": {
       "filePath": "questions/$id.tsx"
     },
+    "/questions/new": {
+      "filePath": "questions/new.tsx"
+    },
     "/terms/$id": {
       "filePath": "terms/$id.tsx"
+    },
+    "/terms/new": {
+      "filePath": "terms/new.tsx"
     },
     "/users/$id": {
       "filePath": "users/$id.tsx"

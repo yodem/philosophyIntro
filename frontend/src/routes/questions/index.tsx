@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { questionsApi } from '../../api';
-import { Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
+import { Card, CardContent, Grid, Skeleton, Typography, Button } from '@mui/material';
 
 function QuestionsSkeleton() {
     return (
@@ -27,23 +27,29 @@ export const Route = createFileRoute('/questions/')({
 
 function QuestionsComponent() {
     const questions = Route.useLoaderData();
+    const navigate = Route.useNavigate();
 
     return (
-        <Grid container spacing={2} padding={2}>
-            {questions?.map((question) => (
-                <Grid item xs={12} key={question.id}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h5" gutterBottom>
-                                {question.question}
-                            </Typography>
-                            <Typography variant="body1">
-                                {question.description}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            ))}
-        </Grid>
+        <>
+            <Button variant="outlined" onClick={() => navigate({ to: '/questions/new' })}>
+                Add New Question
+            </Button>
+            <Grid container spacing={2} padding={2}>
+                {questions?.map((question) => (
+                    <Grid item xs={12} key={question.id}>
+                        <Card>
+                            <CardContent>
+                                <Typography variant="h5" gutterBottom>
+                                    {question.question}
+                                </Typography>
+                                <Typography variant="body1">
+                                    {question.description}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </>
     );
 }

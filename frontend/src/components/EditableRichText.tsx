@@ -1,31 +1,19 @@
-import { useState, useEffect } from 'react';
 import { RichTextEditor } from './RichTextEditor';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 
 interface EditableRichTextProps {
     initialContent: string;
-    onSave: (content: string) => Promise<void>;
+    onChange: (content: string) => void;
 }
 
-export function EditableRichText({ initialContent, onSave }: EditableRichTextProps) {
-    const [content, setContent] = useState(initialContent);
-
-    useEffect(() => {
-        setContent(initialContent);
-    }, [initialContent]);
-
-    const handleSave = async () => {
-        await onSave(content);
-    };
-
+export function EditableRichText({ initialContent, onChange }: EditableRichTextProps) {
     return (
         <Box sx={{
             display: 'flex',
             flexDirection: 'column',
             gap: 2
         }} >
-            <RichTextEditor content={content} onChange={setContent} />
-            <Button variant='contained' sx={{ alignSelf: "start" }} onClick={handleSave}>Save Changes</Button>
+            <RichTextEditor content={initialContent} onChange={onChange} />
         </Box>
     );
 }

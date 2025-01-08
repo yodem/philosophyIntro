@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { termsApi } from '../../api';
-import { Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
+import { Card, CardContent, Grid, Skeleton, Typography, Button } from '@mui/material';
 
 function TermsSkeleton() {
     return (
@@ -27,21 +27,30 @@ export const Route = createFileRoute('/terms/')({
 
 function TermsComponent() {
     const terms = Route.useLoaderData();
+    const navigate = Route.useNavigate();
 
     return (
-        <Grid container spacing={2} padding={2}>
-            {terms?.map((term) => (
-                <Grid item xs={12} md={6} key={term.id}>
-                    <Card>
-                        <CardContent>
-                            <Typography variant="h5" gutterBottom>
-                                {term.term}
-                            </Typography>
-                            <div dangerouslySetInnerHTML={{ __html: term.definition }} />
-                        </CardContent>
-                    </Card>
-                </Grid>
-            ))}
-        </Grid>
+        <>
+            <Button variant="outlined" onClick={() => navigate({ to: '/terms/new' })}>
+                Add New Term
+            </Button>
+            <Grid container spacing={2} padding={2}>
+                {terms?.map((term) => (
+                    <Grid item xs={12} md={6} key={term.id}>
+                        <Card>
+                            <CardContent
+                                onClick={() => navigate({ to: '/terms/$id', params: { id: term.id.toString() } })}
+                                sx={{ cursor: 'pointer' }}
+                            >
+                                <Typography variant="h5" gutterBottom>
+                                    {term.term}
+                                </Typography>
+                                <div dangerouslySetInnerHTML={{ __html: term.definition }} />
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
+            </Grid>
+        </>
     );
 }

@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { philosophersApi } from '../../api';
-import { Card, CardContent, Grid, Skeleton, Typography } from '@mui/material';
+import { Card, CardContent, Grid, Skeleton, Typography, Button } from '@mui/material';
 
 function PhilosophersSkeleton() {
   return (
@@ -31,24 +31,29 @@ function PhilosophersComponent() {
   const navigate = Route.useNavigate();
 
   return (
-    <Grid container spacing={2} padding={2}>
-      {philosophers?.map((philosopher) => (
-        <Grid item xs={12} md={6} lg={4} key={philosopher.id}>
-          <Card>
-            <CardContent onClick={() => navigate({ to: `/philosophers/$id`, params: { id: philosopher.id.toString() } })} sx={{ cursor: 'pointer' }}>
-              <Typography variant="h5" gutterBottom>
-                {philosopher.name}
-              </Typography>
-              <Typography color="text.secondary">
-                {philosopher.birthYear} - {philosopher.deathYear}
-              </Typography>
-              <Typography variant="body2" sx={{ mt: 1 }}>
-                {philosopher.description}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-      ))}
-    </Grid>
+    <>
+      <Button variant="outlined" onClick={() => navigate({ to: '/philosophers/new' })}>
+        Add New Philosopher
+      </Button>
+      <Grid container spacing={2} padding={2}>
+        {philosophers?.map((philosopher) => (
+          <Grid item xs={12} md={6} lg={4} key={philosopher.id}>
+            <Card>
+              <CardContent onClick={() => navigate({ to: `/philosophers/$id`, params: { id: philosopher.id.toString() } })} sx={{ cursor: 'pointer' }}>
+                <Typography variant="h5" gutterBottom>
+                  {philosopher.name}
+                </Typography>
+                <Typography color="text.secondary">
+                  {philosopher.birthYear} - {philosopher.deathYear}
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 1 }}>
+                  {philosopher.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </>
   );
 }

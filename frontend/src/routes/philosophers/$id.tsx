@@ -1,12 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { philosophersApi, termsApi, questionsApi } from '../../api';
-import { Card, CardContent, Skeleton, Typography, Box } from '@mui/material';
-import { EditableRichText } from '../../components/EditableRichText';
-import { AutocompleteWithButton } from '../../components/AutocompleteWithButton';
+import { Card, CardContent, Skeleton, Typography, Box, Button } from '@mui/material';
 import { useState } from 'react';
-import { Term, Question, UpdatePhilosopherDto } from '@/types';
-import { RelatedItems } from '../../components/RelatedItems';
+import { UpdatePhilosopherDto } from '@/types';
+import dayjs from 'dayjs';
+import { PhilosopherForm } from '../../components/Forms/PhilosopherForm';
 
 function PhilosopherSkeleton() {
   return (
@@ -42,8 +41,7 @@ export const Route = createFileRoute('/philosophers/$id')({
 function PhilosopherComponent() {
   const philosopher = Route.useLoaderData();
   const queryClient = useQueryClient();
-  const [selectedTerms, setSelectedTerms] = useState(philosopher?.terms || []);
-  const [selectedQuestions, setSelectedQuestions] = useState(philosopher?.questions || []);
+  const [isEditing, setIsEditing] = useState(false);
 
   const { data: allTerms } = useQuery({
     queryKey: ['terms'],
@@ -61,36 +59,15 @@ function PhilosopherComponent() {
       queryClient.invalidateQueries({
         queryKey: ['philosopher', philosopher!.id]
       });
+      setIsEditing(false);
     },
   });
 
-  const handleSaveContent = async (content: string) => {
-    if (philosopher) {
-      updatePhilosopherMutation.mutate({
-        ...philosopher,
-        description: content,
-        terms: philosopher.terms?.map(t => t.id),
-        questions: philosopher.questions?.map(q => q.id)
-      });
-    }
-  };
-
-  const handleSaveAdditionalData = async () => {
-    if (philosopher) {
-      updatePhilosopherMutation.mutate({
-        ...philosopher,
-        terms: selectedTerms.map(t => t.id),
-        questions: selectedQuestions.map(q => q.id)
-      });
-    }
-  };
-
-  const handleTermsChange = (_: React.SyntheticEvent, value: Term[]) => {
-    setSelectedTerms(value);
-  };
-
-  const handleQuestionsChange = (_: React.SyntheticEvent, value: Question[]) => {
-    setSelectedQuestions(value);
+  const onSubmit = async (data: UpdatePhilosopherDto) => {
+    return updatePhilosopherMutation.mutateAsync({
+      ...philosopher,
+      ...data
+    });
   };
 
   if (!philosopher) {
@@ -98,49 +75,30 @@ function PhilosopherComponent() {
   }
 
   return (
-    <Box p={2}>
-      <Card>
-        <CardContent>
-          <Typography variant="h4" gutterBottom>
-            {philosopher.name}
-          </Typography>
-          <Typography color="text.secondary" gutterBottom>
-            {philosopher.birthYear} - {philosopher.deathYear}
-          </Typography>
-          <EditableRichText initialContent={philosopher.description} onSave={handleSaveContent} />
-          <AutocompleteWithButton
-            options={allTerms || []}
-            getOptionLabel={(option) => option.term}
-            value={selectedTerms}
-            onChange={handleTermsChange}
-            label="Key Terms"
-            onSave={handleSaveAdditionalData}
-          />
+    <>
+      <Button
+        variant="outlined"
+        onClick={() => setIsEditing(!isEditing)}
+        sx={{ m: 2 }}
+      >
+        {isEditing ? 'View' : 'Edit'}
+      </Button>
 
-          <AutocompleteWithButton
-            options={allQuestions || []}
-            getOptionLabel={(option) => option.question}
-            value={selectedQuestions}
-            onChange={handleQuestionsChange}
-            label="Key Questions"
-            onSave={handleSaveAdditionalData}
-          />
-
-          <RelatedItems
-            title="Key Terms"
-            items={philosopher.terms || []}
-            getLabel={(item) => item.term}
-            getLink={(item) => ({ to: "/terms/$id", params: { id: item.id.toString() } })}
-          />
-
-          <RelatedItems
-            title="Key Questions"
-            items={philosopher.questions || []}
-            getLabel={(item) => item.question}
-            getLink={(item) => ({ to: "/questions/$id", params: { id: item.id.toString() } })}
-          />
-        </CardContent>
-      </Card>
-    </Box>
+      <PhilosopherForm
+        isEdit={true}
+        isEditable={isEditing}
+        defaultValues={{
+          name: philosopher.name,
+          birthYear: philosopher.birthYear ?? dayjs(philosopher.birthYear),
+          deathYear: philosopher.deathYear ?? dayjs(philosopher.deathYear),
+          description: philosopher.description,
+          terms: philosopher.terms || [],
+          questions: philosopher.questions || []
+        }}
+        allTerms={allTerms || []}
+        allQuestions={allQuestions || []}
+        onSubmit={isEditing ? onSubmit : undefined}
+      />
+    </>
   );
 }

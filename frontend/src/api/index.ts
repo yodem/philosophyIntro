@@ -37,6 +37,14 @@ export const philosophersApi = {
       console.error(error);
     }
   },
+  create: async (data: UpdatePhilosopherDto) => {
+    try {
+      const res = await api.post<Philosopher>("/philosophers", data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export const questionsApi = {
@@ -64,6 +72,14 @@ export const questionsApi = {
       console.error(error);
     }
   },
+  create: async (data: UpdateQuestionDto) => {
+    try {
+      const res = await api.post<Question>("/questions", data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };
 
 export const termsApi = {
@@ -86,6 +102,14 @@ export const termsApi = {
   update: async (id: number, data: UpdateTermDto) => {
     try {
       const res = await api.patch<Term>(`/terms/${id}`, data);
+      return res.data;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  create: async (data: UpdateTermDto) => {
+    try {
+      const res = await api.post<Term>("/terms", data);
       return res.data;
     } catch (error) {
       console.error(error);

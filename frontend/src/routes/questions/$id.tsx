@@ -1,12 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { questionsApi, termsApi, philosophersApi } from '../../api';
-import { Card, CardContent, Box, Skeleton, Typography } from '@mui/material';
-import { EditableRichText } from '../../components/EditableRichText';
-import { AutocompleteWithButton } from '../../components/AutocompleteWithButton';
+import { Card, CardContent, Box, Skeleton, Typography, Button } from '@mui/material';
 import { useState } from 'react';
-import { Term, Philosopher, UpdateQuestionDto } from '@/types';
-import { RelatedItems } from '../../components/RelatedItems';
+import { UpdateQuestionDto } from '@/types';
+import { QuestionForm } from '../../components/Forms/QuestionForm';
 
 function QuestionSkeleton() {
     return (
@@ -45,8 +43,7 @@ export const Route = createFileRoute('/questions/$id')({
 function QuestionComponent() {
     const question = Route.useLoaderData();
     const queryClient = useQueryClient();
-    const [selectedTerms, setSelectedTerms] = useState(question?.terms || []);
-    const [selectedPhilosophers, setSelectedPhilosophers] = useState(question?.philosophers || []);
+    const [isEditing, setIsEditing] = useState(false);
 
     const { data: allTerms } = useQuery({
         queryKey: ['terms'],
@@ -64,84 +61,43 @@ function QuestionComponent() {
             queryClient.invalidateQueries({
                 queryKey: ['question', question!.id]
             });
+            setIsEditing(false);
         },
     });
 
-    const handleSave = async (content: string) => {
-        if (question) {
-            updateQuestionMutation.mutate({
-                ...question,
-                description: content,
-                terms: selectedTerms.map(t => t.id),
-                philosophers: selectedPhilosophers.map(p => p.id)
-            });
-        }
+    const onSubmit = async (data: UpdateQuestionDto) => {
+        if (!question) return;
+        return updateQuestionMutation.mutateAsync({
+            ...question,
+            ...data
+        });
     };
 
-    const handleTermsChange = (_: React.SyntheticEvent, value: Term[]) => {
-        setSelectedTerms(value);
-    };
-
-    const handlePhilosophersChange = (_: React.SyntheticEvent, value: Philosopher[]) => {
-        setSelectedPhilosophers(value);
-    };
-
-    const handleSaveAdditionalData = async () => {
-        if (question) {
-            updateQuestionMutation.mutate({
-                ...question,
-                terms: selectedTerms.map(t => t.id),
-                philosophers: selectedPhilosophers.map(p => p.id)
-            });
-        }
-    };
-
-    if (!question) {
-        return <Typography variant="h6">Question not found</Typography>;
-    }
+    if (!question) return <Typography variant="h6">Question not found</Typography>;
 
     return (
-        <Box p={2}>
-            <Card>
-                <CardContent>
-                    <Typography variant="h4" gutterBottom>
-                        {question.question}
-                    </Typography>
-                    <EditableRichText initialContent={question.description} onSave={handleSave} />
+        <>
+            <Button
+                variant="outlined"
+                onClick={() => setIsEditing(!isEditing)}
+                sx={{ m: 2 }}
+            >
+                {isEditing ? 'View' : 'Edit'}
+            </Button>
 
-                    <AutocompleteWithButton
-                        options={allTerms || []}
-                        getOptionLabel={(option) => option.term}
-                        value={selectedTerms}
-                        onChange={handleTermsChange}
-                        label="Related Terms"
-                        onSave={handleSaveAdditionalData}
-                    />
-
-                    <AutocompleteWithButton
-                        options={allPhilosophers || []}
-                        getOptionLabel={(option) => option.name}
-                        value={selectedPhilosophers}
-                        onChange={handlePhilosophersChange}
-                        label="Discussed by"
-                        onSave={handleSaveAdditionalData}
-                    />
-
-                    <RelatedItems
-                        title="Discussed by"
-                        items={question.philosophers || []}
-                        getLabel={(item) => item.name}
-                        getLink={(item) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })}
-                    />
-
-                    <RelatedItems
-                        title="Related Terms"
-                        items={question.terms || []}
-                        getLabel={(item) => item.term}
-                        getLink={(item) => ({ to: "/terms/$id", params: { id: item.id.toString() } })}
-                    />
-                </CardContent>
-            </Card>
-        </Box>
+            <QuestionForm
+                isEdit={true}
+                isEditable={isEditing}
+                defaultValues={{
+                    question: question.question,
+                    description: question.description,
+                    terms: question.terms || [],
+                    philosophers: question.philosophers || []
+                }}
+                allTerms={allTerms || []}
+                allPhilosophers={allPhilosophers || []}
+                onSubmit={isEditing ? onSubmit : undefined}
+            />
+        </>
     );
 }
