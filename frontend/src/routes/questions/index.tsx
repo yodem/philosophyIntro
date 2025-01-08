@@ -1,21 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { questionsApi } from '../../api';
-import { Card, CardContent, Grid, Skeleton, Typography, Button } from '@mui/material';
+import { questionsApi } from '@/api';
+import { Button } from '@mui/material';
+import ResourceCard from '@/components/ResourceCard'; // Import the generic component
+import ResourceGrid from '@/components/ResourceGrid'; // Import the generic grid component
+import ResourceSkeleton from '@/components/ResourceSkeleton';
 
 function QuestionsSkeleton() {
     return (
-        <Grid container spacing={2} padding={2}>
+        <ResourceGrid>
             {[1, 2, 3, 4].map((i) => (
-                <Grid item xs={12} key={i}>
-                    <Card>
-                        <CardContent>
-                            <Skeleton variant="text" height={40} />
-                            <Skeleton variant="rectangular" height={80} />
-                        </CardContent>
-                    </Card>
-                </Grid>
+                <ResourceSkeleton key={i} />
             ))}
-        </Grid>
+        </ResourceGrid>
     );
 }
 
@@ -34,22 +30,15 @@ function QuestionsComponent() {
             <Button variant="outlined" onClick={() => navigate({ to: '/questions/new' })}>
                 Add New Question
             </Button>
-            <Grid container spacing={2} padding={2}>
+            <ResourceGrid>
                 {questions?.map((question) => (
-                    <Grid item xs={12} key={question.id}>
-                        <Card>
-                            <CardContent>
-                                <Typography variant="h5" gutterBottom>
-                                    {question.question}
-                                </Typography>
-                                <Typography variant="body1">
-                                    {question.description}
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                    <ResourceCard
+                        key={question.id}
+                        title={question.question}
+                        onClick={() => navigate({ to: '/questions/$id', params: { id: question.id.toString() } })}
+                    />
                 ))}
-            </Grid>
+            </ResourceGrid>
         </>
     );
 }

@@ -1,21 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { termsApi } from '../../api';
-import { Card, CardContent, Grid, Skeleton, Typography, Button } from '@mui/material';
+import { termsApi } from '@/api';
+import { Button } from '@mui/material';
+import ResourceCard from '@/components/ResourceCard'; // Import the generic component
+import ResourceGrid from '@/components/ResourceGrid'; // Import the generic grid component
+import ResourceSkeleton from '@/components/ResourceSkeleton';
 
 function TermsSkeleton() {
     return (
-        <Grid container spacing={2} padding={2}>
+        <ResourceGrid>
             {[1, 2, 3, 4].map((i) => (
-                <Grid item xs={12} md={6} key={i}>
-                    <Card>
-                        <CardContent>
-                            <Skeleton variant="text" height={32} />
-                            <Skeleton variant="rectangular" height={60} />
-                        </CardContent>
-                    </Card>
-                </Grid>
+                <ResourceSkeleton key={i} />
             ))}
-        </Grid>
+        </ResourceGrid>
     );
 }
 
@@ -34,23 +30,15 @@ function TermsComponent() {
             <Button variant="outlined" onClick={() => navigate({ to: '/terms/new' })}>
                 Add New Term
             </Button>
-            <Grid container spacing={2} padding={2}>
+            <ResourceGrid>
                 {terms?.map((term) => (
-                    <Grid item xs={12} md={6} key={term.id}>
-                        <Card>
-                            <CardContent
-                                onClick={() => navigate({ to: '/terms/$id', params: { id: term.id.toString() } })}
-                                sx={{ cursor: 'pointer' }}
-                            >
-                                <Typography variant="h5" gutterBottom>
-                                    {term.term}
-                                </Typography>
-                                <div dangerouslySetInnerHTML={{ __html: term.definition }} />
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                    <ResourceCard
+                        key={term.id}
+                        title={term.term}
+                        onClick={() => navigate({ to: '/terms/$id', params: { id: term.id.toString() } })}
+                    />
                 ))}
-            </Grid>
+            </ResourceGrid>
         </>
     );
 }

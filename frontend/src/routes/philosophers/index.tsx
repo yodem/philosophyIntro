@@ -1,22 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { philosophersApi } from '../../api';
-import { Card, CardContent, Grid, Skeleton, Typography, Button } from '@mui/material';
+import { philosophersApi } from '@/api';
+import { Button } from '@mui/material';
+import ResourceCard from '@/components/ResourceCard'; // Import the generic component
+import ResourceGrid from '@/components/ResourceGrid'; // Import the generic grid component
+import ResourceSkeleton from '@/components/ResourceSkeleton'; // Import the generic skeleton component
 
 function PhilosophersSkeleton() {
   return (
-    <Grid container spacing={2} padding={2}>
+    <ResourceGrid>
       {[1, 2, 3, 4, 5, 6].map((i) => (
-        <Grid item xs={12} md={6} lg={4} key={i}>
-          <Card>
-            <CardContent>
-              <Skeleton variant="text" height={40} />
-              <Skeleton variant="text" height={20} />
-              <Skeleton variant="rectangular" height={100} />
-            </CardContent>
-          </Card>
-        </Grid>
+        <ResourceSkeleton key={i} />
       ))}
-    </Grid>
+    </ResourceGrid>
   );
 }
 
@@ -35,25 +30,15 @@ function PhilosophersComponent() {
       <Button variant="outlined" onClick={() => navigate({ to: '/philosophers/new' })}>
         Add New Philosopher
       </Button>
-      <Grid container spacing={2} padding={2}>
+      <ResourceGrid>
         {philosophers?.map((philosopher) => (
-          <Grid item xs={12} md={6} lg={4} key={philosopher.id}>
-            <Card>
-              <CardContent onClick={() => navigate({ to: `/philosophers/$id`, params: { id: philosopher.id.toString() } })} sx={{ cursor: 'pointer' }}>
-                <Typography variant="h5" gutterBottom>
-                  {philosopher.name}
-                </Typography>
-                <Typography color="text.secondary">
-                  {philosopher.birthYear} - {philosopher.deathYear}
-                </Typography>
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  {philosopher.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
+          <ResourceCard
+            key={philosopher.id}
+            title={philosopher.name}
+            onClick={() => navigate({ to: `/philosophers/$id`, params: { id: philosopher.id.toString() } })}
+          />
         ))}
-      </Grid>
+      </ResourceGrid>
     </>
   );
 }
