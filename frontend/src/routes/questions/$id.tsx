@@ -4,8 +4,9 @@ import { questionsApi, termsApi, philosophersApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Button } from '@mui/material';
 import { useState } from 'react';
 import { UpdateQuestionDto } from '@/types';
-import { QuestionForm } from '../../components/Forms/QuestionForm';
 import { useTranslation } from 'react-i18next';
+import { GenericForm } from '@/components/Forms/GenericForm';
+import { FormInputs } from '@/types/form';
 
 function QuestionSkeleton() {
     return (
@@ -57,6 +58,11 @@ function QuestionComponent() {
         queryFn: philosophersApi.getAll
     });
 
+    const { data: allQuestions } = useQuery({
+        queryKey: ['questions'],
+        queryFn: questionsApi.getAll
+    });
+
     const updateQuestionMutation = useMutation({
         mutationFn: (updatedQuestion: UpdateQuestionDto) => questionsApi.update(question!.id, updatedQuestion),
         onSuccess: () => {
@@ -67,21 +73,22 @@ function QuestionComponent() {
         },
     });
 
-    const onSubmit = async (data: UpdateQuestionDto) => {
+    const onSubmit = async (data: FormInputs) => {
         if (!question) return;
         return updateQuestionMutation.mutateAsync({
             ...question,
             ...data,
-            relatedPhilosophers: data.relatedPhilosophers?.map(p => typeof p === 'number' ? p : p.id),
-            relatedQuestions: data.relatedQuestions?.map(q => typeof q === 'number' ? q : q.id),
-            relatedTerms: data.relatedTerms?.map(t => typeof t === 'number' ? t : t.id),
+            id: question.id,
+            relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
+            relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
+            relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
         });
     };
 
     if (!question) return <Typography variant="h6">{t('questionNotFound')}</Typography>;
 
     return (
-        <>
+        <Box p={2}>
             <Button
                 variant="outlined"
                 onClick={() => setIsEditing(!isEditing)}
@@ -90,20 +97,35 @@ function QuestionComponent() {
                 {t(isEditing ? 'view' : 'edit')}
             </Button>
 
-            <QuestionForm
+            <GenericForm
                 isEdit={true}
                 isEditable={isEditing}
-                defaultValues={{
-                    title: question.title,
-                    content: question.content,
-                    relatedTerms: question.relatedTerms || [],
-                    relatedPhilosophers: question.relatedPhilosophers || [],
-                    relatedQuestions: question.relatedQuestions || []
-                }}
-                allTerms={allTerms || []}
-                allPhilosophers={allPhilosophers || []}
-                onSubmit={isEditing ? onSubmit : undefined}
+                defaultValues={question}
+                entityType="Question"
+                entityRoute="questions"
+                relations={[
+                    {
+                        name: 'relatedTerms',
+                        label: t('relatedTerms'),
+                        options: allTerms || [],
+                        baseRoute: 'terms'
+                    },
+                    {
+                        name: 'relatedPhilosophers',
+                        label: t('relatedPhilosophers'),
+                        options: allPhilosophers || [],
+                        baseRoute: 'philosophers'
+                    },
+                    {
+                        name: 'relatedQuestions',
+                        label: t('relatedQuestions'),
+                        options: allQuestions || [],
+                        baseRoute: 'questions'
+                    }
+                ]}
+                onSubmit={onSubmit}
+                setIsEditable={setIsEditing}
             />
-        </>
+        </Box>
     );
 }

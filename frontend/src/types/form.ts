@@ -1,16 +1,14 @@
-import { BasicEntity, Philosopher, Question, Term } from "./index";
+import { BasicEntity } from "./index";
 
-export type BasicFormInputs = BasicEntity;
-
-export type PhilosopherFormInputs = Philosopher;
-export type QuestionFormInputs = BasicFormInputs;
-
-export type TermFormInputs = BasicFormInputs;
-
-export interface RelationConfig<T> {
-  name: keyof BasicFormInputs;
-  label: string;
-  options: T[];
+export interface FormInputs extends BasicEntity {
+  era?: string;
+  birthdate?: string;
+  deathdate?: string;
 }
 
-export type EntityRelation = RelationConfig<Term | Question | Philosopher>;
+export interface RelationConfig {
+  name: keyof FormInputs;
+  label: string;
+  options: BasicEntity[];
+  baseRoute: string; // Add this property
+}

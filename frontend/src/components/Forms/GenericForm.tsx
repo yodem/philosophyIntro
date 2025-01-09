@@ -1,116 +1,81 @@
 import { Card, CardContent, Button, TextField, Autocomplete, Box, Typography } from '@mui/material';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { UpdateTermDto, Question, Philosopher, Term, BasicEntity } from '@/types';
+import { BasicEntity } from '@/types';
 import { EditableRichText } from '../EditableRichText';
-import { EntityDisplay } from '@/components/EntityDisplay';
+import { EntityDisplay } from '../EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { EntityRelation, TermFormInputs } from '@/types/form';
+import { FormInputs, RelationConfig } from '@/types/form';
 
-interface TermFormProps {
-    defaultValues: TermFormInputs;
+interface GenericFormProps {
+    defaultValues: Partial<FormInputs>;
     isEdit?: boolean;
     isEditable?: boolean;
-    allTerms?: Term[];
-    allQuestions?: Question[];
-    allPhilosophers?: Philosopher[];
-    onSubmit?: (data: UpdateTermDto) => Promise<Term | undefined>;
+    relations?: RelationConfig[];
+    onSubmit?: (data: FormInputs) => Promise<BasicEntity | undefined>;
     setIsEditable?: (isEditable: boolean) => void;
+    entityType: string;
+    entityRoute: string;
+    metadata?: Array<{ label: string; value: string }>;
 }
 
-export function TermForm({
+export function GenericForm({
     defaultValues,
     isEdit = false,
     isEditable = true,
-    allTerms = [],
-    allQuestions = [],
-    allPhilosophers = [],
+    relations = [],
     onSubmit,
-    setIsEditable
-}: TermFormProps) {
+    setIsEditable,
+    entityType,
+    entityRoute,
+    metadata = []
+}: GenericFormProps) {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    const { register, handleSubmit, watch, setValue, control, getValues } = useForm<TermFormInputs>({
+    const { register, handleSubmit, watch, setValue, control } = useForm<FormInputs>({
         defaultValues
     });
 
-    console.log('defaultValues:', defaultValues, getValues());
-
-
     const { title, content } = watch();
 
-    const relations: EntityRelation[] = [
-        {
-            name: 'relatedTerms' as keyof BasicEntity,
-            label: t('relatedTerms'),
-            options: allTerms
-        },
-        {
-            name: 'relatedQuestions' as keyof BasicEntity,
-            label: t('relatedQuestions'),
-            options: allQuestions
-        },
-        {
-            name: 'relatedPhilosophers' as keyof BasicEntity,
-            label: t('relatedPhilosophers'),
-            options: allPhilosophers
-        }
-    ].filter(relation => relation.options.length > 0);
-
     if (!isEditable) {
-
         return (
             <EntityDisplay
                 title={title}
                 content={content}
-                relations={[
-                    {
-                        title: t('relatedTerms'),
-                        items: watch('relatedTerms') ?? [],
-                        getLabel: (item: BasicEntity) => item.title,
-                        getLink: (item: BasicEntity) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
-                    },
-                    {
-                        title: t('relatedQuestions'),
-                        items: watch('relatedQuestions') ?? [],
-                        getLabel: (item: BasicEntity) => item.title,
-                        getLink: (item: BasicEntity) => ({ to: "/questions/$id", params: { id: item.id.toString() } })
-                    },
-                    {
-                        title: t('relatedPhilosophers'),
-                        items: watch('relatedPhilosophers') ?? [],
-                        getLabel: (item: BasicEntity) => item.title,
-                        getLink: (item: BasicEntity) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
-                    }
-                ].filter(r => r.items?.length > 0)}
+                metadata={metadata}
+                relations={relations.map(rel => ({
+                    title: t(rel.label),
+                    items: ((watch(rel.name) ?? []) as BasicEntity[]).filter((item): item is BasicEntity => typeof item === 'object'),
+                    getLabel: (item: BasicEntity) => item.title,
+                    getLink: (item: BasicEntity) => ({
+                        to: `/${rel.baseRoute}/$id`,
+                        params: { id: item.id.toString() }
+                    })
+                })).filter(r => r.items.length > 0)}
             />
         );
     }
 
-    const handleFormSubmit: SubmitHandler<TermFormInputs> = async (formData) => {
+    const handleFormSubmit: SubmitHandler<FormInputs> = async (formData) => {
         try {
             if (!onSubmit) return;
 
-            const response = await onSubmit({
-                ...formData,
-                relatedTerms: (formData.relatedTerms ?? []).map((t: BasicEntity) => t.id),
-                relatedQuestions: (formData.relatedQuestions ?? []).map((q: BasicEntity) => q.id),
-                relatedPhilosophers: (formData.relatedPhilosophers ?? []).map((p: BasicEntity) => p.id)
-            });
+            const response = await onSubmit(formData);
 
-            enqueueSnackbar(`Term successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
+            enqueueSnackbar(`${entityType} successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
 
             if (isEdit && setIsEditable) {
                 setIsEditable(false);
             } else if (response?.id) {
-                navigate({ to: '/terms/$id', params: { id: response.id.toString() } });
+                navigate({ to: `/${entityRoute}/$id`, params: { id: response.id.toString() } });
             }
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error occurred';
-            enqueueSnackbar(`Failed to ${isEdit ? 'update' : 'create'} term: ${message}`, { variant: 'error' });
+            enqueueSnackbar(`Failed to ${isEdit ? 'update' : 'create'} ${entityType}: ${message}`, { variant: 'error' });
         }
     };
 
@@ -120,7 +85,7 @@ export function TermForm({
                 <CardContent>
                     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
                         <Typography variant="h4" gutterBottom>
-                            {t(isEdit ? 'editTerm' : 'newTerm')}
+                            {t(isEdit ? `edit${entityType}` : `new${entityType}`)}
                         </Typography>
                         <TextField
                             autoFocus

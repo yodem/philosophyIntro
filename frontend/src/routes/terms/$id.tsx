@@ -3,9 +3,10 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { termsApi, questionsApi, philosophersApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Button } from '@mui/material';
 import { UpdateTermDto } from '@/types';
-import { TermForm } from '../../components/Forms/TermForm';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GenericForm } from '@/components/Forms/GenericForm';
+import { FormInputs } from '@/types/form';
 
 function TermSkeleton() {
     return (
@@ -53,6 +54,11 @@ function TermComponent() {
         queryFn: philosophersApi.getAll
     });
 
+    const { data: allTerms } = useQuery({
+        queryKey: ['terms'],
+        queryFn: termsApi.getAll
+    });
+
     const updateTermMutation = useMutation({
         mutationFn: (updatedTerm: UpdateTermDto) => termsApi.update(term!.id, updatedTerm),
         onSuccess: () => {
@@ -63,15 +69,22 @@ function TermComponent() {
         },
     });
 
-    const onSubmit = async (data: UpdateTermDto) => {
+    const onSubmit = async (data: FormInputs) => {
         if (!term) return;
-        return updateTermMutation.mutateAsync({ ...term, ...data });
+        return updateTermMutation.mutateAsync({
+            ...term,
+            ...data,
+            id: term.id,
+            relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
+            relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
+            relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
+        });
     };
 
     if (!term) return <Typography variant="h6">{t('termNotFound')}</Typography>;
 
     return (
-        <>
+        <Box p={2}>
             <Button
                 variant="outlined"
                 onClick={() => setIsEditing(!isEditing)}
@@ -80,20 +93,35 @@ function TermComponent() {
                 {t(isEditing ? 'view' : 'edit')}
             </Button>
 
-            <TermForm
+            <GenericForm
                 isEdit={true}
                 isEditable={isEditing}
-                defaultValues={{
-                    title: term.title,
-                    content: term.content,
-                    relatedTerms: term.relatedTerms || [],
-                    relatedQuestions: term.relatedQuestions || [],
-                    relatedPhilosophers: term.relatedPhilosophers || []
-                }}
-                allQuestions={allQuestions || []}
-                allPhilosophers={allPhilosophers || []}
-                onSubmit={isEditing ? onSubmit : undefined}
+                defaultValues={term}
+                entityType="Term"
+                entityRoute="terms"
+                relations={[
+                    {
+                        name: 'relatedQuestions',
+                        label: t('relatedQuestions'),
+                        options: allQuestions || [],
+                        baseRoute: 'questions'
+                    },
+                    {
+                        name: 'relatedPhilosophers',
+                        label: t('relatedPhilosophers'),
+                        options: allPhilosophers || [],
+                        baseRoute: 'philosophers'
+                    },
+                    {
+                        name: 'relatedTerms',
+                        label: t('relatedTerms'),
+                        options: allTerms || [],
+                        baseRoute: 'terms'
+                    }
+                ]}
+                onSubmit={onSubmit}
+                setIsEditable={setIsEditing}
             />
-        </>
+        </Box>
     );
 }

@@ -4,8 +4,9 @@ import { philosophersApi, termsApi, questionsApi } from '../../api';
 import { Card, CardContent, Skeleton, Typography, Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { UpdatePhilosopherDto } from '@/types';
-import { PhilosopherForm } from '../../components/Forms/PhilosopherForm';
 import { useTranslation } from 'react-i18next';
+import { GenericForm } from '@/components/Forms/GenericForm';
+import { FormInputs } from '@/types/form';
 
 function PhilosopherSkeleton() {
   return (
@@ -54,6 +55,11 @@ function PhilosopherComponent() {
     queryFn: questionsApi.getAll
   });
 
+  const { data: allPhilosophers } = useQuery({
+    queryKey: ['philosophers'],
+    queryFn: philosophersApi.getAll
+  });
+
   const updatePhilosopherMutation = useMutation({
     mutationFn: (updatedPhilosopher: UpdatePhilosopherDto) => philosophersApi.update(philosopher!.id, updatedPhilosopher),
     onSuccess: () => {
@@ -64,10 +70,14 @@ function PhilosopherComponent() {
     },
   });
 
-  const onSubmit = async (data: UpdatePhilosopherDto) => {
+  const onSubmit = async (data: Partial<FormInputs>) => {
     return updatePhilosopherMutation.mutateAsync({
       ...philosopher,
-      ...data
+      ...data,
+      id: philosopher!.id,
+      relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
+      relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
+      relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
     });
   };
 
@@ -75,31 +85,45 @@ function PhilosopherComponent() {
     return <Typography variant="h6">{t('philosopherNotFound')}</Typography>;
   }
 
-  console.log('Philosopher:', philosopher);
-
   return (
-    <Box key={philosopher.id} p={2}>
-      <Button
-        variant="outlined"
-        onClick={() => setIsEditing(!isEditing)}
-        sx={{ m: 2 }}
-      >
+    <Box p={2}>
+      <Button variant="outlined" onClick={() => setIsEditing(!isEditing)} sx={{ m: 2 }}>
         {t(isEditing ? 'view' : 'edit')}
       </Button>
 
-      <PhilosopherForm
+      <GenericForm
         isEdit={true}
         isEditable={isEditing}
-        key={philosopher.id}
-        defaultValues={{
-          ...philosopher,
-          relatedTerms: philosopher.relatedTerms || [],
-          relatedQuestions: philosopher.relatedQuestions || [],
-          relatedPhilosophers: philosopher.relatedPhilosophers || [],
-        }}
-        allTerms={allTerms || []}
-        allQuestions={allQuestions || []}
-        onSubmit={isEditing ? onSubmit : undefined}
+        defaultValues={philosopher}
+        entityType="Philosopher"
+        entityRoute="philosophers"
+        relations={[
+          {
+            name: 'relatedTerms',
+            label: t('relatedTerms'),
+            options: allTerms || [],
+            baseRoute: 'terms'
+          },
+          {
+            name: 'relatedQuestions',
+            label: t('relatedQuestions'),
+            options: allQuestions || [],
+            baseRoute: 'questions'
+          },
+          {
+            name: 'relatedPhilosophers',
+            label: t('relatedPhilosophers'),
+            options: allPhilosophers || [],
+            baseRoute: 'philosophers'
+          }
+        ]}
+        metadata={[
+          { label: "Era", value: philosopher.era },
+          { label: "Birth Date", value: philosopher.birthdate || 'Unknown' },
+          { label: "Death Date", value: philosopher.deathdate || 'Unknown' }
+        ]}
+        onSubmit={onSubmit}
+        setIsEditable={setIsEditing}
       />
     </Box>
   );
