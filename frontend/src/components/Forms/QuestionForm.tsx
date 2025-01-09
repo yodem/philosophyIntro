@@ -40,12 +40,12 @@ export function QuestionForm({
 
     const relations: EntityRelation[] = [
         {
-            name: 'relatedTerms',
+            name: 'relatedTerms' as keyof BasicEntity,
             label: t('relatedTerms'),
             options: allTerms
         },
         {
-            name: 'relatedPhilosophers',
+            name: 'relatedPhilosophers' as keyof BasicEntity,
             label: t('relatedPhilosophers'),
             options: allPhilosophers
         }
@@ -59,13 +59,13 @@ export function QuestionForm({
                 relations={[
                     {
                         title: t('relatedTerms'),
-                        items: watch('relatedTerms'),
+                        items: watch('relatedTerms') || [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
                     },
                     {
                         title: t('relatedPhilosophers'),
-                        items: watch('relatedPhilosophers'),
+                        items: watch('relatedPhilosophers') || [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
                     }
@@ -81,8 +81,8 @@ export function QuestionForm({
                 id: formData.id,
                 title: formData.title,
                 content: formData.content,
-                relatedTerms: formData.relatedTerms.map((t: BasicEntity) => t.id),
-                relatedPhilosophers: formData.relatedPhilosophers.map((p: BasicEntity) => p.id)
+                relatedTerms: (formData.relatedTerms ?? []).map((t: BasicEntity) => t.id),
+                relatedPhilosophers: (formData.relatedPhilosophers ?? []).map((p: BasicEntity) => p.id)
             });
 
             enqueueSnackbar(`Question successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
@@ -128,11 +128,11 @@ export function QuestionForm({
                                 name={name}
                                 control={control}
                                 render={({ field: { onChange, value, ...props } }) => (
-                                    <Autocomplete<BasicEntity, true>
+                                    <Autocomplete
                                         multiple
                                         options={options}
                                         getOptionLabel={(option) => option.title}
-                                        value={value ?? []}
+                                        value={(value ?? []) as BasicEntity[]}
                                         onChange={(_, data) => onChange(data)}
                                         isOptionEqualToValue={(option, value) => option.id === value.id}
                                         renderInput={(params) => (

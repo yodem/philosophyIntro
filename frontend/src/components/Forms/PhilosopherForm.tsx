@@ -59,19 +59,19 @@ export function PhilosopherForm({
                 relations={[
                     {
                         title: t('relatedTerms'),
-                        items: relatedTerms,
+                        items: relatedTerms || [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
                     },
                     {
                         title: t('relatedQuestions'),
-                        items: relatedQuestions,
+                        items: relatedQuestions || [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/questions/$id", params: { id: item.id.toString() } })
                     },
                     {
                         title: t('relatedPhilosophers'),
-                        items: relatedPhilosophers,
+                        items: relatedPhilosophers || [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
                     }
@@ -82,17 +82,17 @@ export function PhilosopherForm({
 
     const relations: EntityRelation[] = [
         {
-            name: 'relatedTerms',
+            name: 'relatedTerms' as keyof BasicEntity,
             label: t('relatedTerms'),
             options: allTerms
         },
         {
-            name: 'relatedQuestions',
+            name: 'relatedQuestions' as keyof BasicEntity,
             label: t('relatedQuestions'),
             options: allQuestions
         },
         {
-            name: 'relatedPhilosophers',
+            name: 'relatedPhilosophers' as keyof BasicEntity,
             label: t('relatedPhilosophers'),
             options: allPhilosophers
         }
@@ -102,15 +102,10 @@ export function PhilosopherForm({
         try {
             if (!onSubmit) return;
             const response = await onSubmit({
-                id: formData.id,
-                title: formData.title,
-                content: formData.content,
-                era: formData.era,
-                birthdate: formData.birthdate,
-                deathdate: formData.deathdate,
-                relatedTerms: formData.relatedTerms.map(t => t.id),
-                relatedQuestions: formData.relatedQuestions.map(q => q.id),
-                relatedPhilosophers: formData.relatedPhilosophers.map(p => p.id)
+                ...formData,
+                relatedTerms: (formData.relatedTerms ?? []).map((t: BasicEntity) => t.id),
+                relatedQuestions: (formData.relatedQuestions ?? []).map((q: BasicEntity) => q.id),
+                relatedPhilosophers: (formData.relatedPhilosophers ?? []).map((p: BasicEntity) => p.id)
             });
 
             enqueueSnackbar(t(isEdit ? 'philosopherUpdated' : 'philosopherCreated'), { variant: 'success' });
@@ -187,7 +182,7 @@ export function PhilosopherForm({
                                         multiple
                                         options={options}
                                         getOptionLabel={(option) => option.title}
-                                        value={value ?? []}
+                                        value={(value ?? []) as BasicEntity[]}
                                         onChange={(_, data) => onChange(data)}
                                         isOptionEqualToValue={(option, value) => option.id === value.id}
                                         renderInput={(params) => (

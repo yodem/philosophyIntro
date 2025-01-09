@@ -1,12 +1,12 @@
 import { Card, CardContent, Button, TextField, Autocomplete, Box, Typography } from '@mui/material';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { TermFormInputs, UpdateTermDto, Question, Philosopher, Term, BasicEntity } from '@/types';
+import { UpdateTermDto, Question, Philosopher, Term, BasicEntity } from '@/types';
 import { EditableRichText } from '../EditableRichText';
 import { EntityDisplay } from '@/components/EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-import { EntityRelation } from '@/types/form';
+import { EntityRelation, TermFormInputs } from '@/types/form';
 
 interface TermFormProps {
     defaultValues: TermFormInputs;
@@ -44,17 +44,17 @@ export function TermForm({
 
     const relations: EntityRelation[] = [
         {
-            name: 'relatedTerms',
+            name: 'relatedTerms' as keyof BasicEntity,
             label: t('relatedTerms'),
             options: allTerms
         },
         {
-            name: 'relatedQuestions',
+            name: 'relatedQuestions' as keyof BasicEntity,
             label: t('relatedQuestions'),
             options: allQuestions
         },
         {
-            name: 'relatedPhilosophers',
+            name: 'relatedPhilosophers' as keyof BasicEntity,
             label: t('relatedPhilosophers'),
             options: allPhilosophers
         }
@@ -69,19 +69,19 @@ export function TermForm({
                 relations={[
                     {
                         title: t('relatedTerms'),
-                        items: watch('relatedTerms'),
+                        items: watch('relatedTerms') ?? [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
                     },
                     {
                         title: t('relatedQuestions'),
-                        items: watch('relatedQuestions'),
+                        items: watch('relatedQuestions') ?? [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/questions/$id", params: { id: item.id.toString() } })
                     },
                     {
                         title: t('relatedPhilosophers'),
-                        items: watch('relatedPhilosophers'),
+                        items: watch('relatedPhilosophers') ?? [],
                         getLabel: (item: BasicEntity) => item.title,
                         getLink: (item: BasicEntity) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
                     }
@@ -95,12 +95,10 @@ export function TermForm({
             if (!onSubmit) return;
 
             const response = await onSubmit({
-                id: formData.id,
-                title: formData.title,
-                content: formData.content,
-                relatedTerms: formData.relatedTerms.map((t: BasicEntity) => t.id),
-                relatedQuestions: formData.relatedQuestions.map((q: BasicEntity) => q.id),
-                relatedPhilosophers: formData.relatedPhilosophers.map((p: BasicEntity) => p.id)
+                ...formData,
+                relatedTerms: (formData.relatedTerms ?? []).map((t: BasicEntity) => t.id),
+                relatedQuestions: (formData.relatedQuestions ?? []).map((q: BasicEntity) => q.id),
+                relatedPhilosophers: (formData.relatedPhilosophers ?? []).map((p: BasicEntity) => p.id)
             });
 
             enqueueSnackbar(`Term successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
@@ -150,7 +148,7 @@ export function TermForm({
                                         multiple
                                         options={options}
                                         getOptionLabel={(option) => option.title}
-                                        value={value ?? []}
+                                        value={(value ?? []) as BasicEntity[]}
                                         onChange={(_, data) => onChange(data)}
                                         isOptionEqualToValue={(option, value) => option.id === value.id}
                                         renderInput={(params) => (
