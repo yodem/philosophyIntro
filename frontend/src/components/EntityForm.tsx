@@ -2,6 +2,7 @@ import { Card, CardContent, Box, Typography, Button, TextField, Autocomplete } f
 import { EditableRichText } from './EditableRichText';
 import { YearPicker } from './YearPicker';
 import { Dayjs } from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 interface EntityFormProps {
     title: string;
@@ -24,6 +25,7 @@ interface EntityFormProps {
 }
 
 export function EntityForm({ title, initialData, onSave, config }: EntityFormProps) {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState(initialData);
     const [relatedItems, setRelatedItems] = useState<Record<string, any[]>>({});
 
@@ -39,12 +41,12 @@ export function EntityForm({ title, initialData, onSave, config }: EntityFormPro
         <Box p={2}>
             <Card>
                 <CardContent>
-                    <Typography variant="h4" gutterBottom>{title}</Typography>
+                    <Typography variant="h4" gutterBottom>{t(title)}</Typography>
 
                     <TextField
                         autoFocus
                         margin="dense"
-                        label={config.mainField.label}
+                        label={t(config.mainField.label)}
                         fullWidth
                         variant="standard"
                         value={formData[config.mainField.key]}
@@ -52,19 +54,25 @@ export function EntityForm({ title, initialData, onSave, config }: EntityFormPro
                     />
 
                     {config.dateRange && (
-                        <YearPicker
-                            birthYear={formData.birthYear}
-                            deathYear={formData.deathYear}
-                            onBirthYearChange={(date: Dayjs | null) => handleChange('birthYear', date)}
-                            onDeathYearChange={(date: Dayjs | null) => handleChange('deathYear', date)}
-                        />
+                        <Box sx={{ mb: 3 }}>
+                            <YearPicker
+                                birthLabel={t('birthYear')}
+                                deathLabel={t('deathYear')}
+                                birthYear={formData.birthYear}
+                                deathYear={formData.deathYear}
+                                onBirthYearChange={(date: Dayjs | null) => handleChange('birthYear', date)}
+                                onDeathYearChange={(date: Dayjs | null) => handleChange('deathYear', date)}
+                            />
+                        </Box>
                     )}
 
                     {config.description && (
-                        <EditableRichText
-                            initialContent={formData.description}
-                            onChange={(content) => handleChange('description', content)}
-                        />
+                        <Box sx={{ mb: 3 }}>
+                            <EditableRichText
+                                initialContent={formData.description}
+                                onChange={(content) => handleChange('description', content)}
+                            />
+                        </Box>
                     )}
 
                     {config.relations?.map(relation => (
@@ -75,12 +83,22 @@ export function EntityForm({ title, initialData, onSave, config }: EntityFormPro
                             getOptionLabel={relation.getOptionLabel}
                             value={relatedItems[relation.key] || []}
                             onChange={(_, value) => handleRelationChange(relation.key, value)}
-                            renderInput={(params) => <TextField {...params} label={relation.label} />}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label={t(relation.label)}
+                                    sx={{ mb: 2 }}
+                                />
+                            )}
                         />
                     ))}
 
-                    <Button variant="contained" onClick={() => onSave({ ...formData, ...relatedItems })}>
-                        Save
+                    <Button
+                        variant="contained"
+                        onClick={() => onSave({ ...formData, ...relatedItems })}
+                        fullWidth
+                    >
+                        {t('save')}
                     </Button>
                 </CardContent>
             </Card>

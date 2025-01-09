@@ -1,13 +1,16 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 function AboutDisplay() {
+    const { t } = useTranslation();
+
     return (
         <Box sx={{ mt: 4 }}>
             <Typography variant="h5" component="h2" gutterBottom>
-                About
+                {t('about')}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-                This is a platform to explore philosophical concepts, questions, and notable philosophers.
+                {t('aboutDescription')}
             </Typography>
         </Box>
     )

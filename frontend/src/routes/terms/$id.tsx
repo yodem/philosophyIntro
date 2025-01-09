@@ -5,6 +5,7 @@ import { Card, CardContent, Box, Skeleton, Typography, Button } from '@mui/mater
 import { UpdateTermDto } from '@/types';
 import { TermForm } from '../../components/Forms/TermForm';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function TermSkeleton() {
     return (
@@ -37,6 +38,7 @@ export const Route = createFileRoute('/terms/$id')({
 });
 
 function TermComponent() {
+    const { t } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
     const term = Route.useLoaderData();
     const queryClient = useQueryClient();
@@ -66,7 +68,7 @@ function TermComponent() {
         return updateTermMutation.mutateAsync({ ...term, ...data });
     };
 
-    if (!term) return <Typography variant="h6">Term not found</Typography>;
+    if (!term) return <Typography variant="h6">{t('termNotFound')}</Typography>;
 
     return (
         <>
@@ -75,7 +77,7 @@ function TermComponent() {
                 onClick={() => setIsEditing(!isEditing)}
                 sx={{ m: 2 }}
             >
-                {isEditing ? 'View' : 'Edit'}
+                {t(isEditing ? 'view' : 'edit')}
             </Button>
 
             <TermForm

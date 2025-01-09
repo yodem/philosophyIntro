@@ -5,6 +5,7 @@ import { EditableRichText } from '../EditableRichText';
 import { EntityDisplay } from '@/components/EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 interface TermFormProps {
     defaultValues: TermFormInputs;
@@ -27,6 +28,7 @@ export function TermForm({
 }: TermFormProps) {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { register, handleSubmit, watch, setValue } = useForm<TermFormInputs>({
         defaultValues
@@ -84,12 +86,12 @@ export function TermForm({
                 <CardContent>
                     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
                         <Typography variant="h4" gutterBottom>
-                            {isEdit ? 'Update Term' : 'Add New Term'}
+                            {t(isEdit ? 'editTerm' : 'newTerm')}
                         </Typography>
                         <TextField
                             autoFocus
                             margin="dense"
-                            label="Term"
+                            label={t('term')}
                             fullWidth
                             required
                             variant="standard"
@@ -110,7 +112,7 @@ export function TermForm({
                             onChange={(_, value) => setValue('questions', value)}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             renderInput={(params) => (
-                                <TextField {...params} label="Related Questions" sx={{ mb: 2 }} />
+                                <TextField {...params} label={t('relatedQuestions')} sx={{ mb: 2 }} />
                             )}
                         />
                         <Autocomplete<Philosopher, true>
@@ -121,7 +123,7 @@ export function TermForm({
                             onChange={(_, value) => setValue('philosophers', value)}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             renderInput={(params) => (
-                                <TextField {...params} label="Key Philosophers" sx={{ mb: 3 }} />
+                                <TextField {...params} label={t('keyPhilosophers')} sx={{ mb: 3 }} />
                             )}
                         />
                         <Box sx={{ mt: 3 }}>
@@ -131,7 +133,7 @@ export function TermForm({
                                 size="large"
                                 fullWidth
                             >
-                                {isEdit ? 'Update' : 'Save'}
+                                {t(isEdit ? 'update' : 'save')}
                             </Button>
                         </Box>
                     </form>

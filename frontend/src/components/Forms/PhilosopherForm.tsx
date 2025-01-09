@@ -7,6 +7,7 @@ import { YearPicker } from '../YearPicker';
 import { EntityDisplay } from '../EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 type PhilosopherFormInputs = {
     name: string;
@@ -38,6 +39,7 @@ export function PhilosopherForm({
 }: PhilosopherFormProps) {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { register, handleSubmit, watch, setValue } = useForm<PhilosopherFormInputs>({
         defaultValues
@@ -81,7 +83,7 @@ export function PhilosopherForm({
                 questions: formData.questions.map(q => q.id)
             });
 
-            enqueueSnackbar(`Philosopher successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
+            enqueueSnackbar(t(isEdit ? 'philosopherUpdated' : 'philosopherCreated'), { variant: 'success' });
 
             if (isEdit && setIsEditable) {
                 setIsEditable(false);
@@ -100,12 +102,12 @@ export function PhilosopherForm({
                 <CardContent>
                     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
                         <Typography variant="h4" gutterBottom>
-                            {isEdit ? 'Update Philosopher' : 'Add New Philosopher'}
+                            {t(isEdit ? 'updatePhilosopher' : 'addPhilosopher')}
                         </Typography>
                         <TextField
                             autoFocus
                             margin="dense"
-                            label="Name"
+                            label={t('name')}
                             fullWidth
                             required
                             variant="standard"
@@ -140,7 +142,7 @@ export function PhilosopherForm({
                             onChange={(_, value) => setValue('terms', value)}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             renderInput={(params) => (
-                                <TextField {...params} label="Key Terms" sx={{ mb: 2 }} />
+                                <TextField {...params} label={t('keyTerms')} sx={{ mb: 2 }} />
                             )}
                         />
                         <Autocomplete<Question, true>
@@ -151,7 +153,7 @@ export function PhilosopherForm({
                             onChange={(_, value) => setValue('questions', value)}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             renderInput={(params) => (
-                                <TextField {...params} label="Key Questions" sx={{ mb: 3 }} />
+                                <TextField {...params} label={t('keyQuestions')} sx={{ mb: 3 }} />
                             )}
                         />
                         <Box sx={{ mt: 3 }}>
@@ -161,7 +163,7 @@ export function PhilosopherForm({
                                 size="large"
                                 fullWidth
                             >
-                                {isEdit ? 'Update' : 'Save'}
+                                {t(isEdit ? 'update' : 'save')}
                             </Button>
                         </Box>
                     </form>

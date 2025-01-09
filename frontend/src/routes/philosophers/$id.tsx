@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { UpdatePhilosopherDto } from '@/types';
 import dayjs from 'dayjs';
 import { PhilosopherForm } from '../../components/Forms/PhilosopherForm';
+import { useTranslation } from 'react-i18next';
 
 function PhilosopherSkeleton() {
   return (
@@ -39,6 +40,7 @@ export const Route = createFileRoute('/philosophers/$id')({
 });
 
 function PhilosopherComponent() {
+  const { t } = useTranslation();
   const philosopher = Route.useLoaderData();
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
@@ -71,7 +73,7 @@ function PhilosopherComponent() {
   };
 
   if (!philosopher) {
-    return <Typography variant="h6">Philosopher not found</Typography>;
+    return <Typography variant="h6">{t('philosopherNotFound')}</Typography>;
   }
 
   return (
@@ -81,7 +83,7 @@ function PhilosopherComponent() {
         onClick={() => setIsEditing(!isEditing)}
         sx={{ m: 2 }}
       >
-        {isEditing ? 'View' : 'Edit'}
+        {t(isEditing ? 'view' : 'edit')}
       </Button>
 
       <PhilosopherForm

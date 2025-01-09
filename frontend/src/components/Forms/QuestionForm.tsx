@@ -5,6 +5,7 @@ import { EditableRichText } from '../EditableRichText';
 import { EntityDisplay } from '../EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
+import { useTranslation } from 'react-i18next';
 
 type QuestionFormInputs = {
     question: string;
@@ -34,6 +35,7 @@ export function QuestionForm({
 }: QuestionFormProps) {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const { register, handleSubmit, watch, setValue } = useForm<QuestionFormInputs>({
         defaultValues
@@ -90,12 +92,12 @@ export function QuestionForm({
                 <CardContent>
                     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
                         <Typography variant="h4" gutterBottom>
-                            {isEdit ? 'Update Question' : 'Add New Question'}
+                            {t(isEdit ? 'editQuestion' : 'newQuestion')}
                         </Typography>
                         <TextField
                             autoFocus
                             margin="dense"
-                            label="Question"
+                            label={t('question')}
                             fullWidth
                             required
                             variant="standard"
@@ -116,7 +118,11 @@ export function QuestionForm({
                             onChange={(_, value) => setValue('terms', value)}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             renderInput={(params) => (
-                                <TextField {...params} label="Related Terms" sx={{ mb: 2 }} />
+                                <TextField
+                                    {...params}
+                                    label={t('relatedTerms')}
+                                    sx={{ mb: 2 }}
+                                />
                             )}
                         />
                         <Autocomplete<Philosopher, true>
@@ -127,7 +133,11 @@ export function QuestionForm({
                             onChange={(_, value) => setValue('philosophers', value)}
                             isOptionEqualToValue={(option, value) => option.id === value.id}
                             renderInput={(params) => (
-                                <TextField {...params} label="Discussed by" sx={{ mb: 3 }} />
+                                <TextField
+                                    {...params}
+                                    label={t('discussedBy')}
+                                    sx={{ mb: 3 }}
+                                />
                             )}
                         />
                         <Box sx={{ mt: 3 }}>
@@ -137,7 +147,7 @@ export function QuestionForm({
                                 size="large"
                                 fullWidth
                             >
-                                {isEdit ? 'Update' : 'Save'}
+                                {t(isEdit ? 'update' : 'save')}
                             </Button>
                         </Box>
                     </form>

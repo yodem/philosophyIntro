@@ -5,6 +5,7 @@ import { Card, CardContent, Box, Skeleton, Typography, Button } from '@mui/mater
 import { useState } from 'react';
 import { UpdateQuestionDto } from '@/types';
 import { QuestionForm } from '../../components/Forms/QuestionForm';
+import { useTranslation } from 'react-i18next';
 
 function QuestionSkeleton() {
     return (
@@ -41,6 +42,7 @@ export const Route = createFileRoute('/questions/$id')({
 });
 
 function QuestionComponent() {
+    const { t } = useTranslation();
     const question = Route.useLoaderData();
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
@@ -73,7 +75,7 @@ function QuestionComponent() {
         });
     };
 
-    if (!question) return <Typography variant="h6">Question not found</Typography>;
+    if (!question) return <Typography variant="h6">{t('questionNotFound')}</Typography>;
 
     return (
         <>
@@ -82,7 +84,7 @@ function QuestionComponent() {
                 onClick={() => setIsEditing(!isEditing)}
                 sx={{ m: 2 }}
             >
-                {isEditing ? 'View' : 'Edit'}
+                {t(isEditing ? 'view' : 'edit')}
             </Button>
 
             <QuestionForm

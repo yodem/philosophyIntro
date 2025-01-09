@@ -2,6 +2,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Box } from '@mui/material';
 import { Dayjs } from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 interface YearPickerProps {
     birthYear: Dayjs | null | undefined;
@@ -16,12 +17,13 @@ export function YearPicker({
     onBirthYearChange,
     onDeathYearChange
 }: YearPickerProps) {
+    const { t } = useTranslation();
     return (
         <Box sx={{ my: 2 }}>
             <DemoContainer components={['DatePicker', 'DatePicker']}>
                 <Box>
                     <DatePicker
-                        label="Birth Year"
+                        label={t('birthYear')}
                         views={['year']}
                         value={birthYear}
                         onChange={onBirthYearChange}
@@ -35,7 +37,7 @@ export function YearPicker({
                 </Box>
                 <Box>
                     <DatePicker
-                        label="Death Year"
+                        label={t('deathYear')}
                         views={['year']}
                         value={deathYear}
                         onChange={onDeathYearChange}

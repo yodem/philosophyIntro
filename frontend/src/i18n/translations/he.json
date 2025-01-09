@@ -1,0 +1,48 @@
+{
+  "common": {
+    "darkMode": "מצב כהה",
+    "lightMode": "מצב בהיר",
+    "language": "שפה"
+  },
+  "editTerm": "עריכת מושג",
+  "newTerm": "מושג חדש",
+  "term": "מושג",
+  "relatedQuestions": "שאלות קשורות",
+  "keyPhilosophers": "פילוסופים מרכזיים",
+  "editQuestion": "עריכת שאלה",
+  "newQuestion": "שאלה חדשה",
+  "question": "שאלה",
+  "relatedTerms": "מושגים קשורים",
+  "discussedBy": "נדון על ידי",
+  "name": "שם",
+  "birthYear": "שנת לידה",
+  "deathYear": "שנת פטירה",
+  "keyTerms": "מושגי מפתח",
+  "keyQuestions": "שאלות מפתח",
+  "update": "עדכן",
+  "save": "שמור",
+  "philosopherUpdated": "הפילוסוף עודכן בהצלחה",
+  "philosopherCreated": "הפילוסוף נוצר בהצלחה",
+  "updatePhilosopher": "עדכון פילוסוף",
+  "addPhilosopher": "הוספת פילוסוף חדש",
+  "form": {
+    "save": "שמור",
+    "edit": "ערוך",
+    "create": "צור",
+    "update": "עדכן",
+    "cancel": "בטל",
+    "delete": "מחק",
+    "description": "תיאור",
+    "selectPlaceholder": "בחר...",
+    "required": "שדה חובה",
+    "optional": "אופציונלי"
+  },
+  "entity": {
+    "create": "יצירת {{type}}",
+    "edit": "עריכת {{type}}",
+    "view": "צפה ב{{type}}",
+    "delete": "מחק {{type}}",
+    "details": "פרטי {{type}}",
+    "list": "רשימת {{type}}"
+  }
+}
