@@ -10,12 +10,25 @@ export class DatabaseInitService implements OnApplicationShutdown {
   ) {}
 
   async init() {
+    await this.cleanup();
+    await this.recreateDatabase();
     await this.seedService.seed();
   }
 
+  private async cleanup() {
+    try {
+      await this.dataSource.dropDatabase();
+    } catch (error) {
+      console.warn('Error during database cleanup:', error);
+    }
+  }
+
+  private async recreateDatabase() {
+    await this.dataSource.synchronize(true);
+  }
+
   async onApplicationShutdown() {
-    // Drop all tables
-    await this.dataSource.dropDatabase();
+    await this.cleanup();
     await this.dataSource.destroy();
   }
 }

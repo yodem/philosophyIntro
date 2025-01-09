@@ -36,7 +36,7 @@ function TermsComponent() {
                 {terms?.map((term) => (
                     <ResourceCard
                         key={term.id}
-                        title={term.term}
+                        resource={term}
                         onClick={() => navigate({ to: '/terms/$id', params: { id: term.id.toString() } })}
                     />
                 ))}

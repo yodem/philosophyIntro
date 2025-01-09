@@ -36,7 +36,7 @@ function PhilosophersComponent() {
         {philosophers?.map((philosopher) => (
           <ResourceCard
             key={philosopher.id}
-            title={philosopher.name}
+            resource={philosopher}
             onClick={() => navigate({ to: `/philosophers/$id`, params: { id: philosopher.id.toString() } })}
           />
         ))}

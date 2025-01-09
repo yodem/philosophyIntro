@@ -1,22 +1,12 @@
 import { Card, CardContent, TextField, Button, Autocomplete, Box, Typography } from '@mui/material';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { Term, Question, UpdatePhilosopherDto, Philosopher } from '@/types';
-import dayjs from 'dayjs';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { Term, Question, UpdatePhilosopherDto, Philosopher, BasicEntity } from '@/types';
+import { PhilosopherFormInputs, EntityRelation } from '@/types/form';
 import { EditableRichText } from '../EditableRichText';
-import { YearPicker } from '../YearPicker';
 import { EntityDisplay } from '../EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-
-type PhilosopherFormInputs = {
-    name: string;
-    birthYear: number;
-    deathYear: number;
-    description: string;
-    terms: Term[];
-    questions: Question[];
-};
 
 interface PhilosopherFormProps {
     defaultValues: PhilosopherFormInputs;
@@ -26,6 +16,7 @@ interface PhilosopherFormProps {
     onSubmit?: (data: UpdatePhilosopherDto) => Promise<Philosopher | undefined>;
     isEditable?: boolean;
     setIsEditable?: (isEditable: boolean) => void;
+    allPhilosophers?: Philosopher[];  // Add this prop
 }
 
 export function PhilosopherForm({
@@ -34,6 +25,7 @@ export function PhilosopherForm({
     isEditable = true,
     allTerms = [],
     allQuestions = [],
+    allPhilosophers = [], // Add this prop
     onSubmit,
     setIsEditable
 }: PhilosopherFormProps) {
@@ -41,46 +33,84 @@ export function PhilosopherForm({
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    const { register, handleSubmit, watch, setValue } = useForm<PhilosopherFormInputs>({
-        defaultValues
+    console.log({ defaultValues });
+
+    const { register, handleSubmit, watch, setValue, control } = useForm<PhilosopherFormInputs>({
+        defaultValues,
+        mode: "onChange"
     });
 
+    const { title, content, era, birthdate, deathdate, relatedTerms, relatedQuestions, relatedPhilosophers, id } = watch();
+
+    console.log("values:", { title, content, era, birthdate, deathdate, relatedTerms, relatedQuestions, relatedPhilosophers, id });
+
     if (!isEditable) {
+
         return (
             <EntityDisplay
-                title={defaultValues.name}
-                content={defaultValues.description}
+                key={id}
+                title={title}
+                content={content}
                 metadata={[
-                    { label: "Birth Year", value: defaultValues.birthYear?.toString() || 'Unknown' },
-                    { label: "Death Year", value: defaultValues.deathYear?.toString() || 'Unknown' }
+                    { label: "Era", value: era },
+                    { label: "Birth Date", value: birthdate || 'Unknown' },
+                    { label: "Death Date", value: deathdate || 'Unknown' }
                 ]}
                 relations={[
                     {
-                        title: "Key Terms",
-                        items: defaultValues.terms,
-                        getLabel: (item) => item.term,
-                        getLink: (item) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
+                        title: t('relatedTerms'),
+                        items: relatedTerms,
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
                     },
                     {
-                        title: "Key Questions",
-                        items: defaultValues.questions,
-                        getLabel: (item) => item.question,
-                        getLink: (item) => ({ to: "/questions/$id", params: { id: item.id.toString() } })
+                        title: t('relatedQuestions'),
+                        items: relatedQuestions,
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/questions/$id", params: { id: item.id.toString() } })
+                    },
+                    {
+                        title: t('relatedPhilosophers'),
+                        items: relatedPhilosophers,
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
                     }
-                ]}
+                ].filter(r => r.items?.length > 0)}
             />
         );
     }
+
+    const relations: EntityRelation[] = [
+        {
+            name: 'relatedTerms',
+            label: t('relatedTerms'),
+            options: allTerms
+        },
+        {
+            name: 'relatedQuestions',
+            label: t('relatedQuestions'),
+            options: allQuestions
+        },
+        {
+            name: 'relatedPhilosophers',
+            label: t('relatedPhilosophers'),
+            options: allPhilosophers
+        }
+    ].filter(relation => relation.options.length > 0);
 
     const handleFormSubmit: SubmitHandler<PhilosopherFormInputs> = async (formData) => {
         try {
             if (!onSubmit) return;
             const response = await onSubmit({
-                ...formData,
-                birthYear: formData.birthYear,
-                deathYear: formData.deathYear,
-                terms: formData.terms.map(t => t.id),
-                questions: formData.questions.map(q => q.id)
+                id: formData.id,
+                title: formData.title,
+                content: formData.content,
+                era: formData.era,
+                birthdate: formData.birthdate,
+                deathdate: formData.deathdate,
+                relatedTerms: formData.relatedTerms.map(t => t.id),
+                relatedQuestions: formData.relatedQuestions.map(q => q.id),
+                relatedPhilosophers: formData.relatedPhilosophers.map(p => p.id)
             });
 
             enqueueSnackbar(t(isEdit ? 'philosopherUpdated' : 'philosopherCreated'), { variant: 'success' });
@@ -100,62 +130,74 @@ export function PhilosopherForm({
         <Box p={2}>
             <Card>
                 <CardContent>
-                    <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
+                    <form key={defaultValues.id} onSubmit={handleSubmit(handleFormSubmit)} noValidate>
                         <Typography variant="h4" gutterBottom>
                             {t(isEdit ? 'updatePhilosopher' : 'addPhilosopher')}
                         </Typography>
                         <TextField
                             autoFocus
                             margin="dense"
-                            label={t('name')}
+                            label={t('title')}  // Changed from 'name'
                             fullWidth
                             required
                             variant="standard"
-                            {...register('name', { required: 'Name is required' })}
+                            {...register('title', { required: 'Title is required' })}  // Changed from 'name'
                             sx={{ mb: 3 }}
                         />
                         <Box sx={{ mb: 3 }}>
-                            <YearPicker
-                                birthYear={watch('birthYear') ? dayjs().year(watch('birthYear')) : undefined}
-                                deathYear={watch('deathYear') ? dayjs().year(watch('deathYear')) : undefined}
-                                onBirthYearChange={(date) => {
-                                    const year = date?.isValid() ? date.year() : undefined;
-                                    setValue('birthYear', year ?? 0);
-                                }}
-                                onDeathYearChange={(date) => {
-                                    const year = date?.isValid() ? date.year() : undefined;
-                                    setValue('deathYear', year ?? 0);
-                                }}
-                            />
-                        </Box>
-                        <Box sx={{ mb: 3 }}>
                             <EditableRichText
-                                initialContent={watch('description') || ''}
-                                onChange={(content) => setValue('description', content)}
+                                key={`content-${defaultValues.id}`}
+                                initialContent={content || ''}  // Changed from 'description'
+                                onChange={(content) => setValue('content', content)}  // Changed from 'description'
                             />
                         </Box>
-                        <Autocomplete<Term, true>
-                            multiple
-                            options={allTerms}
-                            getOptionLabel={(option: Term) => option.term}
-                            value={watch('terms') ?? []}
-                            onChange={(_, value) => setValue('terms', value)}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
-                                <TextField {...params} label={t('keyTerms')} sx={{ mb: 2 }} />
-                            )}
+                        <TextField
+                            margin="dense"
+                            label={t('era')}
+                            fullWidth
+                            required
+                            variant="standard"
+                            {...register('era', { required: 'Era is required' })}
+                            sx={{ mb: 3 }}
                         />
-                        <Autocomplete<Question, true>
-                            multiple
-                            options={allQuestions}
-                            getOptionLabel={(option: Question) => option.question}
-                            value={watch('questions') ?? []}
-                            onChange={(_, value) => setValue('questions', value)}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
-                                <TextField {...params} label={t('keyQuestions')} sx={{ mb: 3 }} />
-                            )}
+                        <TextField
+                            margin="dense"
+                            label={t('birthdate')}
+                            fullWidth
+                            variant="standard"
+                            {...register('birthdate')}
+                            sx={{ mb: 3 }}
                         />
+                        <TextField
+                            margin="dense"
+                            label={t('deathdate')}
+                            fullWidth
+                            variant="standard"
+                            {...register('deathdate')}
+                            sx={{ mb: 3 }}
+                        />
+                        {relations.map(({ name, label, options }) => (
+                            <Controller
+                                key={name}
+                                name={name}
+                                control={control}
+                                defaultValue={[]}
+                                render={({ field: { onChange, value, ...props } }) => (
+                                    <Autocomplete<BasicEntity, true>
+                                        multiple
+                                        options={options}
+                                        getOptionLabel={(option) => option.title}
+                                        value={value ?? []}
+                                        onChange={(_, data) => onChange(data)}
+                                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label={label} sx={{ mb: 2 }} />
+                                        )}
+                                        {...props}
+                                    />
+                                )}
+                            />
+                        ))}
                         <Box sx={{ mt: 3 }}>
                             <Button
                                 variant="contained"

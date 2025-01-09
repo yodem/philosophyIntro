@@ -71,7 +71,10 @@ function QuestionComponent() {
         if (!question) return;
         return updateQuestionMutation.mutateAsync({
             ...question,
-            ...data
+            ...data,
+            relatedPhilosophers: data.relatedPhilosophers?.map(p => typeof p === 'number' ? p : p.id),
+            relatedQuestions: data.relatedQuestions?.map(q => typeof q === 'number' ? q : q.id),
+            relatedTerms: data.relatedTerms?.map(t => typeof t === 'number' ? t : t.id),
         });
     };
 
@@ -91,10 +94,11 @@ function QuestionComponent() {
                 isEdit={true}
                 isEditable={isEditing}
                 defaultValues={{
-                    question: question.question,
-                    description: question.description,
-                    terms: question.terms || [],
-                    philosophers: question.philosophers || []
+                    title: question.title,
+                    content: question.content,
+                    relatedTerms: question.relatedTerms || [],
+                    relatedPhilosophers: question.relatedPhilosophers || [],
+                    relatedQuestions: question.relatedQuestions || []
                 }}
                 allTerms={allTerms || []}
                 allPhilosophers={allPhilosophers || []}

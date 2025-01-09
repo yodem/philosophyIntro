@@ -14,25 +14,31 @@ export class Philosopher {
   id: number;
 
   @Column()
-  name: string;
-
-  @Column({ nullable: true })
-  birthYear: number;
-
-  @Column({ nullable: true })
-  deathYear: number;
-
-  @Column('text', { nullable: true })
-  bio: string;
+  title: string;
 
   @Column({ type: 'text' })
-  description: string;
+  content: string;
 
-  @ManyToMany(() => Question, (question) => question.philosophers)
-  @JoinTable()
-  questions: Question[];
+  @Column()
+  era: string;
 
-  @ManyToMany(() => Term, (term) => term.philosophers)
-  @JoinTable()
-  terms: Term[];
+  @Column({ nullable: true })
+  birthdate: string;
+
+  @Column({ nullable: true })
+  deathdate: string;
+
+  @ManyToMany(() => Question, (question) => question.relatedPhilosophers)
+  relatedQuestions: Question[];
+
+  @ManyToMany(() => Term, (term) => term.relatedPhilosophers)
+  relatedTerms: Term[];
+
+  @ManyToMany(() => Philosopher)
+  @JoinTable({
+    name: 'philosopher_related_philosophers',
+    joinColumn: { name: 'philosopher_id' },
+    inverseJoinColumn: { name: 'related_philosopher_id' },
+  })
+  relatedPhilosophers: Philosopher[];
 }

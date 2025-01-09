@@ -14,15 +14,24 @@ export class Question {
   id: number;
 
   @Column()
-  question: string;
+  title: string;
 
   @Column({ type: 'text' })
-  description: string;
+  content: string;
 
-  @ManyToMany(() => Philosopher, (philosopher) => philosopher.questions)
-  philosophers: Philosopher[];
+  @ManyToMany(() => Philosopher, (philosopher) => philosopher.relatedQuestions)
+  @JoinTable({ name: 'question_philosophers' })
+  relatedPhilosophers: Philosopher[];
 
-  @ManyToMany(() => Term, (term) => term.questions)
-  @JoinTable()
-  terms: Term[];
+  @ManyToMany(() => Question)
+  @JoinTable({
+    name: 'question_related_questions',
+    joinColumn: { name: 'question_id' },
+    inverseJoinColumn: { name: 'related_question_id' },
+  })
+  relatedQuestions: Question[];
+
+  @ManyToMany(() => Term, (term) => term.relatedQuestions)
+  @JoinTable({ name: 'question_terms' })
+  relatedTerms: Term[];
 }

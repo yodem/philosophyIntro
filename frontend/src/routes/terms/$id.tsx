@@ -84,10 +84,11 @@ function TermComponent() {
                 isEdit={true}
                 isEditable={isEditing}
                 defaultValues={{
-                    term: term.term,
-                    definition: term.definition,
-                    questions: term.questions || [],
-                    philosophers: term.philosophers || []
+                    title: term.title,
+                    content: term.content,
+                    relatedTerms: term.relatedTerms || [],
+                    relatedQuestions: term.relatedQuestions || [],
+                    relatedPhilosophers: term.relatedPhilosophers || []
                 }}
                 allQuestions={allQuestions || []}
                 allPhilosophers={allPhilosophers || []}

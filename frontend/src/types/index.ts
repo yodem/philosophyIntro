@@ -1,78 +1,46 @@
 // Entity types with self-referential properties
-export interface Question {
+export interface BasicEntity {
   id: number;
-  question: string;
-  description: string;
-  terms?: Term[];
-  philosophers?: Philosopher[];
+  title: string;
+  content: string;
+  relatedPhilosophers?: Philosopher[];
+  relatedQuestions?: Question[];
+  relatedTerms?: Term[];
 }
 
-export interface Term {
-  id: number;
-  term: string;
-  definition: string;
-  questions?: Question[];
-  philosophers?: Philosopher[];
+export interface Philosopher extends BasicEntity {
+  era: string;
+  birthdate?: string;
+  deathdate?: string;
 }
 
-export interface Philosopher {
-  id: number;
-  name: string;
-  birthYear: number;
-  deathYear: number;
-  description: string;
-  terms?: Term[];
-  questions?: Question[];
+export type Question = BasicEntity;
+export type Term = BasicEntity;
+
+// DTOs for creating/updating entities
+export interface CreateBasicDto {
+  title: string;
+  content: string;
+  relatedPhilosophers?: number[];
+  relatedQuestions?: number[];
+  relatedTerms?: number[];
 }
 
-// Form input types
-export type TermFormInputs = {
-  term: string;
-  definition: string;
-  questions: Question[];
-  philosophers: Philosopher[];
-};
+// Remove redundant interfaces and simplify
+export interface CreatePhilosopherDto extends CreateBasicDto {
+  era: string;
+  birthdate?: string;
+  deathdate?: string;
+}
 
-export type QuestionFormInputs = {
-  question: string;
-  description: string;
-  terms: Term[];
-  philosophers: Philosopher[];
+export type CreateQuestionDto = CreateBasicDto;
+export type CreateTermDto = CreateBasicDto;
+export type UpdateBasicDto = Partial<CreateBasicDto> & { id: number };
+export type UpdatePhilosopherDto = Partial<CreatePhilosopherDto> & {
+  id: number;
 };
-
-export type PhilosopherFormInputs = {
-  name: string;
-  birthYear: number;
-  deathYear: number;
-  description: string;
-  terms: Term[];
-  questions: Question[];
-};
-
-// DTO types remain the same
-export type UpdateTermDto = Omit<
-  TermFormInputs,
-  "questions" | "philosophers"
-> & {
-  questions: number[];
-  philosophers: number[];
-};
-
-export type UpdateQuestionDto = Omit<
-  QuestionFormInputs,
-  "terms" | "philosophers"
-> & {
-  terms: number[];
-  philosophers: number[];
-};
-
-export type UpdatePhilosopherDto = Omit<
-  PhilosopherFormInputs,
-  "terms" | "questions"
-> & {
-  terms: number[];
-  questions: number[];
-};
+export type UpdateQuestionDto = UpdateBasicDto;
+export type UpdateTermDto = UpdateBasicDto;
 
 export interface ApiResponse<T> {
   data: T;

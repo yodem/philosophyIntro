@@ -1,16 +1,20 @@
 import { Card, CardContent, Typography } from '@mui/material';
+import { BasicEntity } from '@/types';
 
 interface ResourceCardProps {
-    title: string;
+    resource: BasicEntity;
     onClick: () => void;
 }
 
-export default function ResourceCard({ title, onClick }: ResourceCardProps) {
+export default function ResourceCard({ resource, onClick }: ResourceCardProps) {
     return (
-        <Card onClick={onClick} sx={{ cursor: 'pointer', '&:hover': { boxShadow: 6 } }}>
+        <Card onClick={onClick} sx={{ cursor: 'pointer' }}>
             <CardContent>
-                <Typography variant="h5" gutterBottom>
-                    {title}
+                <Typography variant="h5" component="div">
+                    {resource.title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                    {resource.content}
                 </Typography>
             </CardContent>
         </Card>

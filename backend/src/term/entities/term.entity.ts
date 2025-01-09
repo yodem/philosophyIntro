@@ -1,6 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
-import { Philosopher } from '../../philosopher/entities/philosopher.entity';
-import { Question } from '../../question/entities/question.entity';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
+import { Philosopher } from '@/philosopher/entities/philosopher.entity';
+import { Question } from '@/question/entities/question.entity';
 
 @Entity()
 export class Term {
@@ -8,14 +14,24 @@ export class Term {
   id: number;
 
   @Column()
-  term: string;
+  title: string;
 
-  @Column('text')
-  definition: string;
+  @Column({ type: 'text' })
+  content: string;
 
-  @ManyToMany(() => Philosopher, (philosopher) => philosopher.terms)
-  philosophers: Philosopher[];
+  @ManyToMany(() => Philosopher, (philosopher) => philosopher.relatedTerms)
+  @JoinTable({ name: 'term_philosophers' })
+  relatedPhilosophers: Philosopher[];
 
-  @ManyToMany(() => Question, (question) => question.terms)
-  questions: Question[];
+  @ManyToMany(() => Question, (question) => question.relatedTerms)
+  @JoinTable({ name: 'term_questions' })
+  relatedQuestions: Question[];
+
+  @ManyToMany(() => Term)
+  @JoinTable({
+    name: 'term_related_terms',
+    joinColumn: { name: 'term_id' },
+    inverseJoinColumn: { name: 'related_term_id' },
+  })
+  relatedTerms: Term[];
 }

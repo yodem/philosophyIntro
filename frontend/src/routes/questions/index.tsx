@@ -36,7 +36,7 @@ function QuestionsComponent() {
                 {questions?.map((question) => (
                     <ResourceCard
                         key={question.id}
-                        title={question.question}
+                        resource={question}
                         onClick={() => navigate({ to: '/questions/$id', params: { id: question.id.toString() } })}
                     />
                 ))}

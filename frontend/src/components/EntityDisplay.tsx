@@ -1,24 +1,23 @@
 import { Card, CardContent, Box, Typography, Chip, Stack } from '@mui/material';
 import { RelatedItems } from './RelatedItems';
+import { BasicEntity } from '@/types';
 
 interface EntityDisplayProps {
     title: string;
     content: string;
-    relations?: {
+    metadata?: Array<{ label: string; value: string }>;
+    relations?: Array<{
         title: string;
-        items: any[];
-        getLabel: (item: any) => string;
-        getLink: (item: any) => { to: string; params: { id: string } };
-    }[];
-    metadata?: {
-        label: string;
-        value: string | number;
-    }[];
+        items: BasicEntity[];
+        getLabel: (item: BasicEntity) => string;
+        getLink: (item: BasicEntity) => { to: string; params: { id: string } };
+    }>;
 }
 
 export function EntityDisplay({ title, content, relations = [], metadata = [] }: EntityDisplayProps) {
+
     return (
-        <Box p={2}>
+        <Box key={title} p={2}>
             <Card>
                 <CardContent>
                     <Typography variant="h4" gutterBottom>{title}</Typography>

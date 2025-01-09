@@ -1,26 +1,21 @@
 import { Card, CardContent, Button, TextField, Autocomplete, Box, Typography } from '@mui/material';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { Term, Philosopher, UpdateQuestionDto, Question } from '@/types';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { Term, Philosopher, UpdateQuestionDto, Question, BasicEntity } from '@/types';
 import { EditableRichText } from '../EditableRichText';
 import { EntityDisplay } from '../EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
-
-type QuestionFormInputs = {
-    question: string;
-    description: string;
-    terms: Term[];
-    philosophers: Philosopher[];
-};
+import { QuestionFormInputs } from '@/types/form';
+import { EntityRelation } from '@/types/form';
 
 interface QuestionFormProps {
     defaultValues: QuestionFormInputs;
     isEdit?: boolean;
+    isEditable?: boolean;
     allTerms?: Term[];
     allPhilosophers?: Philosopher[];
     onSubmit?: (data: UpdateQuestionDto) => Promise<Question | undefined>;
-    isEditable?: boolean;
     setIsEditable?: (isEditable: boolean) => void;
 }
 
@@ -37,29 +32,44 @@ export function QuestionForm({
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    const { register, handleSubmit, watch, setValue } = useForm<QuestionFormInputs>({
+    const { register, handleSubmit, watch, setValue, control } = useForm<QuestionFormInputs>({
         defaultValues
     });
+
+    const { title, content } = watch();
+
+    const relations: EntityRelation[] = [
+        {
+            name: 'relatedTerms',
+            label: t('relatedTerms'),
+            options: allTerms
+        },
+        {
+            name: 'relatedPhilosophers',
+            label: t('relatedPhilosophers'),
+            options: allPhilosophers
+        }
+    ].filter(relation => relation.options.length > 0);
 
     if (!isEditable) {
         return (
             <EntityDisplay
-                title={defaultValues.question}
-                content={defaultValues.description}
+                title={title}
+                content={content}
                 relations={[
                     {
-                        title: "Related Terms",
-                        items: defaultValues.terms,
-                        getLabel: (item) => item.term,
-                        getLink: (item) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
+                        title: t('relatedTerms'),
+                        items: watch('relatedTerms'),
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
                     },
                     {
-                        title: "Discussed by",
-                        items: defaultValues.philosophers,
-                        getLabel: (item) => item.name,
-                        getLink: (item) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
+                        title: t('relatedPhilosophers'),
+                        items: watch('relatedPhilosophers'),
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
                     }
-                ]}
+                ].filter(r => r.items?.length > 0)}
             />
         );
     }
@@ -68,9 +78,11 @@ export function QuestionForm({
         try {
             if (!onSubmit) return;
             const response = await onSubmit({
-                ...formData,
-                terms: formData.terms.map(t => t.id),
-                philosophers: formData.philosophers.map(p => p.id)
+                id: formData.id,
+                title: formData.title,
+                content: formData.content,
+                relatedTerms: formData.relatedTerms.map((t: BasicEntity) => t.id),
+                relatedPhilosophers: formData.relatedPhilosophers.map((p: BasicEntity) => p.id)
             });
 
             enqueueSnackbar(`Question successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
@@ -97,49 +109,40 @@ export function QuestionForm({
                         <TextField
                             autoFocus
                             margin="dense"
-                            label={t('question')}
+                            label={t('title')}
                             fullWidth
                             required
                             variant="standard"
-                            {...register('question', { required: 'Question is required' })}
+                            {...register('title', { required: 'Title is required' })}
                             sx={{ mb: 3 }}
                         />
                         <Box sx={{ mb: 3 }}>
                             <EditableRichText
-                                initialContent={watch('description') || ''}
-                                onChange={(content) => setValue('description', content)}
+                                initialContent={content || ''}
+                                onChange={(content) => setValue('content', content)}
                             />
                         </Box>
-                        <Autocomplete<Term, true>
-                            multiple
-                            options={allTerms}
-                            getOptionLabel={(option: Term) => option.term}
-                            value={watch('terms') ?? []}
-                            onChange={(_, value) => setValue('terms', value)}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label={t('relatedTerms')}
-                                    sx={{ mb: 2 }}
-                                />
-                            )}
-                        />
-                        <Autocomplete<Philosopher, true>
-                            multiple
-                            options={allPhilosophers}
-                            getOptionLabel={(option: Philosopher) => option.name}
-                            value={watch('philosophers') ?? []}
-                            onChange={(_, value) => setValue('philosophers', value)}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label={t('discussedBy')}
-                                    sx={{ mb: 3 }}
-                                />
-                            )}
-                        />
+                        {relations.map(({ name, label, options }) => (
+                            <Controller
+                                key={name}
+                                name={name}
+                                control={control}
+                                render={({ field: { onChange, value, ...props } }) => (
+                                    <Autocomplete<BasicEntity, true>
+                                        multiple
+                                        options={options}
+                                        getOptionLabel={(option) => option.title}
+                                        value={value ?? []}
+                                        onChange={(_, data) => onChange(data)}
+                                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label={label} sx={{ mb: 2 }} />
+                                        )}
+                                        {...props}
+                                    />
+                                )}
+                            />
+                        ))}
                         <Box sx={{ mt: 3 }}>
                             <Button
                                 variant="contained"

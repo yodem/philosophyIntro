@@ -1,16 +1,18 @@
 import { Card, CardContent, Button, TextField, Autocomplete, Box, Typography } from '@mui/material';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { TermFormInputs, UpdateTermDto, Question, Philosopher, Term } from '@/types';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { TermFormInputs, UpdateTermDto, Question, Philosopher, Term, BasicEntity } from '@/types';
 import { EditableRichText } from '../EditableRichText';
 import { EntityDisplay } from '@/components/EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { EntityRelation } from '@/types/form';
 
 interface TermFormProps {
     defaultValues: TermFormInputs;
     isEdit?: boolean;
     isEditable?: boolean;
+    allTerms?: Term[];
     allQuestions?: Question[];
     allPhilosophers?: Philosopher[];
     onSubmit?: (data: UpdateTermDto) => Promise<Term | undefined>;
@@ -21,6 +23,7 @@ export function TermForm({
     defaultValues,
     isEdit = false,
     isEditable = true,
+    allTerms = [],
     allQuestions = [],
     allPhilosophers = [],
     onSubmit,
@@ -30,29 +33,59 @@ export function TermForm({
     const navigate = useNavigate();
     const { t } = useTranslation();
 
-    const { register, handleSubmit, watch, setValue } = useForm<TermFormInputs>({
+    const { register, handleSubmit, watch, setValue, control, getValues } = useForm<TermFormInputs>({
         defaultValues
     });
 
+    console.log('defaultValues:', defaultValues, getValues());
+
+
+    const { title, content } = watch();
+
+    const relations: EntityRelation[] = [
+        {
+            name: 'relatedTerms',
+            label: t('relatedTerms'),
+            options: allTerms
+        },
+        {
+            name: 'relatedQuestions',
+            label: t('relatedQuestions'),
+            options: allQuestions
+        },
+        {
+            name: 'relatedPhilosophers',
+            label: t('relatedPhilosophers'),
+            options: allPhilosophers
+        }
+    ].filter(relation => relation.options.length > 0);
+
     if (!isEditable) {
+
         return (
             <EntityDisplay
-                title={defaultValues.term}
-                content={defaultValues.definition}
+                title={title}
+                content={content}
                 relations={[
                     {
-                        title: "Key Philosophers",
-                        items: defaultValues.philosophers,
-                        getLabel: (item) => item.name,
-                        getLink: (item) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
+                        title: t('relatedTerms'),
+                        items: watch('relatedTerms'),
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/terms/$id", params: { id: item.id.toString() } })
                     },
                     {
-                        title: "Related Questions",
-                        items: defaultValues.questions,
-                        getLabel: (item) => item.question,
-                        getLink: (item) => ({ to: "/questions/$id", params: { id: item.id.toString() } })
+                        title: t('relatedQuestions'),
+                        items: watch('relatedQuestions'),
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/questions/$id", params: { id: item.id.toString() } })
+                    },
+                    {
+                        title: t('relatedPhilosophers'),
+                        items: watch('relatedPhilosophers'),
+                        getLabel: (item: BasicEntity) => item.title,
+                        getLink: (item: BasicEntity) => ({ to: "/philosophers/$id", params: { id: item.id.toString() } })
                     }
-                ]}
+                ].filter(r => r.items?.length > 0)}
             />
         );
     }
@@ -62,9 +95,12 @@ export function TermForm({
             if (!onSubmit) return;
 
             const response = await onSubmit({
-                ...formData,
-                questions: formData.questions.map(q => q.id),
-                philosophers: formData.philosophers.map(p => p.id),
+                id: formData.id,
+                title: formData.title,
+                content: formData.content,
+                relatedTerms: formData.relatedTerms.map((t: BasicEntity) => t.id),
+                relatedQuestions: formData.relatedQuestions.map((q: BasicEntity) => q.id),
+                relatedPhilosophers: formData.relatedPhilosophers.map((p: BasicEntity) => p.id)
             });
 
             enqueueSnackbar(`Term successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
@@ -91,41 +127,40 @@ export function TermForm({
                         <TextField
                             autoFocus
                             margin="dense"
-                            label={t('term')}
+                            label={t('title')}
                             fullWidth
                             required
                             variant="standard"
-                            {...register('term', { required: 'Term is required' })}
+                            {...register('title', { required: 'Title is required' })}
                             sx={{ mb: 3 }}
                         />
                         <Box sx={{ mb: 3 }}>
                             <EditableRichText
-                                initialContent={watch('definition') || ''}
-                                onChange={(content) => setValue('definition', content)}
+                                initialContent={content || ''}
+                                onChange={(content) => setValue('content', content)}
                             />
                         </Box>
-                        <Autocomplete<Question, true>
-                            multiple
-                            options={allQuestions}
-                            getOptionLabel={(option: Question) => option.question}
-                            value={watch('questions') ?? []}
-                            onChange={(_, value) => setValue('questions', value)}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
-                                <TextField {...params} label={t('relatedQuestions')} sx={{ mb: 2 }} />
-                            )}
-                        />
-                        <Autocomplete<Philosopher, true>
-                            multiple
-                            options={allPhilosophers}
-                            getOptionLabel={(option: Philosopher) => option.name}
-                            value={watch('philosophers') ?? []}
-                            onChange={(_, value) => setValue('philosophers', value)}
-                            isOptionEqualToValue={(option, value) => option.id === value.id}
-                            renderInput={(params) => (
-                                <TextField {...params} label={t('keyPhilosophers')} sx={{ mb: 3 }} />
-                            )}
-                        />
+                        {relations.map(({ name, label, options }) => (
+                            <Controller
+                                key={name}
+                                name={name}
+                                control={control}
+                                render={({ field: { onChange, value, ...props } }) => (
+                                    <Autocomplete<BasicEntity, true>
+                                        multiple
+                                        options={options}
+                                        getOptionLabel={(option) => option.title}
+                                        value={value ?? []}
+                                        onChange={(_, data) => onChange(data)}
+                                        isOptionEqualToValue={(option, value) => option.id === value.id}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label={label} sx={{ mb: 2 }} />
+                                        )}
+                                        {...props}
+                                    />
+                                )}
+                            />
+                        ))}
                         <Box sx={{ mt: 3 }}>
                             <Button
                                 variant="contained"

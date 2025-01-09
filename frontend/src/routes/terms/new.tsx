@@ -41,10 +41,10 @@ function NewTermComponent() {
     return (
         <TermForm
             defaultValues={{
-                term: '',
-                definition: '',
-                questions: [],
-                philosophers: []
+                title: '',
+                content: '',
+                relatedQuestions: [],
+                relatedPhilosophers: []
             }}
             allQuestions={allQuestions || []}
             allPhilosophers={allPhilosophers || []}

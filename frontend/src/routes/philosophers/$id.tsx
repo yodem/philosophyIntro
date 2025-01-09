@@ -4,7 +4,6 @@ import { philosophersApi, termsApi, questionsApi } from '../../api';
 import { Card, CardContent, Skeleton, Typography, Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { UpdatePhilosopherDto } from '@/types';
-import dayjs from 'dayjs';
 import { PhilosopherForm } from '../../components/Forms/PhilosopherForm';
 import { useTranslation } from 'react-i18next';
 
@@ -76,8 +75,10 @@ function PhilosopherComponent() {
     return <Typography variant="h6">{t('philosopherNotFound')}</Typography>;
   }
 
+  console.log('Philosopher:', philosopher);
+
   return (
-    <>
+    <Box key={philosopher.id} p={2}>
       <Button
         variant="outlined"
         onClick={() => setIsEditing(!isEditing)}
@@ -89,18 +90,17 @@ function PhilosopherComponent() {
       <PhilosopherForm
         isEdit={true}
         isEditable={isEditing}
+        key={philosopher.id}
         defaultValues={{
-          name: philosopher.name,
-          birthYear: philosopher.birthYear ?? dayjs(philosopher.birthYear),
-          deathYear: philosopher.deathYear ?? dayjs(philosopher.deathYear),
-          description: philosopher.description,
-          terms: philosopher.terms || [],
-          questions: philosopher.questions || []
+          ...philosopher,
+          relatedTerms: philosopher.relatedTerms || [],
+          relatedQuestions: philosopher.relatedQuestions || [],
+          relatedPhilosophers: philosopher.relatedPhilosophers || [],
         }}
         allTerms={allTerms || []}
         allQuestions={allQuestions || []}
         onSubmit={isEditing ? onSubmit : undefined}
       />
-    </>
+    </Box>
   );
 }

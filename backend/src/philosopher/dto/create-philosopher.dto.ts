@@ -9,27 +9,36 @@ import {
 export class CreatePhilosopherDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  title: string;
 
   @IsString()
   @IsNotEmpty()
-  description: string;
+  content: string;
 
-  @IsNumber()
-  @IsOptional()
-  birthYear?: number;
-
-  @IsNumber()
-  @IsOptional()
-  deathYear?: number;
+  @IsString()
+  @IsNotEmpty()
+  era: string;
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  terms?: number[];
+  relatedTerms?: number[];
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  questions?: number[];
+  relatedQuestions?: number[];
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  relatedPhilosophers?: number[];
+
+  @IsString()
+  @IsOptional()
+  birthdate?: string;
+
+  @IsString()
+  @IsOptional()
+  deathdate?: string;
 }

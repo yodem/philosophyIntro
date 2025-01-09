@@ -2,7 +2,6 @@ import { createFileRoute } from '@tanstack/react-router';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { philosophersApi, termsApi, questionsApi } from '../../api';
 import { UpdatePhilosopherDto } from '@/types';
-import dayjs from 'dayjs';
 import { PhilosopherForm } from '../../components/Forms/PhilosopherForm';
 
 export const Route = createFileRoute('/philosophers/new')({
@@ -43,12 +42,13 @@ function NewPhilosopherComponent() {
     return (
         <PhilosopherForm
             defaultValues={{
-                name: '',
-                birthYear: dayjs().year(),
-                deathYear: dayjs().year(),
-                description: '',
-                terms: [],
-                questions: []
+                title: '',
+                content: '',
+                era: '',
+                birthdate: '',
+                deathdate: '',
+                relatedTerms: [],
+                relatedQuestions: []
             }}
             allTerms={allTerms || []}
             allQuestions={allQuestions || []}

@@ -4,84 +4,96 @@ import { Repository, In } from 'typeorm';
 import { CreateTermDto } from './dto/create-term.dto';
 import { UpdateTermDto } from './dto/update-term.dto';
 import { Term } from './entities/term.entity';
-import { Question } from '../question/entities/question.entity';
 import { Philosopher } from '../philosopher/entities/philosopher.entity';
+import { Question } from '../question/entities/question.entity';
 
 @Injectable()
 export class TermService {
   constructor(
     @InjectRepository(Term)
     private termRepository: Repository<Term>,
-    @InjectRepository(Question)
-    private questionRepository: Repository<Question>,
     @InjectRepository(Philosopher)
     private philosopherRepository: Repository<Philosopher>,
+    @InjectRepository(Question)
+    private questionRepository: Repository<Question>,
   ) {}
 
   async create(createTermDto: CreateTermDto): Promise<Term> {
-    const { philosophers, questions, ...termData } = createTermDto;
+    const { relatedPhilosophers, relatedQuestions, relatedTerms, ...termData } =
+      createTermDto;
 
     const term = this.termRepository.create(termData);
 
-    if (philosophers) {
-      const philosopherEntities = await this.philosopherRepository.findBy({
-        id: In(philosophers),
+    if (relatedPhilosophers) {
+      term.relatedPhilosophers = await this.philosopherRepository.findBy({
+        id: In(relatedPhilosophers),
       });
-      term.philosophers = philosopherEntities;
     }
 
-    if (questions) {
-      const questionEntities = await this.questionRepository.findBy({
-        id: In(questions),
+    if (relatedQuestions) {
+      term.relatedQuestions = await this.questionRepository.findBy({
+        id: In(relatedQuestions),
       });
-      term.questions = questionEntities;
+    }
+
+    if (relatedTerms) {
+      term.relatedTerms = await this.termRepository.findBy({
+        id: In(relatedTerms),
+      });
     }
 
     return this.termRepository.save(term);
   }
 
   findAll(): Promise<Term[]> {
-    return this.termRepository.find();
+    return this.termRepository.find({
+      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
+    });
   }
 
   async findOne(id: number): Promise<Term> {
     const term = await this.termRepository.findOne({
       where: { id },
-      relations: ['philosophers', 'questions'],
+      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
     });
+
     if (!term) {
       throw new Error(`Term with ID ${id} not found`);
     }
+
     return term;
   }
 
   async update(id: number, updateTermDto: UpdateTermDto): Promise<Term> {
-    const { questions, philosophers, ...termData } = updateTermDto;
+    const { relatedTerms, relatedQuestions, relatedPhilosophers, ...termData } =
+      updateTermDto;
 
     await this.termRepository.update({ id }, termData);
-    const updatedTerm = await this.termRepository.findOne({
-      where: { id },
-    });
+    const term = await this.findOne(id);
 
-    if (!updatedTerm) {
+    if (!term) {
       throw new Error(`Term with ID ${id} not found`);
     }
 
-    if (questions) {
-      const questionEntities = await this.questionRepository.findBy({
-        id: In(questions),
+    if (relatedPhilosophers) {
+      term.relatedPhilosophers = await this.philosopherRepository.findBy({
+        id: In(relatedPhilosophers),
       });
-      updatedTerm.questions = questionEntities;
     }
 
-    if (philosophers) {
-      const philosopherEntities = await this.philosopherRepository.findBy({
-        id: In(philosophers),
+    if (relatedQuestions) {
+      term.relatedQuestions = await this.questionRepository.findBy({
+        id: In(relatedQuestions),
       });
-      updatedTerm.philosophers = philosopherEntities;
     }
 
-    return this.termRepository.save(updatedTerm);
+    if (relatedTerms) {
+      term.relatedTerms = await this.termRepository.findBy({
+        id: In(relatedTerms),
+      });
+    }
+
+    return this.termRepository.save(term);
   }
 
   async remove(id: number): Promise<void> {

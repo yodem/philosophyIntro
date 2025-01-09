@@ -41,10 +41,10 @@ function NewQuestionComponent() {
     return (
         <QuestionForm
             defaultValues={{
-                question: '',
-                description: '',
-                terms: [],
-                philosophers: []
+                title: '',
+                content: '',
+                relatedTerms: [],
+                relatedPhilosophers: []
             }}
             allTerms={allTerms || []}
             allPhilosophers={allPhilosophers || []}

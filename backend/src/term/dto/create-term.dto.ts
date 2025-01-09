@@ -9,19 +9,24 @@ import {
 export class CreateTermDto {
   @IsString()
   @IsNotEmpty()
-  term: string;
+  title: string;
 
   @IsString()
   @IsNotEmpty()
-  definition: string;
+  content: string;
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  questions?: number[];
+  relatedTerms?: number[];
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  philosophers?: number[];
+  relatedQuestions?: number[];
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  relatedPhilosophers?: number[];
 }
