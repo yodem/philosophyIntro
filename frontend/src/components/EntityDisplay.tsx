@@ -1,6 +1,7 @@
 import { Card, CardContent, Box, Typography, Chip, Stack } from '@mui/material';
 import { RelatedItems } from './RelatedItems';
 import { BasicEntity } from '@/types';
+import { useTranslation } from 'react-i18next';
 
 interface EntityDisplayProps {
     title: string;
@@ -15,6 +16,7 @@ interface EntityDisplayProps {
 }
 
 export function EntityDisplay({ title, content, relations = [], metadata = [] }: EntityDisplayProps) {
+    const { t } = useTranslation();
 
     return (
         <Box key={title} p={2}>
@@ -25,7 +27,7 @@ export function EntityDisplay({ title, content, relations = [], metadata = [] }:
                     {metadata.length > 0 && (
                         <Stack direction="row" spacing={1} mb={2}>
                             {metadata.map(({ label, value }) => (
-                                <Chip key={label} label={`${label}: ${value}`} variant="outlined" />
+                                <Chip key={label} label={`${t(label)}: ${value}`} variant="outlined" />
                             ))}
                         </Stack>
                     )}
@@ -35,7 +37,7 @@ export function EntityDisplay({ title, content, relations = [], metadata = [] }:
                     {relations.map((relation) => (
                         <RelatedItems
                             key={relation.title}
-                            title={relation.title}
+                            title={t(relation.title)}
                             items={relation.items}
                             getLabel={relation.getLabel}
                             getLink={relation.getLink}

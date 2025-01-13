@@ -7,6 +7,7 @@ import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
 import { FormInputs, RelationConfig } from '@/types/form';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface GenericFormProps {
     defaultValues: Partial<FormInputs>;
@@ -34,9 +35,14 @@ export function GenericForm({
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const { t } = useTranslation();
+    const { language } = useLanguage();
 
     const { register, handleSubmit, watch, setValue, control } = useForm<FormInputs>({
-        defaultValues
+        defaultValues: {
+            ...defaultValues,
+            title: language === 'en' ? defaultValues.titleEn : defaultValues.titleHe,
+            content: language === 'en' ? defaultValues.contentEn : defaultValues.contentHe,
+        }
     });
 
     const { title, content } = watch();
@@ -50,7 +56,7 @@ export function GenericForm({
                 relations={relations.map(rel => ({
                     title: t(rel.label),
                     items: ((watch(rel.name) ?? []) as BasicEntity[]).filter((item): item is BasicEntity => typeof item === 'object'),
-                    getLabel: (item: BasicEntity) => item.title,
+                    getLabel: (item: BasicEntity) => language === 'en' ? item.titleEn : item.titleHe,
                     getLink: (item: BasicEntity) => ({
                         to: `/${rel.baseRoute}/$id`,
                         params: { id: item.id.toString() }
@@ -66,7 +72,7 @@ export function GenericForm({
 
             const response = await onSubmit(formData);
 
-            enqueueSnackbar(`${entityType} successfully ${isEdit ? 'updated' : 'created'}!`, { variant: 'success' });
+            enqueueSnackbar(`${t(entityType)} ${t(isEdit ? 'updated' : 'created')}!`, { variant: 'success' });
 
             if (isEdit && setIsEditable) {
                 setIsEditable(false);
@@ -74,8 +80,8 @@ export function GenericForm({
                 navigate({ to: `/${entityRoute}/$id`, params: { id: response.id.toString() } });
             }
         } catch (error) {
-            const message = error instanceof Error ? error.message : 'Unknown error occurred';
-            enqueueSnackbar(`Failed to ${isEdit ? 'update' : 'create'} ${entityType}: ${message}`, { variant: 'error' });
+            const message = error instanceof Error ? error.message : t('unknownError');
+            enqueueSnackbar(`${t('failedTo')} ${t(isEdit ? 'update' : 'create')} ${t(entityType)}: ${message}`, { variant: 'error' });
         }
     };
 
@@ -94,7 +100,7 @@ export function GenericForm({
                             fullWidth
                             required
                             variant="standard"
-                            {...register('title', { required: 'Title is required' })}
+                            {...register('title', { required: t('titleRequired') })}
                             sx={{ mb: 3 }}
                         />
                         <Box sx={{ mb: 3 }}>
@@ -112,12 +118,12 @@ export function GenericForm({
                                     <Autocomplete<BasicEntity, true>
                                         multiple
                                         options={options}
-                                        getOptionLabel={(option) => option.title}
+                                        getOptionLabel={(option) => language === "en" ? option.titleEn : option.titleHe}
                                         value={(value ?? []) as BasicEntity[]}
                                         onChange={(_, data) => onChange(data)}
                                         isOptionEqualToValue={(option, value) => option.id === value.id}
                                         renderInput={(params) => (
-                                            <TextField {...params} label={label} sx={{ mb: 2 }} />
+                                            <TextField {...params} label={t(label)} sx={{ mb: 2 }} />
                                         )}
                                         {...props}
                                     />

@@ -2,15 +2,18 @@ import { RouterButton } from "@/components/routerComponents/RouterButton";
 import { AppBar, Toolbar, Typography, IconButton, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '../contexts/ThemeContext';
+import { useLanguage } from '../contexts/LanguageContext';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 const NavBar = () => {
-    const { i18n, t } = useTranslation();
+    const { t } = useTranslation();
     const { mode, toggleMode } = useTheme();
+    const { language, setLanguage } = useLanguage();
 
     const handleLanguageChange = (event: SelectChangeEvent) => {
-        i18n.changeLanguage(event.target.value);
+        const newLanguage = event.target.value as 'en' | 'he';
+        setLanguage(newLanguage);
     };
 
     return (
@@ -28,12 +31,12 @@ const NavBar = () => {
                     {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
                 <Select
-                    value={i18n.language}
+                    value={language}
                     onChange={handleLanguageChange}
                     sx={{ color: 'inherit', ml: 2 }}
                 >
-                    <MenuItem value="en">English</MenuItem>
-                    <MenuItem value="he">עברית</MenuItem>
+                    <MenuItem value="en">{t('English')}</MenuItem>
+                    <MenuItem value="he">{t('Hebrew')}</MenuItem>
                 </Select>
             </Toolbar>
         </AppBar>

@@ -1,5 +1,3 @@
-import { Question } from '@/question/entities/question.entity';
-import { Term } from '@/term/entities/term.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,6 +5,8 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
+import { Term } from '@/term/entities/term.entity';
+import { Question } from '@/question/entities/question.entity';
 
 @Entity()
 export class Philosopher {
@@ -14,25 +14,33 @@ export class Philosopher {
   id: number;
 
   @Column()
-  title: string;
+  titleEn: string;
+
+  @Column()
+  titleHe: string;
 
   @Column({ type: 'text' })
-  content: string;
+  contentEn: string;
+
+  @Column({ type: 'text' })
+  contentHe: string;
 
   @Column()
   era: string;
 
   @Column({ nullable: true })
-  birthdate: string;
+  birthdate?: string;
 
   @Column({ nullable: true })
-  deathdate: string;
-
-  @ManyToMany(() => Question, (question) => question.relatedPhilosophers)
-  relatedQuestions: Question[];
+  deathdate?: string;
 
   @ManyToMany(() => Term, (term) => term.relatedPhilosophers)
+  @JoinTable({ name: 'philosopher_terms' })
   relatedTerms: Term[];
+
+  @ManyToMany(() => Question, (question) => question.relatedPhilosophers)
+  @JoinTable({ name: 'philosopher_questions' })
+  relatedQuestions: Question[];
 
   @ManyToMany(() => Philosopher)
   @JoinTable({

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { CreateTermDto } from './dto/create-term.dto';
@@ -19,14 +19,13 @@ export class TermService {
   ) {}
 
   async create(createTermDto: CreateTermDto): Promise<Term> {
-    const { relatedPhilosophers, relatedQuestions, relatedTerms, ...termData } =
+    const { relatedTerms, relatedQuestions, relatedPhilosophers, ...termData } =
       createTermDto;
-
     const term = this.termRepository.create(termData);
 
-    if (relatedPhilosophers) {
-      term.relatedPhilosophers = await this.philosopherRepository.findBy({
-        id: In(relatedPhilosophers),
+    if (relatedTerms) {
+      term.relatedTerms = await this.termRepository.findBy({
+        id: In(relatedTerms),
       });
     }
 
@@ -36,9 +35,9 @@ export class TermService {
       });
     }
 
-    if (relatedTerms) {
-      term.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    if (relatedPhilosophers) {
+      term.relatedPhilosophers = await this.philosopherRepository.findBy({
+        id: In(relatedPhilosophers),
       });
     }
 
@@ -56,11 +55,9 @@ export class TermService {
       where: { id },
       relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
     });
-
     if (!term) {
-      throw new Error(`Term with ID ${id} not found`);
+      throw new NotFoundException(`Term with ID ${id} not found`);
     }
-
     return term;
   }
 
@@ -71,13 +68,9 @@ export class TermService {
     await this.termRepository.update({ id }, termData);
     const term = await this.findOne(id);
 
-    if (!term) {
-      throw new Error(`Term with ID ${id} not found`);
-    }
-
-    if (relatedPhilosophers) {
-      term.relatedPhilosophers = await this.philosopherRepository.findBy({
-        id: In(relatedPhilosophers),
+    if (relatedTerms) {
+      term.relatedTerms = await this.termRepository.findBy({
+        id: In(relatedTerms),
       });
     }
 
@@ -87,9 +80,9 @@ export class TermService {
       });
     }
 
-    if (relatedTerms) {
-      term.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    if (relatedPhilosophers) {
+      term.relatedPhilosophers = await this.philosopherRepository.findBy({
+        id: In(relatedPhilosophers),
       });
     }
 

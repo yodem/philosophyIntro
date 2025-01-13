@@ -1,8 +1,10 @@
 // Entity types with self-referential properties
 export interface BasicEntity {
   id: number;
-  title: string;
-  content: string;
+  titleEn: string;
+  titleHe: string;
+  contentEn: string;
+  contentHe: string;
   relatedPhilosophers?: Philosopher[];
   relatedQuestions?: Question[];
   relatedTerms?: Term[];
@@ -19,8 +21,10 @@ export type Term = BasicEntity;
 
 // DTOs for creating/updating entities
 export interface CreateBasicDto {
-  title: string;
-  content: string;
+  titleEn: string;
+  titleHe: string;
+  contentEn: string;
+  contentHe: string;
   relatedPhilosophers?: number[];
   relatedQuestions?: number[];
   relatedTerms?: number[];

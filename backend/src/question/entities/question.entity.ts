@@ -14,10 +14,16 @@ export class Question {
   id: number;
 
   @Column()
-  title: string;
+  titleEn: string;
+
+  @Column()
+  titleHe: string;
 
   @Column({ type: 'text' })
-  content: string;
+  contentEn: string;
+
+  @Column({ type: 'text' })
+  contentHe: string;
 
   @ManyToMany(() => Philosopher, (philosopher) => philosopher.relatedQuestions)
   @JoinTable({ name: 'question_philosophers' })

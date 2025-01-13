@@ -1,5 +1,6 @@
 import { Autocomplete, TextField, Button, Grid } from '@mui/material';
 import { SyntheticEvent } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface AutocompleteWithButtonProps<T> {
     options: T[];
@@ -11,6 +12,8 @@ interface AutocompleteWithButtonProps<T> {
 }
 
 export function AutocompleteWithButton<T>({ options, getOptionLabel, value, onChange, label, onSave }: AutocompleteWithButtonProps<T>) {
+    const { t } = useTranslation();
+
     return (
         <Grid container spacing={2} sx={{ my: 2 }} width={"30%"}>
             <Grid item xs={10}>
@@ -21,11 +24,11 @@ export function AutocompleteWithButton<T>({ options, getOptionLabel, value, onCh
                     getOptionLabel={getOptionLabel}
                     value={value}
                     onChange={onChange}
-                    renderInput={(params) => <TextField {...params} label={label} />}
+                    renderInput={(params) => <TextField {...params} label={t(label)} />}
                 />
             </Grid>
             <Grid item xs={2}>
-                <Button sx={{ height: "100%" }} variant="contained" onClick={onSave}>update</Button>
+                <Button sx={{ height: "100%" }} variant="contained" onClick={onSave}>{t('update')}</Button>
             </Grid>
         </Grid>
     );

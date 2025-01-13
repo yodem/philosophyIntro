@@ -4,6 +4,8 @@ export interface FormInputs extends BasicEntity {
   era?: string;
   birthdate?: string;
   deathdate?: string;
+  title: string;
+  content: string;
 }
 
 export interface RelationConfig {

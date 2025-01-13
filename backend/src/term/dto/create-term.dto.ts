@@ -9,11 +9,19 @@ import {
 export class CreateTermDto {
   @IsString()
   @IsNotEmpty()
-  title: string;
+  titleEn: string;
 
   @IsString()
   @IsNotEmpty()
-  content: string;
+  titleHe: string;
+
+  @IsString()
+  @IsNotEmpty()
+  contentEn: string;
+
+  @IsString()
+  @IsNotEmpty()
+  contentHe: string;
 
   @IsArray()
   @IsNumber({}, { each: true })

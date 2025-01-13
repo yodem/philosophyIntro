@@ -9,15 +9,36 @@ import {
 export class CreatePhilosopherDto {
   @IsString()
   @IsNotEmpty()
-  title: string;
+  titleEn: string;
 
   @IsString()
   @IsNotEmpty()
-  content: string;
+  titleHe: string;
+
+  @IsString()
+  @IsNotEmpty()
+  contentEn: string;
+
+  @IsString()
+  @IsNotEmpty()
+  contentHe: string;
 
   @IsString()
   @IsNotEmpty()
   era: string;
+
+  @IsString()
+  @IsOptional()
+  birthdate?: string;
+
+  @IsString()
+  @IsOptional()
+  deathdate?: string;
+
+  @IsArray()
+  @IsNumber({}, { each: true })
+  @IsOptional()
+  relatedPhilosophers?: number[];
 
   @IsArray()
   @IsNumber({}, { each: true })
@@ -28,17 +49,4 @@ export class CreatePhilosopherDto {
   @IsNumber({}, { each: true })
   @IsOptional()
   relatedQuestions?: number[];
-
-  @IsArray()
-  @IsNumber({}, { each: true })
-  @IsOptional()
-  relatedPhilosophers?: number[];
-
-  @IsString()
-  @IsOptional()
-  birthdate?: string;
-
-  @IsString()
-  @IsOptional()
-  deathdate?: string;
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { CreatePhilosopherDto } from './dto/create-philosopher.dto';
@@ -27,7 +27,6 @@ export class PhilosopherService {
       relatedPhilosophers,
       ...philosopherData
     } = createPhilosopherDto;
-
     const philosopher = this.philosopherRepository.create(philosopherData);
 
     if (relatedTerms) {
@@ -44,7 +43,9 @@ export class PhilosopherService {
 
     if (relatedPhilosophers) {
       philosopher.relatedPhilosophers = await this.philosopherRepository.findBy(
-        { id: In(relatedPhilosophers) },
+        {
+          id: In(relatedPhilosophers),
+        },
       );
     }
 
@@ -63,7 +64,7 @@ export class PhilosopherService {
       relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
     });
     if (!philosopher) {
-      throw new Error(`Philosopher with ID ${id} not found`);
+      throw new NotFoundException(`Philosopher with ID ${id} not found`);
     }
     return philosopher;
   }
@@ -82,10 +83,6 @@ export class PhilosopherService {
     await this.philosopherRepository.update({ id }, philosopherData);
     const philosopher = await this.findOne(id);
 
-    if (!philosopher) {
-      throw new Error(`Philosopher with ID ${id} not found`);
-    }
-
     if (relatedTerms) {
       philosopher.relatedTerms = await this.termRepository.findBy({
         id: In(relatedTerms),
@@ -100,7 +97,9 @@ export class PhilosopherService {
 
     if (relatedPhilosophers) {
       philosopher.relatedPhilosophers = await this.philosopherRepository.findBy(
-        { id: In(relatedPhilosophers) },
+        {
+          id: In(relatedPhilosophers),
+        },
       );
     }
 
