@@ -97,7 +97,7 @@ function PhilosopherComponent() {
           ...philosopher,
           images: philosopher.images
         }}
-        entityType="Philosopher"
+        entityType="פילוסוף"
         entityRoute="philosophers"
         relations={[
           {

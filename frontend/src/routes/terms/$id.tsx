@@ -99,7 +99,7 @@ function TermComponent() {
                     ...term,
                     images: term.images
                 }}
-                entityType="Term"
+                entityType="מושג"
                 entityRoute="terms"
                 relations={[
                     {

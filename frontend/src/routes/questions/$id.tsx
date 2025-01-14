@@ -100,7 +100,7 @@ function QuestionComponent() {
                 isEdit={true}
                 isEditable={isEditing}
                 defaultValues={question}
-                entityType="Question"
+                entityType="שאלה"
                 entityRoute="questions"
                 relations={[
                     {
