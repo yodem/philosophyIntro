@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import ResourceCard from '@/components/ResourceCard'; // Import the generic component
 import ResourceGrid from '@/components/ResourceGrid'; // Import the generic grid component
 import ResourceSkeleton from '@/components/ResourceSkeleton';
-import { useTranslation } from 'react-i18next';
+import { LABELS } from '@/constants';
 
 function TermsSkeleton() {
     return (
@@ -23,14 +23,13 @@ export const Route = createFileRoute('/terms/')({
 });
 
 function TermsComponent() {
-    const { t } = useTranslation();
     const terms = Route.useLoaderData();
     const navigate = Route.useNavigate();
 
     return (
         <>
             <Button variant="outlined" onClick={() => navigate({ to: '/terms/new' })}>
-                {t('addNewTerm')}
+                {LABELS.ADD_NEW_TERM}
             </Button>
             <ResourceGrid>
                 {terms?.map((term) => (

@@ -5,9 +5,8 @@ import { EditableRichText } from '../EditableRichText';
 import { EntityDisplay } from '../EntityDisplay';
 import { useSnackbar } from 'notistack';
 import { useNavigate } from '@tanstack/react-router';
-import { useTranslation } from 'react-i18next';
 import { FormInputs, RelationConfig } from '@/types/form';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { LABELS } from '@/constants';
 
 interface GenericFormProps {
     defaultValues: Partial<FormInputs>;
@@ -34,15 +33,9 @@ export function GenericForm({
 }: GenericFormProps) {
     const { enqueueSnackbar } = useSnackbar();
     const navigate = useNavigate();
-    const { t } = useTranslation();
-    const { language } = useLanguage();
 
     const { register, handleSubmit, watch, setValue, control } = useForm<FormInputs>({
-        defaultValues: {
-            ...defaultValues,
-            title: language === 'en' ? defaultValues.titleEn : defaultValues.titleHe,
-            content: language === 'en' ? defaultValues.contentEn : defaultValues.contentHe,
-        }
+        defaultValues
     });
 
     const { title, content } = watch();
@@ -54,9 +47,9 @@ export function GenericForm({
                 content={content}
                 metadata={metadata}
                 relations={relations.map(rel => ({
-                    title: t(rel.label),
+                    title: rel.label,
                     items: ((watch(rel.name) ?? []) as BasicEntity[]).filter((item): item is BasicEntity => typeof item === 'object'),
-                    getLabel: (item: BasicEntity) => language === 'en' ? item.titleEn : item.titleHe,
+                    getLabel: (item: BasicEntity) => item.title,
                     getLink: (item: BasicEntity) => ({
                         to: `/${rel.baseRoute}/$id`,
                         params: { id: item.id.toString() }
@@ -72,7 +65,7 @@ export function GenericForm({
 
             const response = await onSubmit(formData);
 
-            enqueueSnackbar(`${t(entityType)} ${t(isEdit ? 'updated' : 'created')}!`, { variant: 'success' });
+            enqueueSnackbar(`${entityType} ${isEdit ? LABELS.UPDATED : LABELS.CREATED}!`, { variant: 'success' });
 
             if (isEdit && setIsEditable) {
                 setIsEditable(false);
@@ -80,8 +73,8 @@ export function GenericForm({
                 navigate({ to: `/${entityRoute}/$id`, params: { id: response.id.toString() } });
             }
         } catch (error) {
-            const message = error instanceof Error ? error.message : t('unknownError');
-            enqueueSnackbar(`${t('failedTo')} ${t(isEdit ? 'update' : 'create')} ${t(entityType)}: ${message}`, { variant: 'error' });
+            const message = error instanceof Error ? error.message : LABELS.UNKNOWN_ERROR;
+            enqueueSnackbar(`${LABELS.FAILED_TO_UPDATE} ${entityType}: ${message}`, { variant: 'error' });
         }
     };
 
@@ -91,16 +84,16 @@ export function GenericForm({
                 <CardContent>
                     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
                         <Typography variant="h4" gutterBottom>
-                            {t(isEdit ? `edit${entityType}` : `new${entityType}`)}
+                            {isEdit ? `${LABELS.EDIT_ENTITY} ${entityType}` : `${LABELS.NEW_ENTITY} ${entityType}`}
                         </Typography>
                         <TextField
                             autoFocus
                             margin="dense"
-                            label={t('title')}
+                            label={LABELS.TITLE}
                             fullWidth
                             required
                             variant="standard"
-                            {...register('title', { required: t('titleRequired') })}
+                            {...register('title', { required: LABELS.TITLE_REQUIRED })}
                             sx={{ mb: 3 }}
                         />
                         <Box sx={{ mb: 3 }}>
@@ -118,12 +111,12 @@ export function GenericForm({
                                     <Autocomplete<BasicEntity, true>
                                         multiple
                                         options={options}
-                                        getOptionLabel={(option) => language === "en" ? option.titleEn : option.titleHe}
+                                        getOptionLabel={(option) => option.title}
                                         value={(value ?? []) as BasicEntity[]}
                                         onChange={(_, data) => onChange(data)}
                                         isOptionEqualToValue={(option, value) => option.id === value.id}
                                         renderInput={(params) => (
-                                            <TextField {...params} label={t(label)} sx={{ mb: 2 }} />
+                                            <TextField {...params} label={label} sx={{ mb: 2 }} />
                                         )}
                                         {...props}
                                     />
@@ -137,7 +130,7 @@ export function GenericForm({
                                 size="large"
                                 fullWidth
                             >
-                                {t(isEdit ? 'update' : 'save')}
+                                {isEdit ? LABELS.UPDATE : LABELS.SAVE}
                             </Button>
                         </Box>
                     </form>

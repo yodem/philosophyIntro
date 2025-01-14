@@ -3,15 +3,14 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { philosophersApi, termsApi, questionsApi } from '../../api';
 import { UpdatePhilosopherDto } from '@/types';
 import { GenericForm } from '../../components/Forms/GenericForm';
-import { useTranslation } from 'react-i18next';
 import { FormInputs } from '@/types/form';
+import { LABELS } from '@/constants';
 
 export const Route = createFileRoute('/philosophers/new')({
     component: NewPhilosopherComponent,
 });
 
 function NewPhilosopherComponent() {
-    const { t } = useTranslation();
     const queryClient = useQueryClient();
     const navigate = Route.useNavigate();
 
@@ -46,11 +45,11 @@ function NewPhilosopherComponent() {
         return createPhilosopherMutation.mutateAsync({
             ...data,
             era: data.era || '',
-            birthdate: data.birthdate || '',
-            deathdate: data.deathdate || '',
-            relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
-            relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
-            relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
+            birthDate: data.birthDate || '',
+            deathDate: data.deathDate || '',
+            associatedPhilosophers: data.associatedPhilosophers?.map((p: { id: string } | string) => typeof p === 'string' ? p : p.id),
+            associatedQuestions: data.associatedQuestions?.map((q: { id: string } | string) => typeof q === 'string' ? q : q.id),
+            associatedTerms: data.associatedTerms?.map((t: { id: string } | string) => typeof t === 'string' ? t : t.id),
         });
     };
 
@@ -60,63 +59,63 @@ function NewPhilosopherComponent() {
                 title: '',
                 content: '',
                 era: '',
-                birthdate: '',
-                deathdate: '',
-                relatedTerms: [],
-                relatedQuestions: [],
-                relatedPhilosophers: []
+                birthDate: '',
+                deathDate: '',
+                associatedTerms: [],
+                associatedQuestions: [],
+                associatedPhilosophers: []
             }}
             entityType="Philosopher"
             entityRoute="philosophers"
             relations={[
                 {
-                    name: 'relatedTerms',
-                    label: t('relatedTerms'),
+                    name: 'associatedTerms',
+                    label: LABELS.RELATED_TERMS,
                     options: allTerms || [],
                     baseRoute: 'terms'
                 },
                 {
-                    name: 'relatedQuestions',
-                    label: t('relatedQuestions'),
+                    name: 'associatedQuestions',
+                    label: LABELS.RELATED_QUESTIONS,
                     options: allQuestions || [],
                     baseRoute: 'questions'
                 },
                 {
-                    name: 'relatedPhilosophers',
-                    label: t('relatedPhilosophers'),
+                    name: 'associatedPhilosophers',
+                    label: LABELS.RELATED_PHILOSOPHERS,
                     options: allPhilosophers || [],
                     baseRoute: 'philosophers'
                 }
             ]}
-            renderAdditionalFields={(register) => (
-                <>
-                    <TextField
-                        margin="dense"
-                        label={t('era')}
-                        fullWidth
-                        required
-                        variant="standard"
-                        {...register('era', { required: 'Era is required' })}
-                        sx={{ mb: 3 }}
-                    />
-                    <TextField
-                        margin="dense"
-                        label={t('birthdate')}
-                        fullWidth
-                        variant="standard"
-                        {...register('birthdate')}
-                        sx={{ mb: 3 }}
-                    />
-                    <TextField
-                        margin="dense"
-                        label={t('deathdate')}
-                        fullWidth
-                        variant="standard"
-                        {...register('deathdate')}
-                        sx={{ mb: 3 }}
-                    />
-                </>
-            )}
+            // renderAdditionalFields={(register) => (
+            //     <>
+            //         <TextField
+            //             margin="dense"
+            //             label={LABELS.ERA}
+            //             fullWidth
+            //             required
+            //             variant="standard"
+            //             {...register('era', { required: LABELS.ERA })}
+            //             sx={{ mb: 3 }}
+            //         />
+            //         <TextField
+            //             margin="dense"
+            //             label={LABELS.BIRTH_DATE}
+            //             fullWidth
+            //             variant="standard"
+            //             {...register('birthDate')}
+            //             sx={{ mb: 3 }}
+            //         />
+            //         <TextField
+            //             margin="dense"
+            //             label={LABELS.DEATH_DATE}
+            //             fullWidth
+            //             variant="standard"
+            //             {...register('deathDate')}
+            //             sx={{ mb: 3 }}
+            //         />
+            //     </>)}
+
             onSubmit={onSubmit}
         />
     );

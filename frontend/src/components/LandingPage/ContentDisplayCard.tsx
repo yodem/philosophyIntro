@@ -2,7 +2,7 @@ import { Box, Card, CardActions, CardContent, Typography } from '@mui/material';
 import { ParseRoute, useNavigate } from '@tanstack/react-router';
 import { routeTree } from '@/routeTree.gen';
 import { RouterButton } from '@/components/routerComponents/RouterButton';
-import { useTranslation } from 'react-i18next';
+import { TEXTS } from '@/constants';
 
 interface ContentDisplayCardProps {
     to?: ParseRoute<typeof routeTree>['fullPath']
@@ -11,12 +11,10 @@ interface ContentDisplayCardProps {
 }
 
 function ContentDisplayCard({ to, Icon, title }: ContentDisplayCardProps) {
-    const { t } = useTranslation();
     const navigate = useNavigate()
     const handleNavigate = () => {
         if (to) {
             navigate({ to })
-
         }
     }
 
@@ -41,7 +39,7 @@ function ContentDisplayCard({ to, Icon, title }: ContentDisplayCardProps) {
             </CardContent>
             {to && <CardActions>
                 <RouterButton to={to} variant='outlined'>
-                    {t('learnMore')}
+                    {TEXTS.LEARN_MORE}
                 </RouterButton>
             </CardActions>}
         </Card>

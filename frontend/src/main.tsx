@@ -5,9 +5,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen';
 import { ThemeProvider as MuiThemeProvider, CssBaseline } from '@mui/material';
 import { ThemeProvider } from './contexts/ThemeContext';
-import { LanguageProvider } from './contexts/LanguageContext';
 import { getTheme } from './theme';
-import './i18n/i18n';
 import { useTheme } from './contexts/ThemeContext';
 
 const queryClient = new QueryClient();
@@ -35,9 +33,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <LanguageProvider>
-          <ThemedApp />
-        </LanguageProvider>
+        <ThemedApp />
       </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>

@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import ResourceCard from '@/components/ResourceCard'; // Import the generic component
 import ResourceGrid from '@/components/ResourceGrid'; // Import the generic grid component
 import ResourceSkeleton from '@/components/ResourceSkeleton'; // Import the generic skeleton component
-import { useTranslation } from 'react-i18next';
+import { LABELS } from '@/constants';
 
 function PhilosophersSkeleton() {
   return (
@@ -23,21 +23,20 @@ export const Route = createFileRoute('/philosophers/')({
 });
 
 function PhilosophersComponent() {
-  const { t } = useTranslation();
   const philosophers = Route.useLoaderData();
   const navigate = Route.useNavigate();
 
   return (
     <>
       <Button variant="outlined" onClick={() => navigate({ to: '/philosophers/new' })}>
-        {t('addNewPhilosopher')}
+        {LABELS.ADD_NEW_PHILOSOPHER}
       </Button>
       <ResourceGrid>
         {philosophers?.map((philosopher) => (
           <ResourceCard
             key={philosopher.id}
             resource={philosopher}
-            onClick={() => navigate({ to: `/philosophers/$id`, params: { id: philosopher.id.toString() } })}
+            onClick={() => navigate({ to: '/philosophers/$id', params: { id: philosopher.id.toString() } })}
           />
         ))}
       </ResourceGrid>

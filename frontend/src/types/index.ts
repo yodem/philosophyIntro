@@ -31,7 +31,6 @@ export interface CreateBasicDto {
   associatedTerms?: string[];
 }
 
-// Remove redundant interfaces and simplify
 export interface CreatePhilosopherDto extends CreateBasicDto {
   era?: string;
   birthDate?: string;

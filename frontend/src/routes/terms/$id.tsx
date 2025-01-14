@@ -4,9 +4,9 @@ import { termsApi, questionsApi, philosophersApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Button } from '@mui/material';
 import { UpdateTermDto } from '@/types';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { GenericForm } from '@/components/Forms/GenericForm';
 import { FormInputs } from '@/types/form';
+import { LABELS } from '@/constants';
 
 function TermSkeleton() {
     return (
@@ -26,7 +26,7 @@ function TermSkeleton() {
 export const Route = createFileRoute('/terms/$id')({
     loader: async ({ params }) => {
         try {
-            const term = await termsApi.getOne(Number(params.id));
+            const term = await termsApi.getOne(params.id);
             if (!term) throw new Error('Term not found');
             return term;
         } catch (error) {
@@ -39,7 +39,6 @@ export const Route = createFileRoute('/terms/$id')({
 });
 
 function TermComponent() {
-    const { t } = useTranslation();
     const [isEditing, setIsEditing] = useState(false);
     const term = Route.useLoaderData();
     const queryClient = useQueryClient();
@@ -75,13 +74,13 @@ function TermComponent() {
             ...term,
             ...data,
             id: term.id,
-            relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
-            relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
-            relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
+            associatedPhilosophers: data.associatedPhilosophers?.map(p => typeof p === 'object' ? p.id : p),
+            associatedQuestions: data.associatedQuestions?.map(q => typeof q === 'object' ? q.id : q),
+            associatedTerms: data.associatedTerms?.map(t => typeof t === 'object' ? t.id : t),
         });
     };
 
-    if (!term) return <Typography variant="h6">{t('termNotFound')}</Typography>;
+    if (!term) return <Typography variant="h6">{LABELS.TERM_NOT_FOUND}</Typography>;
 
     return (
         <Box p={2}>
@@ -90,7 +89,7 @@ function TermComponent() {
                 onClick={() => setIsEditing(!isEditing)}
                 sx={{ m: 2 }}
             >
-                {t(isEditing ? 'view' : 'edit')}
+                {isEditing ? LABELS.VIEW : LABELS.EDIT}
             </Button>
 
             <GenericForm
@@ -101,20 +100,20 @@ function TermComponent() {
                 entityRoute="terms"
                 relations={[
                     {
-                        name: 'relatedQuestions',
-                        label: t('relatedQuestions'),
+                        name: 'associatedQuestions',
+                        label: LABELS.RELATED_QUESTIONS,
                         options: allQuestions || [],
                         baseRoute: 'questions'
                     },
                     {
-                        name: 'relatedPhilosophers',
-                        label: t('relatedPhilosophers'),
+                        name: 'associatedPhilosophers',
+                        label: LABELS.RELATED_PHILOSOPHERS,
                         options: allPhilosophers || [],
                         baseRoute: 'philosophers'
                     },
                     {
-                        name: 'relatedTerms',
-                        label: t('relatedTerms'),
+                        name: 'associatedTerms',
+                        label: LABELS.RELATED_TERMS,
                         options: allTerms || [],
                         baseRoute: 'terms'
                     }

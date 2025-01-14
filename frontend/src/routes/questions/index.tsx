@@ -4,7 +4,7 @@ import { Button } from '@mui/material';
 import ResourceCard from '@/components/ResourceCard'; // Import the generic component
 import ResourceGrid from '@/components/ResourceGrid'; // Import the generic grid component
 import ResourceSkeleton from '@/components/ResourceSkeleton';
-import { useTranslation } from 'react-i18next';
+import { LABELS } from '@/constants';
 
 function QuestionsSkeleton() {
     return (
@@ -23,14 +23,13 @@ export const Route = createFileRoute('/questions/')({
 });
 
 function QuestionsComponent() {
-    const { t } = useTranslation();
     const questions = Route.useLoaderData();
     const navigate = Route.useNavigate();
 
     return (
         <>
             <Button variant="outlined" onClick={() => navigate({ to: '/questions/new' })}>
-                {t('addNewQuestion')}
+                {LABELS.ADD_NEW_QUESTION}
             </Button>
             <ResourceGrid>
                 {questions?.map((question) => (

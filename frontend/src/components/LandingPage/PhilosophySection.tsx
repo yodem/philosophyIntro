@@ -1,24 +1,22 @@
 import ContentDisplayCard from '@/components/LandingPage/ContentDisplayCard';
 import { Grid, Typography } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
-import { useTranslation } from 'react-i18next';
+import { TEXTS } from '@/constants';
 
 function PhilosophySection() {
-  const { t } = useTranslation();
-
   return (
     <Grid container spacing={4}>
       <Grid xs={12} item sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Typography variant='h4'>{t('whatIsPhilosophy')}</Typography>
+        <Typography variant='h4'>{TEXTS.WHAT_IS_PHILOSOPHY}</Typography>
       </Grid>
       <Grid item xs={12} sm={4}>
-        <ContentDisplayCard Icon={<PersonIcon />} title={t('impossibleQuestions')} />
+        <ContentDisplayCard Icon={<PersonIcon />} title={TEXTS.IMPOSSIBLE_QUESTIONS} />
       </Grid>
       <Grid item xs={12} sm={4}>
-        <ContentDisplayCard Icon={<PersonIcon />} title={t('lovingWisdom')} />
+        <ContentDisplayCard Icon={<PersonIcon />} title={TEXTS.LOVING_WISDOM} />
       </Grid>
       <Grid item xs={12} sm={4}>
-        <ContentDisplayCard Icon={<PersonIcon />} title={t('mythosToLogos')} />
+        <ContentDisplayCard Icon={<PersonIcon />} title={TEXTS.MYTHOS_TO_LOGOS} />
       </Grid>
     </Grid>
   )

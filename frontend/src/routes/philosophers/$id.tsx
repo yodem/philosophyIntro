@@ -4,9 +4,9 @@ import { philosophersApi, termsApi, questionsApi } from '../../api';
 import { Card, CardContent, Skeleton, Typography, Box, Button } from '@mui/material';
 import { useState } from 'react';
 import { UpdatePhilosopherDto } from '@/types';
-import { useTranslation } from 'react-i18next';
 import { GenericForm } from '@/components/Forms/GenericForm';
 import { FormInputs } from '@/types/form';
+import { LABELS, METADATA_LABELS } from '@/constants';
 
 function PhilosopherSkeleton() {
   return (
@@ -27,7 +27,7 @@ function PhilosopherSkeleton() {
 export const Route = createFileRoute('/philosophers/$id')({
   loader: async ({ params }) => {
     try {
-      const philosopher = await philosophersApi.getOne(Number(params.id));
+      const philosopher = await philosophersApi.getOne(params.id);
       if (!philosopher) throw new Error('Philosopher not found');
       return philosopher;
     } catch (error) {
@@ -40,7 +40,6 @@ export const Route = createFileRoute('/philosophers/$id')({
 });
 
 function PhilosopherComponent() {
-  const { t } = useTranslation();
   const philosopher = Route.useLoaderData();
   const queryClient = useQueryClient();
   const [isEditing, setIsEditing] = useState(false);
@@ -75,20 +74,20 @@ function PhilosopherComponent() {
       ...philosopher,
       ...data,
       id: philosopher!.id,
-      relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
-      relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
-      relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
+      associatedPhilosophers: data.associatedPhilosophers?.map((p: { id: string } | string) => typeof p === 'string' ? p : p.id),
+      associatedQuestions: data.associatedQuestions?.map((q: { id: string } | string) => typeof q === 'string' ? q : q.id),
+      associatedTerms: data.associatedTerms?.map((t: { id: string } | string) => typeof t === 'string' ? t : t.id),
     });
   };
 
   if (!philosopher) {
-    return <Typography variant="h6">{t('philosopherNotFound')}</Typography>;
+    return <Typography variant="h6">{LABELS.PHILOSOPHER_NOT_FOUND}</Typography>;
   }
 
   return (
     <Box p={2}>
       <Button variant="outlined" onClick={() => setIsEditing(!isEditing)} sx={{ m: 2 }}>
-        {t(isEditing ? 'view' : 'edit')}
+        {isEditing ? LABELS.VIEW : LABELS.EDIT}
       </Button>
 
       <GenericForm
@@ -99,28 +98,28 @@ function PhilosopherComponent() {
         entityRoute="philosophers"
         relations={[
           {
-            name: 'relatedTerms',
-            label: t('relatedTerms'),
+            name: 'associatedTerms',
+            label: LABELS.RELATED_TERMS,
             options: allTerms || [],
             baseRoute: 'terms'
           },
           {
-            name: 'relatedQuestions',
-            label: t('relatedQuestions'),
+            name: 'associatedQuestions',
+            label: LABELS.RELATED_QUESTIONS,
             options: allQuestions || [],
             baseRoute: 'questions'
           },
           {
-            name: 'relatedPhilosophers',
-            label: t('relatedPhilosophers'),
+            name: 'associatedPhilosophers',
+            label: LABELS.RELATED_PHILOSOPHERS,
             options: allPhilosophers || [],
             baseRoute: 'philosophers'
           }
         ]}
         metadata={[
-          { label: "Era", value: philosopher.era },
-          { label: "Birth Date", value: philosopher.birthdate || 'Unknown' },
-          { label: "Death Date", value: philosopher.deathdate || 'Unknown' }
+          { label: METADATA_LABELS.ERA, value: philosopher.era || LABELS.UNKNOWN },
+          { label: METADATA_LABELS.BIRTH_DATE, value: philosopher.birthDate || LABELS.UNKNOWN },
+          { label: METADATA_LABELS.DEATH_DATE, value: philosopher.deathDate || LABELS.UNKNOWN }
         ]}
         onSubmit={onSubmit}
         setIsEditable={setIsEditing}

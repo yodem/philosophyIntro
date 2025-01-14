@@ -1,16 +1,14 @@
 import { Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { TEXTS } from '@/constants';
 
 function AboutDisplay() {
-    const { t } = useTranslation();
-
     return (
         <Box sx={{ mt: 4 }}>
             <Typography variant="h5" component="h2" gutterBottom>
-                {t('about')}
+                {TEXTS.ABOUT}
             </Typography>
             <Typography variant="body1" color="text.secondary">
-                {t('aboutDescription')}
+                {TEXTS.ABOUT_DESCRIPTION}
             </Typography>
         </Box>
     )

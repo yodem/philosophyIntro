@@ -4,9 +4,9 @@ import { questionsApi, termsApi, philosophersApi } from '../../api';
 import { Card, CardContent, Box, Skeleton, Typography, Button } from '@mui/material';
 import { useState } from 'react';
 import { UpdateQuestionDto } from '@/types';
-import { useTranslation } from 'react-i18next';
 import { GenericForm } from '@/components/Forms/GenericForm';
 import { FormInputs } from '@/types/form';
+import { LABELS } from '@/constants';
 
 function QuestionSkeleton() {
     return (
@@ -30,7 +30,7 @@ function QuestionSkeleton() {
 export const Route = createFileRoute('/questions/$id')({
     loader: async ({ params }) => {
         try {
-            const question = await questionsApi.getOne(Number(params.id));
+            const question = await questionsApi.getOne(params.id);
             if (!question) throw new Error('Question not found');
             return question;
         } catch (error) {
@@ -43,7 +43,6 @@ export const Route = createFileRoute('/questions/$id')({
 });
 
 function QuestionComponent() {
-    const { t } = useTranslation();
     const question = Route.useLoaderData();
     const queryClient = useQueryClient();
     const [isEditing, setIsEditing] = useState(false);
@@ -79,13 +78,13 @@ function QuestionComponent() {
             ...question,
             ...data,
             id: question.id,
-            relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
-            relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
-            relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
+            associatedPhilosophers: data.associatedPhilosophers?.map((p: { id: string } | string) => typeof p === 'string' ? p : p.id),
+            associatedQuestions: data.associatedQuestions?.map((q: { id: string } | string) => typeof q === 'string' ? q : q.id),
+            associatedTerms: data.associatedTerms?.map((t: { id: string } | string) => typeof t === 'string' ? t : t.id),
         });
     };
 
-    if (!question) return <Typography variant="h6">{t('questionNotFound')}</Typography>;
+    if (!question) return <Typography variant="h6">{LABELS.QUESTION_NOT_FOUND}</Typography>;
 
     return (
         <Box p={2}>
@@ -94,7 +93,7 @@ function QuestionComponent() {
                 onClick={() => setIsEditing(!isEditing)}
                 sx={{ m: 2 }}
             >
-                {t(isEditing ? 'view' : 'edit')}
+                {isEditing ? LABELS.VIEW : LABELS.EDIT}
             </Button>
 
             <GenericForm
@@ -105,20 +104,20 @@ function QuestionComponent() {
                 entityRoute="questions"
                 relations={[
                     {
-                        name: 'relatedTerms',
-                        label: t('relatedTerms'),
+                        name: 'associatedTerms',
+                        label: LABELS.RELATED_TERMS,
                         options: allTerms || [],
                         baseRoute: 'terms'
                     },
                     {
-                        name: 'relatedPhilosophers',
-                        label: t('relatedPhilosophers'),
+                        name: 'associatedPhilosophers',
+                        label: LABELS.RELATED_PHILOSOPHERS,
                         options: allPhilosophers || [],
                         baseRoute: 'philosophers'
                     },
                     {
-                        name: 'relatedQuestions',
-                        label: t('relatedQuestions'),
+                        name: 'associatedQuestions',
+                        label: LABELS.RELATED_QUESTIONS,
                         options: allQuestions || [],
                         baseRoute: 'questions'
                     }

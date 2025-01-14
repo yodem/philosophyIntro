@@ -1,12 +1,10 @@
 import { Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import { TEXTS } from '@/constants';
 
 function Description() {
-    const { t } = useTranslation();
-
     return (
         <Box sx={{ my: 4, display: "flex", justifyContent: "center" }}>
-            <Typography variant='h2'>{t('welcomeToPhilosophy')}</Typography>
+            <Typography variant='h2'>{TEXTS.WELCOME_TO_PHILOSOPHY}</Typography>
         </Box>
     );
 }

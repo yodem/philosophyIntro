@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { termsApi, questionsApi, philosophersApi } from '../../api';
 import { UpdateTermDto } from '@/types';
 import { GenericForm } from '@/components/Forms/GenericForm';
-import { useTranslation } from 'react-i18next';
+import { LABELS } from '@/constants';
 import { FormInputs } from '@/types/form';
 
 export const Route = createFileRoute('/terms/new')({
@@ -11,7 +11,6 @@ export const Route = createFileRoute('/terms/new')({
 });
 
 function NewTermComponent() {
-    const { t } = useTranslation();
     const queryClient = useQueryClient();
     const navigate = Route.useNavigate();
 
@@ -23,6 +22,11 @@ function NewTermComponent() {
     const { data: allPhilosophers } = useQuery({
         queryKey: ['philosophers'],
         queryFn: philosophersApi.getAll
+    });
+
+    const { data: allTerms } = useQuery({
+        queryKey: ['terms'],
+        queryFn: termsApi.getAll
     });
 
     const createTermMutation = useMutation({
@@ -40,9 +44,9 @@ function NewTermComponent() {
     const onSubmit = async (data: FormInputs) => {
         return createTermMutation.mutateAsync({
             ...data,
-            relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
-            relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
-            relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
+            associatedPhilosophers: data.associatedPhilosophers?.map(p => typeof p === 'object' ? p.id : p),
+            associatedQuestions: data.associatedQuestions?.map(q => typeof q === 'object' ? q.id : q),
+            associatedTerms: data.associatedTerms?.map(t => typeof t === 'object' ? t.id : t),
         });
     };
 
@@ -51,28 +55,29 @@ function NewTermComponent() {
             defaultValues={{
                 title: '',
                 content: '',
-                relatedQuestions: [],
-                relatedPhilosophers: [],
-                relatedTerms: []
+                description: '',
+                associatedQuestions: [],
+                associatedPhilosophers: [],
+                associatedTerms: []
             }}
             entityType="Term"
             entityRoute="terms"
             relations={[
                 {
-                    name: 'relatedQuestions',
-                    label: t('relatedQuestions'),
+                    name: 'associatedQuestions',
+                    label: LABELS.RELATED_QUESTIONS,
                     options: allQuestions || [],
                     baseRoute: 'questions'
                 },
                 {
-                    name: 'relatedPhilosophers',
-                    label: t('relatedPhilosophers'),
+                    name: 'associatedPhilosophers',
+                    label: LABELS.RELATED_PHILOSOPHERS,
                     options: allPhilosophers || [],
                     baseRoute: 'philosophers'
                 },
                 {
-                    name: 'relatedTerms',
-                    label: t('relatedTerms'),
+                    name: 'associatedTerms',
+                    label: LABELS.RELATED_TERMS,
                     options: allTerms || [],
                     baseRoute: 'terms'
                 }

@@ -3,15 +3,14 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { questionsApi, termsApi, philosophersApi } from '../../api';
 import { UpdateQuestionDto } from '@/types';
 import { GenericForm } from '@/components/Forms/GenericForm';
-import { useTranslation } from 'react-i18next';
 import { FormInputs } from '@/types/form';
+import { LABELS } from '@/constants';
 
 export const Route = createFileRoute('/questions/new')({
     component: NewQuestionComponent,
 });
 
 function NewQuestionComponent() {
-    const { t } = useTranslation();
     const queryClient = useQueryClient();
     const navigate = Route.useNavigate();
 
@@ -23,6 +22,11 @@ function NewQuestionComponent() {
     const { data: allPhilosophers } = useQuery({
         queryKey: ['philosophers'],
         queryFn: philosophersApi.getAll
+    });
+
+    const { data: allQuestions } = useQuery({
+        queryKey: ['questions'],
+        queryFn: questionsApi.getAll
     });
 
     const createQuestionMutation = useMutation({
@@ -40,9 +44,9 @@ function NewQuestionComponent() {
     const onSubmit = async (data: FormInputs) => {
         return createQuestionMutation.mutateAsync({
             ...data,
-            relatedPhilosophers: data.relatedPhilosophers?.map((p: { id: number } | number) => typeof p === 'number' ? p : p.id),
-            relatedQuestions: data.relatedQuestions?.map((q: { id: number } | number) => typeof q === 'number' ? q : q.id),
-            relatedTerms: data.relatedTerms?.map((t: { id: number } | number) => typeof t === 'number' ? t : t.id),
+            associatedPhilosophers: data.associatedPhilosophers?.map((p: { id: string } | string) => typeof p === 'string' ? p : p.id),
+            associatedQuestions: data.associatedQuestions?.map((q: { id: string } | string) => typeof q === 'string' ? q : q.id),
+            associatedTerms: data.associatedTerms?.map((t: { id: string } | string) => typeof t === 'string' ? t : t.id),
         });
     };
 
@@ -51,28 +55,28 @@ function NewQuestionComponent() {
             defaultValues={{
                 title: '',
                 content: '',
-                relatedTerms: [],
-                relatedPhilosophers: [],
-                relatedQuestions: []
+                associatedTerms: [],
+                associatedPhilosophers: [],
+                associatedQuestions: []
             }}
             entityType="Question"
             entityRoute="questions"
             relations={[
                 {
-                    name: 'relatedTerms',
-                    label: t('relatedTerms'),
+                    name: 'associatedTerms',
+                    label: LABELS.RELATED_TERMS,
                     options: allTerms || [],
                     baseRoute: 'terms'
                 },
                 {
-                    name: 'relatedPhilosophers',
-                    label: t('relatedPhilosophers'),
+                    name: 'associatedPhilosophers',
+                    label: LABELS.RELATED_PHILOSOPHERS,
                     options: allPhilosophers || [],
                     baseRoute: 'philosophers'
                 },
                 {
-                    name: 'relatedQuestions',
-                    label: t('relatedQuestions'),
+                    name: 'associatedQuestions',
+                    label: LABELS.RELATED_QUESTIONS,
                     options: allQuestions || [],
                     baseRoute: 'questions'
                 }

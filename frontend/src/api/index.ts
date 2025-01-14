@@ -21,7 +21,7 @@ export const philosophersApi = {
       console.error(error);
     }
   },
-  getOne: async (id: number) => {
+  getOne: async (id: string) => {
     try {
       const res = await api.get<Philosopher>(`/philosophers/${id}`);
       return res.data;
@@ -29,7 +29,7 @@ export const philosophersApi = {
       console.error(error);
     }
   },
-  update: async (id: number, data: UpdatePhilosopherDto) => {
+  update: async (id: string, data: UpdatePhilosopherDto) => {
     try {
       const res = await api.patch<Philosopher>(`/philosophers/${id}`, data);
       return res.data;
@@ -56,7 +56,7 @@ export const questionsApi = {
       console.error(error);
     }
   },
-  getOne: async (id: number) => {
+  getOne: async (id: string) => {
     try {
       const res = await api.get<Question>(`/questions/${id}`);
       return res.data;
@@ -64,7 +64,7 @@ export const questionsApi = {
       console.error(error);
     }
   },
-  update: async (id: number, data: UpdateQuestionDto) => {
+  update: async (id: string, data: UpdateQuestionDto) => {
     try {
       const res = await api.patch<Question>(`/questions/${id}`, data);
       return res.data;
@@ -91,7 +91,7 @@ export const termsApi = {
       console.error(error);
     }
   },
-  getOne: async (id: number) => {
+  getOne: async (id: string) => {
     try {
       const res = await api.get<Term>(`/terms/${id}`);
       return res.data;
@@ -99,7 +99,7 @@ export const termsApi = {
       console.error(error);
     }
   },
-  update: async (id: number, data: UpdateTermDto) => {
+  update: async (id: string, data: UpdateTermDto) => {
     try {
       const res = await api.patch<Term>(`/terms/${id}`, data);
       return res.data;
