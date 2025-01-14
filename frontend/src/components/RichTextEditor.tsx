@@ -22,6 +22,11 @@ export function RichTextEditor({ content, onChange }: RichTextEditorProps) {
         onUpdate: ({ editor }) => {
             onChange(editor.getHTML());
         },
+        editorProps: {
+            attributes: {
+                dir: 'rtl',
+            },
+        },
     });
 
     return (

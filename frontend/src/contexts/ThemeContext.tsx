@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface ThemeContextType {
     mode: 'light' | 'dark';
-    direction: 'ltr' | 'rtl';
+    direction: 'rtl';
     toggleMode: () => void;
 }
 
@@ -11,8 +10,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [mode, setMode] = useState<'light' | 'dark'>('light');
-    const { i18n } = useTranslation();
-    const direction = i18n.language === 'he' ? 'rtl' : 'ltr';
+    const direction = 'rtl';
 
     document.documentElement.setAttribute('dir', direction);
 

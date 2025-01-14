@@ -17,6 +17,8 @@ interface EntityDisplayProps {
 
 export function EntityDisplay({ title, content, relations = [], metadata = [] }: EntityDisplayProps) {
     const { t } = useTranslation();
+    console.log(relations);
+
 
     return (
         <Box key={title} p={2}>
@@ -32,7 +34,7 @@ export function EntityDisplay({ title, content, relations = [], metadata = [] }:
                         </Stack>
                     )}
 
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                    <div dir='rtl' dangerouslySetInnerHTML={{ __html: content }} />
 
                     {relations.map((relation) => (
                         <RelatedItems

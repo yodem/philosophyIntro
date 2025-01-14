@@ -41,6 +41,31 @@ interface IPhilosopherData {
   associatedPhilosophers: string[];
 }
 
+const IMAGE_PREFIX = 'https://philosophersapi.com';
+
+// Helper function to add prefix to image URLs
+function addImagePrefix(images: IImages): IImages {
+  if (!images) return images;
+
+  const prefixedImages: IImages = {};
+  if (images.banner400x300)
+    prefixedImages.banner400x300 = `${IMAGE_PREFIX}${images.banner400x300}`;
+  if (images.banner800x600)
+    prefixedImages.banner800x600 = `${IMAGE_PREFIX}${images.banner800x600}`;
+  if (images.faceImages) {
+    prefixedImages.faceImages = {
+      face250x250: `${IMAGE_PREFIX}${images.faceImages.face250x250}`,
+      face500x500: `${IMAGE_PREFIX}${images.faceImages.face500x500}`,
+    };
+  }
+  if (images.fullImages) {
+    prefixedImages.fullImages = {
+      full600x800: `${IMAGE_PREFIX}${images.fullImages.full600x800}`,
+    };
+  }
+  return prefixedImages;
+}
+
 @Injectable()
 export class SeederService {
   private readonly logger = new Logger(SeederService.name);
@@ -61,8 +86,9 @@ export class SeederService {
       let philosopher = await this.philosopherRepository.findOne({
         where: { id: philData.id },
       });
+      const imagesWithPrefix = addImagePrefix(philData.images);
       if (philosopher) {
-        philosopher.images = philData.images;
+        philosopher.images = imagesWithPrefix;
         philosopher.birthDate = philData.birthDate;
         philosopher.deathDate = philData.deathDate;
         philosopher.title = philData.title;
@@ -72,7 +98,7 @@ export class SeederService {
       } else {
         philosopher = this.philosopherRepository.create({
           id: philData.id,
-          images: philData.images,
+          images: imagesWithPrefix,
           birthDate: philData.birthDate,
           deathDate: philData.deathDate,
           title: philData.title,
@@ -92,15 +118,16 @@ export class SeederService {
       let term = await this.termRepository.findOne({
         where: { id: termData.id },
       });
+      const imagesWithPrefix = addImagePrefix(termData.images);
       if (term) {
-        term.images = termData.images;
+        term.images = imagesWithPrefix;
         term.title = termData.name;
         term.content = termData.content;
         term.description = termData.description;
       } else {
         term = this.termRepository.create({
           id: termData.id,
-          images: termData.images,
+          images: imagesWithPrefix,
           title: termData.name,
           content: termData.content,
           description: termData.description,
@@ -129,28 +156,6 @@ export class SeederService {
             .map((catId) => termsToSave.find((t) => t.id === catId))
             .filter((t): t is Term => Boolean(t));
           await this.philosopherRepository.save(philosopher);
-        }
-      }
-    }
-
-    // 4. Update term-to-philosopher associations
-    this.logger.log('Updating term-to-philosopher associations...');
-    for (const termData of terms as ITermData[]) {
-      if (termData.associatedPhilosophers?.length) {
-        const term = await this.termRepository.findOne({
-          where: { id: termData.id },
-          relations: ['associatedPhilosophers'],
-        });
-        if (term) {
-          // Clear existing associated philosophers first
-          term.associatedPhilosophers = [];
-          await this.termRepository.save(term);
-
-          // Reassign new associations
-          term.associatedPhilosophers = termData.associatedPhilosophers
-            .map((philId) => philosopherToSave.find((p) => p.id === philId))
-            .filter((p): p is Philosopher => Boolean(p));
-          await this.termRepository.save(term);
         }
       }
     }

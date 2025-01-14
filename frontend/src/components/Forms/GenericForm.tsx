@@ -38,6 +38,9 @@ export function GenericForm({
         defaultValues
     });
 
+    console.log(watch());
+
+
     const { title, content } = watch();
 
     if (!isEditable) {
