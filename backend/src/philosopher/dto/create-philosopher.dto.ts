@@ -1,52 +1,50 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsOptional,
-  IsArray,
-  IsNumber,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsArray } from 'class-validator';
+import { IImages } from '../../term/entities/term.entity';
 
 export class CreatePhilosopherDto {
   @IsString()
   @IsNotEmpty()
-  titleEn: string;
+  id: string;
 
-  @IsString()
-  @IsNotEmpty()
-  titleHe: string;
-
-  @IsString()
-  @IsNotEmpty()
-  contentEn: string;
-
-  @IsString()
-  @IsNotEmpty()
-  contentHe: string;
-
-  @IsString()
-  @IsNotEmpty()
-  era: string;
+  @IsOptional()
+  images?: IImages;
 
   @IsString()
   @IsOptional()
-  birthdate?: string;
+  birthDate?: string;
 
   @IsString()
   @IsOptional()
-  deathdate?: string;
+  deathDate?: string;
+
+  @IsString()
+  @IsNotEmpty()
+  title: string;
+
+  @IsString()
+  @IsNotEmpty()
+  content: string;
+
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
+  @IsString()
+  @IsOptional()
+  era?: string;
 
   @IsArray()
-  @IsNumber({}, { each: true })
+  @IsString({ each: true })
   @IsOptional()
-  relatedPhilosophers?: number[];
+  associatedTerms?: string[];
 
   @IsArray()
-  @IsNumber({}, { each: true })
+  @IsString({ each: true })
   @IsOptional()
-  relatedTerms?: number[];
+  associatedPhilosophers?: string[];
 
   @IsArray()
-  @IsNumber({}, { each: true })
+  @IsString({ each: true })
   @IsOptional()
-  relatedQuestions?: number[];
+  associatedQuestions?: string[];
 }

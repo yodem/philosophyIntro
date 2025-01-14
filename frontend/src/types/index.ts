@@ -1,19 +1,19 @@
 // Entity types with self-referential properties
 export interface BasicEntity {
-  id: number;
-  titleEn: string;
-  titleHe: string;
-  contentEn: string;
-  contentHe: string;
-  relatedPhilosophers?: Philosopher[];
-  relatedQuestions?: Question[];
-  relatedTerms?: Term[];
+  id: string;
+  title: string;
+  content: string;
+  description: string;
+  images?: IImages;
+  associatedPhilosophers?: Philosopher[];
+  associatedQuestions?: Question[];
+  associatedTerms?: Term[];
 }
 
 export interface Philosopher extends BasicEntity {
-  era: string;
-  birthdate?: string;
-  deathdate?: string;
+  era?: string;
+  birthDate?: string;
+  deathDate?: string;
 }
 
 export type Question = BasicEntity;
@@ -21,27 +21,28 @@ export type Term = BasicEntity;
 
 // DTOs for creating/updating entities
 export interface CreateBasicDto {
-  titleEn: string;
-  titleHe: string;
-  contentEn: string;
-  contentHe: string;
-  relatedPhilosophers?: number[];
-  relatedQuestions?: number[];
-  relatedTerms?: number[];
+  id: string;
+  title: string;
+  content: string;
+  description: string;
+  images?: IImages;
+  associatedPhilosophers?: string[];
+  associatedQuestions?: string[];
+  associatedTerms?: string[];
 }
 
 // Remove redundant interfaces and simplify
 export interface CreatePhilosopherDto extends CreateBasicDto {
-  era: string;
-  birthdate?: string;
-  deathdate?: string;
+  era?: string;
+  birthDate?: string;
+  deathDate?: string;
 }
 
 export type CreateQuestionDto = CreateBasicDto;
 export type CreateTermDto = CreateBasicDto;
-export type UpdateBasicDto = Partial<CreateBasicDto> & { id: number };
+export type UpdateBasicDto = Partial<CreateBasicDto> & { id: string };
 export type UpdatePhilosopherDto = Partial<CreatePhilosopherDto> & {
-  id: number;
+  id: string;
 };
 export type UpdateQuestionDto = UpdateBasicDto;
 export type UpdateTermDto = UpdateBasicDto;
@@ -52,13 +53,33 @@ export interface ApiResponse<T> {
 }
 
 export interface TermResponse extends Term {
-  id: number;
+  id: string;
 }
 
 export interface QuestionResponse extends Question {
-  id: number;
+  id: string;
 }
 
 export interface PhilosopherResponse extends Philosopher {
-  id: number;
+  id: string;
+}
+
+export interface IFaceImages {
+  face250x250?: string;
+  face500x500?: string;
+}
+
+export interface IFullImages {
+  full600x800?: string;
+}
+
+export interface IBannerImages {
+  banner400x300?: string;
+  banner800x600?: string;
+}
+
+export interface IImages {
+  faceImages?: IFaceImages;
+  fullImages?: IFullImages;
+  bannerImages?: IBannerImages;
 }

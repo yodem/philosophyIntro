@@ -27,7 +27,7 @@ export class PhilosopherController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.philosopherService.findOne(+id);
+    return this.philosopherService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class PhilosopherController {
     @Param('id') id: string,
     @Body() updatePhilosopherDto: UpdatePhilosopherDto,
   ) {
-    return this.philosopherService.update(+id, updatePhilosopherDto);
+    return this.philosopherService.update(id, updatePhilosopherDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.philosopherService.remove(+id);
+    return this.philosopherService.remove(id);
   }
 }

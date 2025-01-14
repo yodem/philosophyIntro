@@ -2,10 +2,8 @@ import { BasicEntity } from "./index";
 
 export interface FormInputs extends BasicEntity {
   era?: string;
-  birthdate?: string;
-  deathdate?: string;
-  title: string;
-  content: string;
+  birthDate?: string;
+  deathDate?: string;
 }
 
 export interface RelationConfig {

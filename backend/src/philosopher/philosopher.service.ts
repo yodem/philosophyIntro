@@ -22,31 +22,30 @@ export class PhilosopherService {
     createPhilosopherDto: CreatePhilosopherDto,
   ): Promise<Philosopher> {
     const {
-      relatedTerms,
-      relatedQuestions,
-      relatedPhilosophers,
+      associatedTerms,
+      associatedQuestions,
+      associatedPhilosophers,
       ...philosopherData
     } = createPhilosopherDto;
     const philosopher = this.philosopherRepository.create(philosopherData);
 
-    if (relatedTerms) {
-      philosopher.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    if (associatedTerms) {
+      philosopher.associatedTerms = await this.termRepository.findBy({
+        id: In(associatedTerms),
       });
     }
 
-    if (relatedQuestions) {
-      philosopher.relatedQuestions = await this.questionRepository.findBy({
-        id: In(relatedQuestions),
+    if (associatedQuestions) {
+      philosopher.associatedQuestions = await this.questionRepository.findBy({
+        id: In(associatedQuestions),
       });
     }
 
-    if (relatedPhilosophers) {
-      philosopher.relatedPhilosophers = await this.philosopherRepository.findBy(
-        {
-          id: In(relatedPhilosophers),
-        },
-      );
+    if (associatedPhilosophers) {
+      philosopher.associatedPhilosophers =
+        await this.philosopherRepository.findBy({
+          id: In(associatedPhilosophers),
+        });
     }
 
     return this.philosopherRepository.save(philosopher);
@@ -54,14 +53,22 @@ export class PhilosopherService {
 
   findAll(): Promise<Philosopher[]> {
     return this.philosopherRepository.find({
-      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
+      relations: [
+        'associatedTerms',
+        'associatedQuestions',
+        'associatedPhilosophers',
+      ],
     });
   }
 
-  async findOne(id: number): Promise<Philosopher> {
+  async findOne(id: string): Promise<Philosopher> {
     const philosopher = await this.philosopherRepository.findOne({
       where: { id },
-      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
+      relations: [
+        'associatedTerms',
+        'associatedQuestions',
+        'associatedPhilosophers',
+      ],
     });
     if (!philosopher) {
       throw new NotFoundException(`Philosopher with ID ${id} not found`);
@@ -70,43 +77,61 @@ export class PhilosopherService {
   }
 
   async update(
-    id: number,
+    id: string,
     updatePhilosopherDto: UpdatePhilosopherDto,
   ): Promise<Philosopher> {
     const {
-      relatedTerms,
-      relatedQuestions,
-      relatedPhilosophers,
+      associatedTerms,
+      associatedQuestions,
+      associatedPhilosophers,
       ...philosopherData
     } = updatePhilosopherDto;
 
     await this.philosopherRepository.update({ id }, philosopherData);
-    const philosopher = await this.findOne(id);
 
-    if (relatedTerms) {
-      philosopher.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    // Load existing philosopher with relations
+    const philosopher = await this.philosopherRepository.findOne({
+      where: { id },
+      relations: [
+        'associatedTerms',
+        'associatedQuestions',
+        'associatedPhilosophers',
+      ],
+    });
+
+    if (!philosopher) {
+      throw new NotFoundException(`Philosopher with ID ${id} not found`);
+    }
+
+    if (associatedTerms) {
+      // Load the terms
+      const terms = await this.termRepository.findBy({
+        id: In(associatedTerms),
       });
+
+      // Update the association
+      philosopher.associatedTerms = terms;
     }
 
-    if (relatedQuestions) {
-      philosopher.relatedQuestions = await this.questionRepository.findBy({
-        id: In(relatedQuestions),
+    if (associatedQuestions) {
+      const questions = await this.questionRepository.findBy({
+        id: In(associatedQuestions),
       });
+      philosopher.associatedQuestions = questions;
     }
 
-    if (relatedPhilosophers) {
-      philosopher.relatedPhilosophers = await this.philosopherRepository.findBy(
-        {
-          id: In(relatedPhilosophers),
-        },
-      );
+    if (associatedPhilosophers) {
+      const philosophers = await this.philosopherRepository.findBy({
+        id: In(associatedPhilosophers),
+      });
+      philosopher.associatedPhilosophers = philosophers;
     }
 
+    // Save the updated philosopher with its relations
     return this.philosopherRepository.save(philosopher);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.philosopherRepository.delete(id);
   }
 }

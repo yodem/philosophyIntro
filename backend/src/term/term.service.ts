@@ -19,25 +19,29 @@ export class TermService {
   ) {}
 
   async create(createTermDto: CreateTermDto): Promise<Term> {
-    const { relatedTerms, relatedQuestions, relatedPhilosophers, ...termData } =
-      createTermDto;
+    const {
+      associatedTerms,
+      associatedQuestions,
+      associatedPhilosophers,
+      ...termData
+    } = createTermDto;
     const term = this.termRepository.create(termData);
 
-    if (relatedTerms) {
-      term.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    if (associatedTerms) {
+      term.associatedTerms = await this.termRepository.findBy({
+        id: In(associatedTerms),
       });
     }
 
-    if (relatedQuestions) {
-      term.relatedQuestions = await this.questionRepository.findBy({
-        id: In(relatedQuestions),
+    if (associatedQuestions) {
+      term.associatedQuestions = await this.questionRepository.findBy({
+        id: In(associatedQuestions),
       });
     }
 
-    if (relatedPhilosophers) {
-      term.relatedPhilosophers = await this.philosopherRepository.findBy({
-        id: In(relatedPhilosophers),
+    if (associatedPhilosophers) {
+      term.associatedPhilosophers = await this.philosopherRepository.findBy({
+        id: In(associatedPhilosophers),
       });
     }
 
@@ -46,14 +50,22 @@ export class TermService {
 
   findAll(): Promise<Term[]> {
     return this.termRepository.find({
-      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
+      relations: [
+        'associatedTerms',
+        'associatedQuestions',
+        'associatedPhilosophers',
+      ],
     });
   }
 
-  async findOne(id: number): Promise<Term> {
+  async findOne(id: string): Promise<Term> {
     const term = await this.termRepository.findOne({
       where: { id },
-      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
+      relations: [
+        'associatedTerms',
+        'associatedQuestions',
+        'associatedPhilosophers',
+      ],
     });
     if (!term) {
       throw new NotFoundException(`Term with ID ${id} not found`);
@@ -61,35 +73,39 @@ export class TermService {
     return term;
   }
 
-  async update(id: number, updateTermDto: UpdateTermDto): Promise<Term> {
-    const { relatedTerms, relatedQuestions, relatedPhilosophers, ...termData } =
-      updateTermDto;
+  async update(id: string, updateTermDto: UpdateTermDto): Promise<Term> {
+    const {
+      associatedTerms,
+      associatedQuestions,
+      associatedPhilosophers,
+      ...termData
+    } = updateTermDto;
 
     await this.termRepository.update({ id }, termData);
     const term = await this.findOne(id);
 
-    if (relatedTerms) {
-      term.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    if (associatedTerms) {
+      term.associatedTerms = await this.termRepository.findBy({
+        id: In(associatedTerms),
       });
     }
 
-    if (relatedQuestions) {
-      term.relatedQuestions = await this.questionRepository.findBy({
-        id: In(relatedQuestions),
+    if (associatedQuestions) {
+      term.associatedQuestions = await this.questionRepository.findBy({
+        id: In(associatedQuestions),
       });
     }
 
-    if (relatedPhilosophers) {
-      term.relatedPhilosophers = await this.philosopherRepository.findBy({
-        id: In(relatedPhilosophers),
+    if (associatedPhilosophers) {
+      term.associatedPhilosophers = await this.philosopherRepository.findBy({
+        id: In(associatedPhilosophers),
       });
     }
 
     return this.termRepository.save(term);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.termRepository.delete(id);
   }
 }

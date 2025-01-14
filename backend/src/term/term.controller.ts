@@ -27,16 +27,16 @@ export class TermController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.termService.findOne(+id);
+    return this.termService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateTermDto: UpdateTermDto) {
-    return this.termService.update(+id, updateTermDto);
+    return this.termService.update(id, updateTermDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.termService.remove(+id);
+    return this.termService.remove(id);
   }
 }

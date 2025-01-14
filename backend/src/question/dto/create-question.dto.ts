@@ -9,32 +9,24 @@ import {
 export class CreateQuestionDto {
   @IsString()
   @IsNotEmpty()
-  titleEn: string;
+  title: string;
 
   @IsString()
   @IsNotEmpty()
-  titleHe: string;
-
-  @IsString()
-  @IsNotEmpty()
-  contentEn: string;
-
-  @IsString()
-  @IsNotEmpty()
-  contentHe: string;
+  content: string;
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  relatedTerms?: number[];
+  associatedTerms?: string[];
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  relatedPhilosophers?: number[];
+  associatedPhilosophers?: string[];
 
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()
-  relatedQuestions?: number[];
+  associatedQuestions?: string[];
 }

@@ -20,29 +20,31 @@ export class QuestionService {
 
   async create(createQuestionDto: CreateQuestionDto): Promise<Question> {
     const {
-      relatedTerms,
-      relatedQuestions,
-      relatedPhilosophers,
+      associatedTerms,
+      associatedQuestions,
+      associatedPhilosophers,
       ...questionData
     } = createQuestionDto;
     const question = this.questionRepository.create(questionData);
 
-    if (relatedTerms) {
-      question.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    if (associatedTerms) {
+      question.associatedTerms = await this.termRepository.findBy({
+        id: In(associatedTerms),
       });
     }
 
-    if (relatedQuestions) {
-      question.relatedQuestions = await this.questionRepository.findBy({
-        id: In(relatedQuestions),
+    if (associatedQuestions) {
+      question.associatedQuestions = await this.questionRepository.findBy({
+        id: In(associatedQuestions),
       });
     }
 
-    if (relatedPhilosophers) {
-      question.relatedPhilosophers = await this.philosopherRepository.findBy({
-        id: In(relatedPhilosophers),
-      });
+    if (associatedPhilosophers) {
+      question.associatedPhilosophers = await this.philosopherRepository.findBy(
+        {
+          id: In(associatedPhilosophers),
+        },
+      );
     }
 
     return this.questionRepository.save(question);
@@ -50,14 +52,22 @@ export class QuestionService {
 
   findAll(): Promise<Question[]> {
     return this.questionRepository.find({
-      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
+      relations: [
+        'associatedTerms',
+        'associatedQuestions',
+        'associatedPhilosophers',
+      ],
     });
   }
 
-  async findOne(id: number): Promise<Question> {
+  async findOne(id: string): Promise<Question> {
     const question = await this.questionRepository.findOne({
       where: { id },
-      relations: ['relatedTerms', 'relatedQuestions', 'relatedPhilosophers'],
+      relations: [
+        'associatedTerms',
+        'associatedQuestions',
+        'associatedPhilosophers',
+      ],
     });
     if (!question) {
       throw new NotFoundException(`Question with ID ${id} not found`);
@@ -66,41 +76,43 @@ export class QuestionService {
   }
 
   async update(
-    id: number,
+    id: string,
     updateQuestionDto: UpdateQuestionDto,
   ): Promise<Question> {
     const {
-      relatedTerms,
-      relatedQuestions,
-      relatedPhilosophers,
+      associatedTerms,
+      associatedQuestions,
+      associatedPhilosophers,
       ...questionData
     } = updateQuestionDto;
 
     await this.questionRepository.update({ id }, questionData);
     const question = await this.findOne(id);
 
-    if (relatedTerms) {
-      question.relatedTerms = await this.termRepository.findBy({
-        id: In(relatedTerms),
+    if (associatedTerms) {
+      question.associatedTerms = await this.termRepository.findBy({
+        id: In(associatedTerms),
       });
     }
 
-    if (relatedQuestions) {
-      question.relatedQuestions = await this.questionRepository.findBy({
-        id: In(relatedQuestions),
+    if (associatedQuestions) {
+      question.associatedQuestions = await this.questionRepository.findBy({
+        id: In(associatedQuestions),
       });
     }
 
-    if (relatedPhilosophers) {
-      question.relatedPhilosophers = await this.philosopherRepository.findBy({
-        id: In(relatedPhilosophers),
-      });
+    if (associatedPhilosophers) {
+      question.associatedPhilosophers = await this.philosopherRepository.findBy(
+        {
+          id: In(associatedPhilosophers),
+        },
+      );
     }
 
     return this.questionRepository.save(question);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     await this.questionRepository.delete(id);
   }
 }

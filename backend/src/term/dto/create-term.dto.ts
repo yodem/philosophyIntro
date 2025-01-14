@@ -1,40 +1,39 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsOptional,
-  IsArray,
-  IsNumber,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsArray } from 'class-validator';
+import { IImages } from '../entities/term.entity';
 
 export class CreateTermDto {
-  @IsString()
-  @IsNotEmpty()
-  titleEn: string;
+  id: string;
+  images?: IImages;
 
   @IsString()
   @IsNotEmpty()
-  titleHe: string;
+  title: string;
 
   @IsString()
   @IsNotEmpty()
-  contentEn: string;
+  content: string;
 
   @IsString()
   @IsNotEmpty()
-  contentHe: string;
+  description: string;
 
   @IsArray()
-  @IsNumber({}, { each: true })
+  @IsString({ each: true })
   @IsOptional()
-  relatedTerms?: number[];
+  associatedCategories?: string[];
 
   @IsArray()
-  @IsNumber({}, { each: true })
+  @IsString({ each: true })
   @IsOptional()
-  relatedQuestions?: number[];
+  associatedPhilosophers?: string[];
 
   @IsArray()
-  @IsNumber({}, { each: true })
+  @IsString({ each: true })
   @IsOptional()
-  relatedPhilosophers?: number[];
+  associatedTerms?: string[];
+
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  associatedQuestions?: string[];
 }

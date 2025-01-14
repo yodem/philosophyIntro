@@ -1,52 +1,43 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
-import { Term } from '@/term/entities/term.entity';
+import { Column, Entity, ManyToMany, PrimaryColumn } from 'typeorm';
+import { Term } from '../../term/entities/term.entity';
+import { IImages } from '../../term/entities/term.entity';
 import { Question } from '@/question/entities/question.entity';
 
 @Entity()
 export class Philosopher {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryColumn('uuid')
+  id: string;
+
+  @Column({ type: 'json', nullable: true })
+  images: IImages;
+
+  @Column({ nullable: true })
+  birthDate: string;
+
+  @Column({ nullable: true })
+  deathDate: string;
 
   @Column()
-  titleEn: string;
-
-  @Column()
-  titleHe: string;
+  title: string;
 
   @Column({ type: 'text' })
-  contentEn: string;
+  content: string;
 
   @Column({ type: 'text' })
-  contentHe: string;
+  description: string;
 
-  @Column()
+  @Column({ nullable: true })
   era: string;
 
-  @Column({ nullable: true })
-  birthdate?: string;
+  @ManyToMany(() => Term, (term) => term.associatedPhilosophers)
+  associatedTerms: Term[];
 
-  @Column({ nullable: true })
-  deathdate?: string;
+  @ManyToMany(() => Question, (question) => question.associatedPhilosophers)
+  associatedQuestions: Question[];
 
-  @ManyToMany(() => Term, (term) => term.relatedPhilosophers)
-  @JoinTable({ name: 'philosopher_terms' })
-  relatedTerms: Term[];
-
-  @ManyToMany(() => Question, (question) => question.relatedPhilosophers)
-  @JoinTable({ name: 'philosopher_questions' })
-  relatedQuestions: Question[];
-
-  @ManyToMany(() => Philosopher)
-  @JoinTable({
-    name: 'philosopher_related_philosophers',
-    joinColumn: { name: 'philosopher_id' },
-    inverseJoinColumn: { name: 'related_philosopher_id' },
-  })
-  relatedPhilosophers: Philosopher[];
+  @ManyToMany(
+    () => Philosopher,
+    (philosopher) => philosopher.associatedPhilosophers,
+  )
+  associatedPhilosophers: Philosopher[];
 }
