@@ -1,47 +1,32 @@
-import { Box, Card, CardActions, CardContent, Typography } from '@mui/material';
-import { ParseRoute, useNavigate } from '@tanstack/react-router';
-import { routeTree } from '@/routeTree.gen';
-import { RouterButton } from '@/components/routerComponents/RouterButton';
-import { TEXTS } from '@/constants';
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { useNavigate } from '@tanstack/react-router'
+import { LABELS } from '@/constants'
+import { Sections } from "@/types"
 
-interface ContentDisplayCardProps {
-    to?: ParseRoute<typeof routeTree>['fullPath']
-    Icon: JSX.Element
-    title: string
-}
-
-function ContentDisplayCard({ to, Icon, title }: ContentDisplayCardProps) {
+function ContentDisplayCard({ to, icon: Icon, title, description }: Sections) {
     const navigate = useNavigate()
-    const handleNavigate = () => {
-        if (to) {
-            navigate({ to })
-        }
-    }
 
     return (
-        <Card sx={{
-            cursor: to ? 'pointer' : 'default',
-            '&:hover': {
-                backgroundColor: to ? 'rgba(0, 0, 0, 0.04)' : 'initial',
-            },
-            p: 2
-        }} onClick={handleNavigate}>
-            <CardContent sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
-            }}>
-                {Icon}
-                <Box><Typography variant="h6" component="div">
-                    {title}
-                </Typography></Box>
+        <Card
+            className="h-full group hover:shadow-xl transition-all duration-300 cursor-pointer bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm border-none"
+            onClick={() => navigate({ to })}
+        >
+            <CardHeader>
+                <div className="mb-4 w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                </div>
+                <CardTitle className="text-xl font-semibold">{title}</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <p className="text-gray-600 dark:text-gray-300 mb-6">{description}</p>
+                <Button
+                    variant="outline"
+                    className="group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300"
+                >
+                    {LABELS.EXPLORE}
+                </Button>
             </CardContent>
-            {to && <CardActions>
-                <RouterButton to={to} variant='outlined'>
-                    {TEXTS.LEARN_MORE}
-                </RouterButton>
-            </CardActions>}
         </Card>
     )
 }

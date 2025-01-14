@@ -1,3 +1,8 @@
+import { routeTree } from "@/routeTree.gen";
+import { ParseRoute } from "@tanstack/react-router";
+import { LucideProps } from "lucide-react";
+import { ForwardRefExoticComponent, RefAttributes } from "react";
+
 // Entity types with self-referential properties
 export interface BasicEntity {
   id: string;
@@ -82,3 +87,12 @@ export interface IImages {
   fullImages?: IFullImages;
   bannerImages?: IBannerImages;
 }
+
+export type Sections = {
+  title: string;
+  description: string;
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
+  to: ParseRoute<typeof routeTree>["fullPath"];
+};

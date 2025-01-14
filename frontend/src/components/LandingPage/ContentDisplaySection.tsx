@@ -1,24 +1,50 @@
-import { Grid, Typography } from '@mui/material';
-import ContentDisplayCard from './ContentDisplayCard';
-import PersonIcon from '@mui/icons-material/Person';
-import { TEXTS } from '@/constants';
+import { motion } from 'framer-motion'
+import ContentDisplayCard from './ContentDisplayCard'
+import { Clock, Users, Lightbulb } from 'lucide-react'
+import { LABELS } from '@/constants'
+import { Sections } from '@/types'
+
+
+const sections: Sections[] = [
+  {
+    title: LABELS.BIG_PHILOSOPHERS,
+    description: LABELS.JOURNEY_THROUGH_HISTORY,
+    icon: Clock,
+    to: "/philosophers"
+  },
+  {
+    title: LABELS.BIG_QUESTIONS,
+    description: LABELS.EXPLORE_QUESTIONS,
+    icon: Users,
+    to: "/questions"
+  },
+  {
+    title: LABELS.CONCEPT_EXPLORER,
+    description: LABELS.UNDERSTAND_CONCEPTS,
+    icon: Lightbulb,
+    to: "/terms"
+  }
+]
 
 function ContentDisplaySection() {
   return (
-    <Grid container spacing={4}>
-      <Grid xs={12} item sx={{ display: 'flex', justifyContent: 'center' }}>
-        <Typography variant='h4'>{TEXTS.SECTIONS}</Typography>
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <ContentDisplayCard to="/philosophers" Icon={<PersonIcon />} title={TEXTS.PHILOSOPHERS} />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <ContentDisplayCard to="/questions" Icon={<PersonIcon />} title={TEXTS.QUESTIONS} />
-      </Grid>
-      <Grid item xs={12} sm={4}>
-        <ContentDisplayCard to="/terms" Icon={<PersonIcon />} title={TEXTS.TERMS} />
-      </Grid>
-    </Grid>
+    <section className="py-16 px-4">
+      <h2 className="text-3xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        {LABELS.EXPLORE_PHILOSOPHY}
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {sections.map((section, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2 }}
+          >
+            <ContentDisplayCard {...section} />
+          </motion.div>
+        ))}
+      </div>
+    </section>
   )
 }
 

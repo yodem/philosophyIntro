@@ -5,11 +5,12 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useNavigate } from "@tanstack/react-router";
 import philosopherIcon from "@/assets/philosopher.png";
+
 const NavBar = () => {
     const { mode, toggleMode } = useTheme();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     return (
-        <AppBar position="fixed">
+        <AppBar position="sticky">
             <Toolbar>
                 <Box sx={{ flexGrow: 1 }}>
                     <Box

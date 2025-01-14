@@ -18,6 +18,7 @@ export const RouterButton: LinkComponent<typeof MUILinkComponent> = (props) => {
     const { to } = props
     const location = useLocation()
     return <CreatedLinkComponent sx={{
-        bgcolor: (theme) => location.pathname.includes(to as string) ? theme.palette.primary.light : 'inherit',
+        backdropFilter: location.pathname.includes(to as string) ? 'contrast(0.6)' : 'none',
+        // backgroundColor: 'transparent',
     }} preload={'intent'} {...props} />
 }
