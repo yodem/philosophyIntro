@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, In } from 'typeorm';
 import { CreateQuestionDto } from './dto/create-question.dto';
@@ -9,6 +14,8 @@ import { Philosopher } from '../philosopher/entities/philosopher.entity';
 
 @Injectable()
 export class QuestionService {
+  private readonly logger = new Logger(QuestionService.name);
+
   constructor(
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
@@ -19,38 +26,44 @@ export class QuestionService {
   ) {}
 
   async create(createQuestionDto: CreateQuestionDto): Promise<Question> {
-    const {
-      associatedTerms,
-      associatedQuestions,
-      associatedPhilosophers,
-      ...questionData
-    } = createQuestionDto;
-    const question = this.questionRepository.create(questionData);
+    this.logger.log('Creating a new question');
+    try {
+      const {
+        associatedTerms,
+        associatedQuestions,
+        associatedPhilosophers,
+        ...questionData
+      } = createQuestionDto;
+      const question = this.questionRepository.create(questionData);
 
-    if (associatedTerms) {
-      question.associatedTerms = await this.termRepository.findBy({
-        id: In(associatedTerms),
-      });
+      if (associatedTerms) {
+        question.associatedTerms = await this.termRepository.findBy({
+          id: In(associatedTerms),
+        });
+      }
+
+      if (associatedQuestions) {
+        question.associatedQuestions = await this.questionRepository.findBy({
+          id: In(associatedQuestions),
+        });
+      }
+
+      if (associatedPhilosophers) {
+        question.associatedPhilosophers =
+          await this.philosopherRepository.findBy({
+            id: In(associatedPhilosophers),
+          });
+      }
+
+      return this.questionRepository.save(question);
+    } catch (error) {
+      this.logger.error('Failed to create question', error.stack);
+      throw new InternalServerErrorException('Failed to create question');
     }
-
-    if (associatedQuestions) {
-      question.associatedQuestions = await this.questionRepository.findBy({
-        id: In(associatedQuestions),
-      });
-    }
-
-    if (associatedPhilosophers) {
-      question.associatedPhilosophers = await this.philosopherRepository.findBy(
-        {
-          id: In(associatedPhilosophers),
-        },
-      );
-    }
-
-    return this.questionRepository.save(question);
   }
 
   findAll(): Promise<Question[]> {
+    this.logger.log('Fetching all questions');
     return this.questionRepository.find({
       relations: [
         'associatedTerms',
@@ -61,58 +74,81 @@ export class QuestionService {
   }
 
   async findOne(id: string): Promise<Question> {
-    const question = await this.questionRepository.findOne({
-      where: { id },
-      relations: [
-        'associatedTerms',
-        'associatedQuestions',
-        'associatedPhilosophers',
-      ],
-    });
-    if (!question) {
-      throw new NotFoundException(`Question with ID ${id} not found`);
+    this.logger.log(`Fetching question with ID ${id}`);
+    try {
+      const question = await this.questionRepository.findOne({
+        where: { id },
+        relations: [
+          'associatedTerms',
+          'associatedQuestions',
+          'associatedPhilosophers',
+        ],
+      });
+      if (!question) {
+        throw new NotFoundException(`Question with ID ${id} not found`);
+      }
+      return question;
+    } catch (error) {
+      this.logger.error(`Failed to fetch question with ID ${id}`, error.stack);
+      throw new InternalServerErrorException(
+        `Failed to fetch question with ID ${id}`,
+      );
     }
-    return question;
   }
 
   async update(
     id: string,
     updateQuestionDto: UpdateQuestionDto,
   ): Promise<Question> {
-    const {
-      associatedTerms,
-      associatedQuestions,
-      associatedPhilosophers,
-      ...questionData
-    } = updateQuestionDto;
+    this.logger.log(`Updating question with ID ${id}`);
+    try {
+      const {
+        associatedTerms,
+        associatedQuestions,
+        associatedPhilosophers,
+        ...questionData
+      } = updateQuestionDto;
 
-    await this.questionRepository.update({ id }, questionData);
-    const question = await this.findOne(id);
+      await this.questionRepository.update({ id }, questionData);
+      const question = await this.findOne(id);
 
-    if (associatedTerms) {
-      question.associatedTerms = await this.termRepository.findBy({
-        id: In(associatedTerms),
-      });
-    }
+      if (associatedTerms) {
+        question.associatedTerms = await this.termRepository.findBy({
+          id: In(associatedTerms),
+        });
+      }
 
-    if (associatedQuestions) {
-      question.associatedQuestions = await this.questionRepository.findBy({
-        id: In(associatedQuestions),
-      });
-    }
+      if (associatedQuestions) {
+        question.associatedQuestions = await this.questionRepository.findBy({
+          id: In(associatedQuestions),
+        });
+      }
 
-    if (associatedPhilosophers) {
-      question.associatedPhilosophers = await this.philosopherRepository.findBy(
-        {
-          id: In(associatedPhilosophers),
-        },
+      if (associatedPhilosophers) {
+        question.associatedPhilosophers =
+          await this.philosopherRepository.findBy({
+            id: In(associatedPhilosophers),
+          });
+      }
+
+      return this.questionRepository.save(question);
+    } catch (error) {
+      this.logger.error(`Failed to update question with ID ${id}`, error.stack);
+      throw new InternalServerErrorException(
+        `Failed to update question with ID ${id}`,
       );
     }
-
-    return this.questionRepository.save(question);
   }
 
   async remove(id: string): Promise<void> {
-    await this.questionRepository.delete(id);
+    this.logger.log(`Removing question with ID ${id}`);
+    try {
+      await this.questionRepository.delete(id);
+    } catch (error) {
+      this.logger.error(`Failed to remove question with ID ${id}`, error.stack);
+      throw new InternalServerErrorException(
+        `Failed to remove question with ID ${id}`,
+      );
+    }
   }
 }

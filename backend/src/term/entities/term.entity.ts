@@ -40,14 +40,26 @@ export class Term {
   description: string;
 
   @ManyToMany(() => Philosopher, (philosopher) => philosopher.associatedTerms)
-  @JoinTable()
+  @JoinTable({
+    name: 'term_philosophers',
+    joinColumn: { name: 'term_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'philosopher_id', referencedColumnName: 'id' },
+  })
   associatedPhilosophers: Philosopher[];
 
   @ManyToMany(() => Question, (question) => question.associatedTerms)
-  @JoinTable({})
+  @JoinTable({
+    name: 'term_questions',
+    joinColumn: { name: 'term_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'question_id', referencedColumnName: 'id' },
+  })
   associatedQuestions: Question[];
 
   @ManyToMany(() => Term, (term) => term.associatedTerms)
-  @JoinTable({})
+  @JoinTable({
+    name: 'term_related_terms',
+    joinColumn: { name: 'term_id', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'related_term_id', referencedColumnName: 'id' },
+  })
   associatedTerms: Term[];
 }

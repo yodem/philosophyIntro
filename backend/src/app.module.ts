@@ -45,7 +45,7 @@ export class AppModule {
   constructor(private seederService: SeederService) {}
 
   async onModuleInit() {
-    const res = await this.seederService.seed();
-    this.logger.debug(res);
+    // const res = await this.seederService.seed();
+    // this.logger.debug(res);
   }
 }
