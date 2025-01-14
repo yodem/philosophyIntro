@@ -95,7 +95,10 @@ function TermComponent() {
             <GenericForm
                 isEdit={true}
                 isEditable={isEditing}
-                defaultValues={term}
+                defaultValues={{
+                    ...term,
+                    images: term.images
+                }}
                 entityType="Term"
                 entityRoute="terms"
                 relations={[

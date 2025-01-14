@@ -7,9 +7,9 @@ interface ResourceGridProps {
 
 export default function ResourceGrid({ children }: ResourceGridProps) {
     return (
-        <Grid container spacing={2} padding={2}>
+        <Grid margin={2} container spacing={2} padding={2}>
             {React.Children.map(children, (child) => (
-                <Grid item xs={12} md={6} lg={4}>
+                <Grid item xs={6} md={4} lg={3}>
                     {child}
                 </Grid>
             ))}

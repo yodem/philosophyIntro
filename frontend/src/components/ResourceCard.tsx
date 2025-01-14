@@ -7,13 +7,17 @@ interface ResourceCardProps {
 }
 
 export default function ResourceCard({ resource, onClick }: ResourceCardProps) {
+    console.log({ resource });
+
+    const image = resource.images?.faceImages?.face250x250 || resource.images?.banner400x300
+
     return (
         <Card onClick={onClick} sx={{ cursor: 'pointer', width: 300, height: 400 }}>
-            {resource.images?.faceImages?.face250x250 && (
+            {image && (
                 <CardMedia
                     component="img"
                     height="250"
-                    image={resource.images.faceImages.face250x250}
+                    image={image}
                     alt={resource.title}
                 />
             )}

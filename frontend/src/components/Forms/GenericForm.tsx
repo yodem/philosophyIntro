@@ -40,8 +40,9 @@ export function GenericForm({
 
     console.log(watch());
 
-
     const { title, content } = watch();
+
+    const imageUrl = defaultValues?.images?.banner800x600 || defaultValues?.images?.faceImages?.face500x500;
 
     if (!isEditable) {
         return (
@@ -58,6 +59,7 @@ export function GenericForm({
                         params: { id: item.id.toString() }
                     })
                 })).filter(r => r.items.length > 0)}
+                imageUrl={imageUrl}
             />
         );
     }

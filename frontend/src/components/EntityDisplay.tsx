@@ -13,9 +13,10 @@ interface EntityDisplayProps {
         getLabel: (item: BasicEntity) => string;
         getLink: (item: BasicEntity) => { to: string; params: { id: string } };
     }>;
+    imageUrl?: string;
 }
 
-export function EntityDisplay({ title, content, relations = [], metadata = [] }: EntityDisplayProps) {
+export function EntityDisplay({ title, content, relations = [], metadata = [], imageUrl }: EntityDisplayProps) {
     const { t } = useTranslation();
     console.log(relations);
 
@@ -24,6 +25,14 @@ export function EntityDisplay({ title, content, relations = [], metadata = [] }:
         <Box key={title} p={2}>
             <Card>
                 <CardContent>
+                    {imageUrl && (
+                        <Box
+                            component="img"
+                            src={imageUrl}
+                            alt={title}
+                            sx={{ aspectRatio: "3/4", width: "150", mb: 2 }}
+                        />
+                    )}
                     <Typography variant="h4" gutterBottom>{title}</Typography>
 
                     {metadata.length > 0 && (

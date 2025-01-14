@@ -52,7 +52,7 @@ export const TEXTS = {
   QUESTIONS: "שאלות",
   TERMS: "מושגים",
   LEARN_MORE: "למד עוד",
-  WELCOME_TO_PHILOSOPHY: "ברוכים הבאים לפילוסופיה",
+  WELCOME_TO_PHILOSOPHY: "ברוכים הבאים",
   ABOUT: "אודות",
   ABOUT_DESCRIPTION: "תיאור אודות",
 } as const;

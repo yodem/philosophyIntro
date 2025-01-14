@@ -93,7 +93,10 @@ function PhilosopherComponent() {
       <GenericForm
         isEdit={true}
         isEditable={isEditing}
-        defaultValues={philosopher}
+        defaultValues={{
+          ...philosopher,
+          images: philosopher.images
+        }}
         entityType="Philosopher"
         entityRoute="philosophers"
         relations={[
