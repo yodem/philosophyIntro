@@ -5,12 +5,13 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Repository, In, FindManyOptions, ILike } from 'typeorm';
 import { CreateTermDto } from './dto/create-term.dto';
 import { UpdateTermDto } from './dto/update-term.dto';
 import { Term } from './entities/term.entity';
 import { Philosopher } from '../philosopher/entities/philosopher.entity';
 import { Question } from '../question/entities/question.entity';
+import { PaginatedResponse } from '@/types/pagination.types';
 
 @Injectable()
 export class TermService {
@@ -61,15 +62,43 @@ export class TermService {
     }
   }
 
-  findAll(): Promise<Term[]> {
-    this.logger.log('Fetching all terms');
-    return this.termRepository.find({
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+    search?: string,
+  ): Promise<PaginatedResponse<Term>> {
+    this.logger.log(`Pagination params - Page: ${page}, Limit: ${limit}`);
+    if (search) {
+      this.logger.log(`Search term: "${search}"`);
+    }
+
+    const options: FindManyOptions<Term> = {
       relations: [
         'associatedTerms',
         'associatedQuestions',
         'associatedPhilosophers',
       ],
-    });
+      skip: (page - 1) * limit,
+      take: limit,
+    };
+
+    if (search) {
+      options.where = {
+        title: ILike(`%${search}%`),
+      };
+    }
+
+    const [items, total] = await this.termRepository.findAndCount(options);
+    this.logger.log(
+      `Found ${items.length} items out of ${total} total records`,
+    );
+
+    return {
+      items,
+      total,
+      page,
+      limit,
+    };
   }
 
   async findOne(id: string): Promise<Term> {

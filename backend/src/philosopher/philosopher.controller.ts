@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   Logger,
+  Query,
 } from '@nestjs/common';
 import { PhilosopherService } from './philosopher.service';
 import { CreatePhilosopherDto } from './dto/create-philosopher.dto';
 import { UpdatePhilosopherDto } from './dto/update-philosopher.dto';
+import { PaginatedResponse, SearchParams } from '@/types/pagination.types';
+import { Philosopher } from './entities/philosopher.entity';
 
 @Controller('philosophers')
 export class PhilosopherController {
@@ -25,9 +28,14 @@ export class PhilosopherController {
   }
 
   @Get()
-  findAll() {
-    this.logger.log('Fetching all philosophers');
-    return this.philosopherService.findAll();
+  findAll(
+    @Query() searchParams: SearchParams,
+  ): Promise<PaginatedResponse<Philosopher>> {
+    const { page = 1, limit = 10, search } = searchParams;
+    this.logger.log(
+      `Fetching all philosophers with pagination and search: ${search}`,
+    );
+    return this.philosopherService.findAll(page, limit, search);
   }
 
   @Get(':id')

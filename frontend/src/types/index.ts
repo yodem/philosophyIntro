@@ -86,6 +86,7 @@ export interface IImages {
   faceImages?: IFaceImages;
   fullImages?: IFullImages;
   bannerImages?: IBannerImages;
+  banner400x300?: string;
 }
 
 export type Sections = {
@@ -96,3 +97,16 @@ export type Sections = {
   >;
   to: ParseRoute<typeof routeTree>["fullPath"];
 };
+
+export interface PaginatedResponse<T> {
+  items: T[];
+  total: number;
+  page: number;
+  limit: number;
+}
+
+export interface SearchParams {
+  page?: number;
+  limit?: number;
+  search?: string;
+}

@@ -5,12 +5,13 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Repository, In, FindManyOptions, ILike } from 'typeorm';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
 import { Term } from '../term/entities/term.entity';
 import { Philosopher } from '../philosopher/entities/philosopher.entity';
+import { PaginatedResponse } from '@/types/pagination.types';
 
 @Injectable()
 export class QuestionService {
@@ -62,15 +63,43 @@ export class QuestionService {
     }
   }
 
-  findAll(): Promise<Question[]> {
-    this.logger.log('Fetching all questions');
-    return this.questionRepository.find({
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+    search?: string,
+  ): Promise<PaginatedResponse<Question>> {
+    this.logger.log(`Pagination params - Page: ${page}, Limit: ${limit}`);
+    if (search) {
+      this.logger.log(`Search term: "${search}"`);
+    }
+
+    const options: FindManyOptions<Question> = {
       relations: [
         'associatedTerms',
         'associatedQuestions',
         'associatedPhilosophers',
       ],
-    });
+      skip: (page - 1) * limit,
+      take: limit,
+    };
+
+    if (search) {
+      options.where = {
+        title: ILike(`%${search}%`),
+      };
+    }
+
+    const [items, total] = await this.questionRepository.findAndCount(options);
+    this.logger.log(
+      `Found ${items.length} items out of ${total} total records`,
+    );
+
+    return {
+      items,
+      total,
+      page,
+      limit,
+    };
   }
 
   async findOne(id: string): Promise<Question> {

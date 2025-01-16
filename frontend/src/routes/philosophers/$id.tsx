@@ -46,17 +46,26 @@ function PhilosopherComponent() {
 
   const { data: allTerms } = useQuery({
     queryKey: ['terms'],
-    queryFn: termsApi.getAll
+    queryFn: async () => {
+      const res = await termsApi.getAll();
+      return res?.items;
+    }
   });
 
   const { data: allQuestions } = useQuery({
     queryKey: ['questions'],
-    queryFn: questionsApi.getAll
+    queryFn: async () => {
+      const res = await questionsApi.getAll();
+      return res?.items;
+    }
   });
 
   const { data: allPhilosophers } = useQuery({
     queryKey: ['philosophers'],
-    queryFn: philosophersApi.getAll
+    queryFn: async () => {
+      const res = await philosophersApi.getAll();
+      return res?.items;
+    }
   });
 
   const updatePhilosopherMutation = useMutation({
@@ -91,7 +100,7 @@ function PhilosopherComponent() {
       </Button>
 
       <GenericForm
-        isEdit={true}
+        canEdit={true}
         isEditable={isEditing}
         defaultValues={{
           ...philosopher,

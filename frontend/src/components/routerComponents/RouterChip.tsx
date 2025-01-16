@@ -15,5 +15,5 @@ const MUILinkComponent = forwardRef<HTMLAnchorElement, MUILinkProps>(
 const CreatedLinkComponent = createLink(MUILinkComponent)
 
 export const RouterChip: LinkComponent<typeof MUILinkComponent> = (props) => {
-    return <CreatedLinkComponent preload={'intent'} {...props} />
+    return <CreatedLinkComponent preload={'render'} {...props} />
 }

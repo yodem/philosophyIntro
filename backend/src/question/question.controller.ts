@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   Logger,
+  Query,
 } from '@nestjs/common';
 import { QuestionService } from './question.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { PaginatedResponse, SearchParams } from '@/types/pagination.types';
+import { Question } from './entities/question.entity';
 
 @Controller('questions')
 export class QuestionController {
@@ -25,9 +28,14 @@ export class QuestionController {
   }
 
   @Get()
-  findAll() {
-    this.logger.log('Fetching all questions');
-    return this.questionService.findAll();
+  findAll(
+    @Query() searchParams: SearchParams,
+  ): Promise<PaginatedResponse<Question>> {
+    const { page = 1, limit = 10, search } = searchParams;
+    this.logger.log(
+      `Fetching all questions with pagination and search: ${search}`,
+    );
+    return this.questionService.findAll(page, limit, search);
   }
 
   @Get(':id')

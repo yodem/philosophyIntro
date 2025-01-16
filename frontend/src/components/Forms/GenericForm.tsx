@@ -10,7 +10,7 @@ import { LABELS } from '@/constants';
 
 interface GenericFormProps {
     defaultValues: Partial<FormInputs>;
-    isEdit?: boolean;
+    canEdit?: boolean;
     isEditable?: boolean;
     relations?: RelationConfig[];
     onSubmit?: (data: FormInputs) => Promise<BasicEntity | undefined>;
@@ -22,7 +22,7 @@ interface GenericFormProps {
 
 export function GenericForm({
     defaultValues,
-    isEdit = false,
+    canEdit = false,
     isEditable = true,
     relations = [],
     onSubmit,
@@ -70,9 +70,9 @@ export function GenericForm({
 
             const response = await onSubmit(formData);
 
-            enqueueSnackbar(`${entityType} ${isEdit ? LABELS.UPDATED : LABELS.CREATED}!`, { variant: 'success' });
+            enqueueSnackbar(`${entityType} ${canEdit ? LABELS.UPDATED : LABELS.CREATED}!`, { variant: 'success' });
 
-            if (isEdit && setIsEditable) {
+            if (canEdit && setIsEditable) {
                 setIsEditable(false);
             } else if (response?.id) {
                 navigate({ to: `/${entityRoute}/$id`, params: { id: response.id.toString() } });
@@ -89,7 +89,7 @@ export function GenericForm({
                 <CardContent>
                     <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
                         <Typography variant="h4" gutterBottom>
-                            {isEdit ? `${LABELS.EDIT_ENTITY} ${entityType}` : `${LABELS.NEW_ENTITY} ${entityType}`}
+                            {canEdit ? `${LABELS.EDIT_ENTITY} ${entityType}` : `${LABELS.NEW_ENTITY} ${entityType}`}
                         </Typography>
                         <TextField
                             autoFocus
@@ -135,7 +135,7 @@ export function GenericForm({
                                 size="large"
                                 fullWidth
                             >
-                                {isEdit ? LABELS.UPDATE : LABELS.SAVE}
+                                {canEdit ? LABELS.UPDATE : LABELS.SAVE}
                             </Button>
                         </Box>
                     </form>

@@ -7,10 +7,13 @@ import {
   Param,
   Delete,
   Logger,
+  Query,
 } from '@nestjs/common';
 import { TermService } from './term.service';
 import { CreateTermDto } from './dto/create-term.dto';
 import { UpdateTermDto } from './dto/update-term.dto';
+import { PaginatedResponse, SearchParams } from '@/types/pagination.types';
+import { Term } from './entities/term.entity';
 
 @Controller('terms')
 export class TermController {
@@ -25,9 +28,12 @@ export class TermController {
   }
 
   @Get()
-  findAll() {
-    this.logger.log('Fetching all terms');
-    return this.termService.findAll();
+  findAll(
+    @Query() searchParams: SearchParams,
+  ): Promise<PaginatedResponse<Term>> {
+    const { page = 1, limit = 10, search } = searchParams;
+    this.logger.log(`Fetching all terms with pagination and search: ${search}`);
+    return this.termService.findAll(page, limit, search);
   }
 
   @Get(':id')

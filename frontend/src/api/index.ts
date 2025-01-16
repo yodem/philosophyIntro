@@ -6,6 +6,8 @@ import {
   UpdatePhilosopherDto,
   UpdateQuestionDto,
   UpdateTermDto,
+  PaginatedResponse,
+  SearchParams,
 } from "../types";
 
 const api = axios.create({
@@ -13,9 +15,14 @@ const api = axios.create({
 });
 
 export const philosophersApi = {
-  getAll: async () => {
+  getAll: async (
+    params: SearchParams = { limit: 1000, page: 1, search: "" }
+  ) => {
     try {
-      const res = await api.get<Philosopher[]>("/philosophers");
+      const res = await api.get<PaginatedResponse<Philosopher>>(
+        "/philosophers",
+        { params }
+      );
       return res.data;
     } catch (error) {
       console.error(error);
@@ -48,9 +55,13 @@ export const philosophersApi = {
 };
 
 export const questionsApi = {
-  getAll: async () => {
+  getAll: async (
+    params: SearchParams = { limit: 1000, page: 1, search: "" }
+  ) => {
     try {
-      const res = await api.get<Question[]>("/questions");
+      const res = await api.get<PaginatedResponse<Question>>("/questions", {
+        params,
+      });
       return res.data;
     } catch (error) {
       console.error(error);
@@ -83,9 +94,11 @@ export const questionsApi = {
 };
 
 export const termsApi = {
-  getAll: async () => {
+  getAll: async (
+    params: SearchParams = { limit: 1000, page: 1, search: "" }
+  ) => {
     try {
-      const res = await api.get<Term[]>("/terms");
+      const res = await api.get<PaginatedResponse<Term>>("/terms", { params });
       return res.data;
     } catch (error) {
       console.error(error);

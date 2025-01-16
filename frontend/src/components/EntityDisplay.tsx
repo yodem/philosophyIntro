@@ -30,7 +30,7 @@ export function EntityDisplay({ title, content, relations = [], metadata = [], i
                             component="img"
                             src={imageUrl}
                             alt={title}
-                            sx={{ aspectRatio: "3/4", width: "150", mb: 2 }}
+                            sx={{ aspectRatio: "3/4", mb: 2 }}
                         />
                     )}
                     <Typography variant="h4" gutterBottom>{title}</Typography>

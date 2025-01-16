@@ -5,12 +5,13 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In } from 'typeorm';
+import { Repository, In, FindManyOptions, ILike } from 'typeorm';
 import { CreatePhilosopherDto } from './dto/create-philosopher.dto';
 import { UpdatePhilosopherDto } from './dto/update-philosopher.dto';
 import { Philosopher } from './entities/philosopher.entity';
 import { Term } from '../term/entities/term.entity';
 import { Question } from '../question/entities/question.entity';
+import { PaginatedResponse } from '@/types/pagination.types';
 
 @Injectable()
 export class PhilosopherService {
@@ -64,15 +65,44 @@ export class PhilosopherService {
     }
   }
 
-  findAll(): Promise<Philosopher[]> {
-    this.logger.log('Fetching all philosophers');
-    return this.philosopherRepository.find({
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+    search?: string,
+  ): Promise<PaginatedResponse<Philosopher>> {
+    this.logger.log(`Pagination params - Page: ${page}, Limit: ${limit}`);
+    if (search) {
+      this.logger.log(`Search term: "${search}"`);
+    }
+
+    const options: FindManyOptions<Philosopher> = {
       relations: [
         'associatedTerms',
         'associatedQuestions',
         'associatedPhilosophers',
       ],
-    });
+      skip: (page - 1) * limit,
+      take: limit,
+    };
+
+    if (search) {
+      options.where = {
+        title: ILike(`%${search}%`), // Note: using name instead of title for philosophers
+      };
+    }
+
+    const [items, total] =
+      await this.philosopherRepository.findAndCount(options);
+    this.logger.log(
+      `Found ${items.length} items out of ${total} total records`,
+    );
+
+    return {
+      items,
+      total,
+      page,
+      limit,
+    };
   }
 
   async findOne(id: string): Promise<Philosopher> {
