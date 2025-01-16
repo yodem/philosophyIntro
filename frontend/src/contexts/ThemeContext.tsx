@@ -1,5 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material/styles';
+import { CacheProvider } from '@emotion/react';
+import createCache from '@emotion/cache';
+import rtlPlugin from 'stylis-plugin-rtl';
+import { prefixer } from 'stylis';
 
 interface ThemeContextType {
     mode: 'light' | 'dark';
@@ -7,6 +11,11 @@ interface ThemeContextType {
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+const cacheRtl = createCache({
+    key: 'muirtl',
+    stylisPlugins: [prefixer, rtlPlugin],
+});
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [mode, setMode] = useState<'light' | 'dark'>(() => {
@@ -33,13 +42,18 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         palette: {
             mode: mode,
         },
+        direction: 'rtl',
     });
 
     return (
         <ThemeContext.Provider value={{ mode, toggleMode }}>
-            <MuiThemeProvider theme={theme}>
-                {children}
-            </MuiThemeProvider>
+            <CacheProvider value={cacheRtl}>
+                <MuiThemeProvider theme={theme}>
+                    <div dir="rtl">
+                        {children}
+                    </div>
+                </MuiThemeProvider>
+            </CacheProvider>
         </ThemeContext.Provider>
     );
 };

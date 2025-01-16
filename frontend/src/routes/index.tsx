@@ -35,7 +35,7 @@ function RouteComponent() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="overflow-y-auto no-scrollbar h-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800"
+        className="no-scrollbar h-full bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-800"
       >
         {/* Main content sections with consistent spacing */}
         <Suspense fallback={<SectionLoader />}>
