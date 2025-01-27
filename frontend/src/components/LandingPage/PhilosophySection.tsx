@@ -29,7 +29,6 @@ function PhilosophySection() {
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
             whileHover={{ scale: 1.02 }}
           >
             <Card className="h-full border-none shadow-lg hover:shadow-xl transition-all duration-300 bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm">

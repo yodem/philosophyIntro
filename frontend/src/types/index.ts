@@ -92,9 +92,11 @@ export interface IImages {
 export type Sections = {
   title: string;
   description: string;
-  icon: ForwardRefExoticComponent<
-    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-  >;
+  icon:
+    | ForwardRefExoticComponent<
+        Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+      >
+    | JSX.Element;
   to: ParseRoute<typeof routeTree>["fullPath"];
 };
 

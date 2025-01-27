@@ -23,8 +23,8 @@ const NavBar = () => {
                 <RouterButton color="inherit" to="/philosophers">פילוסופים</RouterButton>
                 <RouterButton color="inherit" to="/questions">שאלות</RouterButton>
                 <RouterButton color="inherit" to="/terms">מושגים</RouterButton>
-                <RouterButton color="inherit" to="/about">אודות</RouterButton>
-                <RouterButton color="inherit" to="/panel">ניהול</RouterButton>
+                {/* <RouterButton color="inherit" to="/about">אודות</RouterButton>
+                <RouterButton color="inherit" to="/panel">ניהול</RouterButton> */}
                 <IconButton onClick={toggleMode} color="inherit">
                     {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import ContentDisplayCard from './ContentDisplayCard'
-import { Clock, Users, Lightbulb } from 'lucide-react'
+import { CircleHelp, Users, Lightbulb } from 'lucide-react'
 import { LABELS } from '@/constants'
 import { Sections } from '@/types'
 
@@ -9,13 +9,13 @@ const sections: Sections[] = [
   {
     title: LABELS.BIG_PHILOSOPHERS,
     description: LABELS.JOURNEY_THROUGH_HISTORY,
-    icon: Clock,
+    icon: Users,
     to: "/philosophers"
   },
   {
     title: LABELS.BIG_QUESTIONS,
     description: LABELS.EXPLORE_QUESTIONS,
-    icon: Users,
+    icon: CircleHelp,
     to: "/questions"
   },
   {

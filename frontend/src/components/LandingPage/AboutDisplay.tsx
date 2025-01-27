@@ -1,15 +1,16 @@
 import { motion } from 'framer-motion'
-import { Github, Twitter, Linkedin, Mail } from 'lucide-react'
+import avatar from '@/assets/avatar_profile.jpg'
+// import { Github, Twitter, Linkedin, Mail } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { LABELS } from '@/constants'
 import { useNavigate } from '@tanstack/react-router'
 
-const socialLinks = [
-    { icon: Github, href: LABELS.SOCIAL_URLS.GITHUB, label: LABELS.SOCIAL_LINKS.GITHUB },
-    { icon: Twitter, href: LABELS.SOCIAL_URLS.TWITTER, label: LABELS.SOCIAL_LINKS.TWITTER },
-    { icon: Linkedin, href: LABELS.SOCIAL_URLS.LINKEDIN, label: LABELS.SOCIAL_LINKS.LINKEDIN },
-    { icon: Mail, href: LABELS.SOCIAL_URLS.EMAIL, label: LABELS.SOCIAL_LINKS.EMAIL }
-]
+// const socialLinks = [
+//     { icon: Github, href: LABELS.SOCIAL_URLS.GITHUB, label: LABELS.SOCIAL_LINKS.GITHUB },
+//     { icon: Twitter, href: LABELS.SOCIAL_URLS.TWITTER, label: LABELS.SOCIAL_LINKS.TWITTER },
+//     { icon: Linkedin, href: LABELS.SOCIAL_URLS.LINKEDIN, label: LABELS.SOCIAL_LINKS.LINKEDIN },
+//     { icon: Mail, href: LABELS.SOCIAL_URLS.EMAIL, label: LABELS.SOCIAL_LINKS.EMAIL }
+// ]
 
 function AboutDisplay() {
     const navigate = useNavigate()
@@ -28,15 +29,22 @@ function AboutDisplay() {
                             {LABELS.ABOUT_ME}
                         </h2>
                         <div className="flex items-start gap-6 mb-6">
-                            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-purple-600 to-blue-600 flex-shrink-0" />
+                            <img
+                                src={avatar}
+                                alt="Profile avatar"
+                                className="w-24 h-24 rounded-full object-cover flex-shrink-0"
+                            />
                             <div>
                                 <h3 className="text-xl font-semibold mb-2">{LABELS.PHILOSOPHY_ENTHUSIAST}</h3>
                                 <p className="text-gray-600 dark:text-gray-300">
                                     {LABELS.DEDICATED_TO_EXPLORING}
                                 </p>
+                                <p className="text-gray-500 dark:text-gray-400 italic mt-2">
+                                    "{LABELS.QUOTE}"
+                                </p>
                             </div>
                         </div>
-                        <div className="flex gap-3">
+                        {/* <div className="flex gap-3">
                             {socialLinks.map((link) => (
                                 <Button
                                     key={link.label}
@@ -50,7 +58,7 @@ function AboutDisplay() {
                                     </a>
                                 </Button>
                             ))}
-                        </div>
+                        </div> */}
                     </motion.div>
 
                     {/* About Project Column */}
@@ -71,7 +79,7 @@ function AboutDisplay() {
                                 {LABELS.INTERACTIVE_CONTENT}
                             </p>
                             <div className="pt-4">
-                                <Button onClick={() => navigate({ to: "/about" })} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90">
+                                <Button onClick={() => navigate({ to: "/philosophers" })} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90">
                                     {LABELS.LEARN_MORE}
                                 </Button>
                             </div>
