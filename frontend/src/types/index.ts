@@ -86,6 +86,7 @@ export interface IImages {
   banner400x300?: string;
   faceImages?: {
     face500x500?: string;
+    face250x250?: string;
   };
 }
 
