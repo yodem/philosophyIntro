@@ -10,5 +10,5 @@ export interface RelationConfig {
   name: keyof FormInputs;
   label: string;
   options: BasicEntity[];
-  baseRoute: string; // Add this property
+  baseRoute: string;
 }

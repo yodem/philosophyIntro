@@ -38,11 +38,9 @@ export function GenericForm({
         defaultValues
     });
 
-    console.log(watch());
-
     const { title, content } = watch();
 
-    const imageUrl = defaultValues?.images?.banner800x600 || defaultValues?.images?.faceImages?.face500x500;
+    const imageUrl = defaultValues?.images?.banner400x300 || defaultValues?.images?.faceImages?.face500x500;
 
     if (!isEditable) {
         return (
@@ -52,7 +50,9 @@ export function GenericForm({
                 metadata={metadata}
                 relations={relations.map(rel => ({
                     title: rel.label,
-                    items: ((watch(rel.name) ?? []) as BasicEntity[]).filter((item): item is BasicEntity => typeof item === 'object'),
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-expect-error
+                    items: ((watch(rel.name) ?? []) as BasicEntity[]).filter((item): item is BasicEntity => item && 'id' in item && 'title' in item),
                     getLabel: (item: BasicEntity) => item.title,
                     getLink: (item: BasicEntity) => ({
                         to: `/${rel.baseRoute}/$id`,

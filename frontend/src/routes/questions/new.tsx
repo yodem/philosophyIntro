@@ -16,17 +16,17 @@ function NewQuestionComponent() {
 
     const { data: allTerms } = useQuery({
         queryKey: ['terms'],
-        queryFn: termsApi.getAll
+        queryFn: () => termsApi.getAll()
     });
 
     const { data: allPhilosophers } = useQuery({
         queryKey: ['philosophers'],
-        queryFn: philosophersApi.getAll
+        queryFn: () => philosophersApi.getAll()
     });
 
     const { data: allQuestions } = useQuery({
         queryKey: ['questions'],
-        queryFn: questionsApi.getAll
+        queryFn: () => questionsApi.getAll()
     });
 
     const createQuestionMutation = useMutation({
@@ -65,19 +65,19 @@ function NewQuestionComponent() {
                 {
                     name: 'associatedTerms',
                     label: LABELS.RELATED_TERMS,
-                    options: allTerms || [],
+                    options: allTerms?.items || [],
                     baseRoute: 'terms'
                 },
                 {
                     name: 'associatedPhilosophers',
                     label: LABELS.RELATED_PHILOSOPHERS,
-                    options: allPhilosophers || [],
+                    options: allPhilosophers?.items || [],
                     baseRoute: 'philosophers'
                 },
                 {
                     name: 'associatedQuestions',
                     label: LABELS.RELATED_QUESTIONS,
-                    options: allQuestions || [],
+                    options: allQuestions?.items || [],
                     baseRoute: 'questions'
                 }
             ]}
