@@ -12,7 +12,9 @@ export const LABELS = {
   RELATED_PHILOSOPHERS: "פילוסופים קשורים",
   RELATED_TERMS: "מושגים קשורים",
   SEARCH_NOT_FOUND: "לא נמצאו תוצאות חיפוש",
-
+  IMAGE_URL_HELPER: "הכנס כתובת תמונה",
+  DESCRIPTION: "תיאור",
+  DESCRIPTION_REQUIRED: "תיאור נדרש",
   EXPLORE_PHILOSOPHY: "חקור פילוסופיה",
   BIG_PHILOSOPHERS: "הפילוסופים הגדולים",
   BIG_QUESTIONS: "השאלות הגדולות",

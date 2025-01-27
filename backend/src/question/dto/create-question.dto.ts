@@ -15,6 +15,10 @@ export class CreateQuestionDto {
   @IsNotEmpty()
   content: string;
 
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
   @IsArray()
   @IsNumber({}, { each: true })
   @IsOptional()

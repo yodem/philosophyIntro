@@ -60,7 +60,7 @@ function NewTermComponent() {
                 associatedPhilosophers: [],
                 associatedTerms: []
             }}
-            entityType="Term"
+            entityType="מושג"
             entityRoute="terms"
             relations={[
                 {

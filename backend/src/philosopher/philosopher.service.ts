@@ -37,8 +37,13 @@ export class PhilosopherService {
         associatedPhilosophers,
         ...philosopherData
       } = createPhilosopherDto;
-      const philosopher = this.philosopherRepository.create(philosopherData);
 
+      // Create and save the philosopher first
+      const philosopher = await this.philosopherRepository.save(
+        this.philosopherRepository.create(philosopherData),
+      );
+
+      // Then handle associations
       if (associatedTerms) {
         philosopher.associatedTerms = await this.termRepository.findBy({
           id: In(associatedTerms),
@@ -58,6 +63,7 @@ export class PhilosopherService {
           });
       }
 
+      // Save again with associations
       return this.philosopherRepository.save(philosopher);
     } catch (error) {
       this.logger.error('Failed to create philosopher', error.stack);
@@ -83,6 +89,9 @@ export class PhilosopherService {
       ],
       skip: (page - 1) * limit,
       take: limit,
+      order: {
+        title: 'ASC',
+      },
     };
 
     if (search) {

@@ -1,11 +1,17 @@
-import { Column, Entity, ManyToMany, PrimaryColumn, JoinTable } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  JoinTable,
+} from 'typeorm';
 import { Term } from '../../term/entities/term.entity';
 import { IImages } from '../../term/entities/term.entity';
 import { Question } from '@/question/entities/question.entity';
 
 @Entity()
 export class Philosopher {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'json', nullable: true })
@@ -45,10 +51,7 @@ export class Philosopher {
   })
   associatedQuestions: Question[];
 
-  @ManyToMany(
-    () => Philosopher,
-    (philosopher) => philosopher.associatedPhilosophers,
-  )
+  @ManyToMany(() => Philosopher)
   @JoinTable({
     name: 'philosopher_related_philosophers',
     joinColumn: { name: 'philosopher_id', referencedColumnName: 'id' },
@@ -56,6 +59,7 @@ export class Philosopher {
       name: 'related_philosopher_id',
       referencedColumnName: 'id',
     },
+    synchronize: false, // Add this to prevent TypeORM from trying to recreate the table
   })
   associatedPhilosophers: Philosopher[];
 }

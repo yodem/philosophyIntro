@@ -65,7 +65,7 @@ function NewPhilosopherComponent() {
                 associatedQuestions: [],
                 associatedPhilosophers: []
             }}
-            entityType="Philosopher"
+            entityType="פילוסוף"
             entityRoute="philosophers"
             relations={[
                 {

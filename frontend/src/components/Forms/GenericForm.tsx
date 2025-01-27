@@ -1,6 +1,6 @@
 import { Card, CardContent, Button, TextField, Autocomplete, Box, Typography } from '@mui/material';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { BasicEntity } from '@/types';
+import { BasicEntity, EntityType } from '@/types';
 import { EditableRichText } from '../EditableRichText';
 import { EntityDisplay } from '../EntityDisplay';
 import { useSnackbar } from 'notistack';
@@ -15,7 +15,7 @@ interface GenericFormProps {
     relations?: RelationConfig[];
     onSubmit?: (data: FormInputs) => Promise<BasicEntity | undefined>;
     setIsEditable?: (isEditable: boolean) => void;
-    entityType: string;
+    entityType: EntityType;
     entityRoute: string;
     metadata?: Array<{ label: string; value: string }>;
 }
@@ -101,6 +101,57 @@ export function GenericForm({
                             {...register('title', { required: LABELS.TITLE_REQUIRED })}
                             sx={{ mb: 3 }}
                         />
+                        <TextField
+                            margin="dense"
+                            label={LABELS.DESCRIPTION}
+                            fullWidth
+                            required
+                            variant="standard"
+                            {...register('description', { required: LABELS.DESCRIPTION_REQUIRED })}
+                            sx={{ mb: 3 }}
+                            multiline
+                            rows={3}
+                        />
+                        <TextField
+                            margin="dense"
+                            label="Image URL"
+                            fullWidth
+                            variant="standard"
+                            {...register('images.banner400x300')}
+                            sx={{ mb: 3 }}
+                            helperText={LABELS.IMAGE_URL_HELPER}
+                        />
+                        {entityType.toLowerCase() === 'פילוסוף' && (
+                            <>
+                                <TextField
+                                    margin="dense"
+                                    label="Era"
+                                    fullWidth
+                                    variant="standard"
+                                    {...register('era')}
+                                    sx={{ mb: 3 }}
+                                    helperText="לדוגמה: עתיק, ימי הביניים, מודרני, עכשווי"
+                                />
+                                <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
+                                    <TextField
+                                        margin="dense"
+                                        label="Birth Date"
+                                        fullWidth
+                                        variant="standard"
+                                        {...register('birthDate')}
+                                        helperText="לדוגמה: 470 לפנה״ס, 1724"
+                                    />
+                                    <TextField
+                                        margin="dense"
+                                        label="Death Date"
+                                        fullWidth
+                                        variant="standard"
+                                        {...register('deathDate')}
+                                        helperText="לדוגמה: 399 לפנה״ס, 1804"
+                                    />
+                                </Box>
+                            </>
+                        )}
                         <Box sx={{ mb: 3 }}>
                             <EditableRichText
                                 initialContent={content || ''}

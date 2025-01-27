@@ -1,4 +1,10 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Philosopher } from '../../philosopher/entities/philosopher.entity';
 import { Question } from '@/question/entities/question.entity';
 
@@ -24,7 +30,7 @@ export interface IImages {
 
 @Entity()
 export class Term {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ type: 'json', nullable: true })
@@ -55,11 +61,18 @@ export class Term {
   })
   associatedQuestions: Question[];
 
-  @ManyToMany(() => Term, (term) => term.associatedTerms)
+  @ManyToMany(() => Term)
   @JoinTable({
     name: 'term_related_terms',
-    joinColumn: { name: 'term_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'related_term_id', referencedColumnName: 'id' },
+    joinColumn: {
+      name: 'term_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'related_term_id',
+      referencedColumnName: 'id',
+    },
+    synchronize: false,
   })
   associatedTerms: Term[];
 }

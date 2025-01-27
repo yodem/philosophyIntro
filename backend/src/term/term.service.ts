@@ -80,6 +80,9 @@ export class TermService {
       ],
       skip: (page - 1) * limit,
       take: limit,
+      order: {
+        title: 'ASC',
+      },
     };
 
     if (search) {

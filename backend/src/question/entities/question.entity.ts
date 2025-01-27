@@ -1,14 +1,23 @@
 import { Philosopher } from '@/philosopher/entities/philosopher.entity';
 import { Term } from '@/term/entities/term.entity';
-import { Entity, Column, ManyToMany, JoinTable, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToMany,
+  JoinTable,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Question {
-  @PrimaryColumn('uuid')
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
   title: string;
+
+  @Column()
+  description: string;
 
   @Column({ type: 'text' })
   content: string;
@@ -32,6 +41,7 @@ export class Question {
       name: 'related_question_id',
       referencedColumnName: 'id',
     },
+    synchronize: false,
   })
   associatedQuestions: Question[];
 

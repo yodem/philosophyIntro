@@ -83,11 +83,13 @@ export interface IBannerImages {
 }
 
 export interface IImages {
-  faceImages?: IFaceImages;
-  fullImages?: IFullImages;
-  bannerImages?: IBannerImages;
   banner400x300?: string;
+  faceImages?: {
+    face500x500?: string;
+  };
 }
+
+export type EntityType = "פילוסוף" | "מושג" | "שאלה";
 
 export type Sections = {
   title: string;
