@@ -94,11 +94,9 @@ export type EntityType = "פילוסוף" | "מושג" | "שאלה";
 export type Sections = {
   title: string;
   description: string;
-  icon:
-    | ForwardRefExoticComponent<
-        Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
-      >
-    | JSX.Element;
+  icon: ForwardRefExoticComponent<
+    Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
+  >;
   to: ParseRoute<typeof routeTree>["fullPath"];
 };
 
