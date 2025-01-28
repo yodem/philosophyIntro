@@ -1,5 +1,5 @@
 import { Philosopher } from '@/philosopher/entities/philosopher.entity';
-import { Term } from '@/term/entities/term.entity';
+import { Term, IImages } from '@/term/entities/term.entity';
 import {
   Entity,
   Column,
@@ -21,6 +21,9 @@ export class Question {
 
   @Column({ type: 'text' })
   content: string;
+
+  @Column({ type: 'json', nullable: true })
+  images: IImages;
 
   @ManyToMany(
     () => Philosopher,

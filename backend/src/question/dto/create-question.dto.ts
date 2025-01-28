@@ -5,6 +5,7 @@ import {
   IsArray,
   IsNumber,
 } from 'class-validator';
+import { IImages } from '@/term/entities/term.entity';
 
 export class CreateQuestionDto {
   @IsString()
@@ -33,4 +34,7 @@ export class CreateQuestionDto {
   @IsNumber({}, { each: true })
   @IsOptional()
   associatedQuestions?: string[];
+
+  @IsOptional()
+  images?: IImages;
 }

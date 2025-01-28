@@ -40,7 +40,9 @@ export function GenericForm({
 
     const { title, content } = watch();
 
-    const imageUrl = defaultValues?.images?.banner400x300 || defaultValues?.images?.faceImages?.face500x500;
+    const imageUrl = entityType === 'פילוסוף'
+        ? (defaultValues?.images?.fullImages?.full600x800 || defaultValues?.images?.faceImages?.face500x500)
+        : defaultValues?.images?.banner800x600 || defaultValues?.images?.banner400x300;
 
     if (!isEditable) {
         return (
@@ -70,12 +72,14 @@ export function GenericForm({
 
             const response = await onSubmit(formData);
 
-            enqueueSnackbar(`${entityType} ${canEdit ? LABELS.UPDATED : LABELS.CREATED}!`, { variant: 'success' });
 
             if (canEdit && setIsEditable) {
                 setIsEditable(false);
             } else if (response?.id) {
+                enqueueSnackbar(`הבקשה הצליחה`, { variant: 'success' });
                 navigate({ to: `/${entityRoute}/$id`, params: { id: response.id.toString() } });
+            } else {
+                enqueueSnackbar("בקשה נכשלה", { variant: 'error' });
             }
         } catch (error) {
             const message = error instanceof Error ? error.message : LABELS.UNKNOWN_ERROR;
@@ -112,15 +116,58 @@ export function GenericForm({
                             multiline
                             rows={3}
                         />
-                        <TextField
-                            margin="dense"
-                            label="Image URL"
-                            fullWidth
-                            variant="standard"
-                            {...register('images.banner400x300')}
-                            sx={{ mb: 3 }}
-                            helperText={LABELS.IMAGE_URL_HELPER}
-                        />
+                        {entityType === 'פילוסוף' ? (
+                            <>
+                                <TextField
+                                    margin="dense"
+                                    label="Face Image (250x250)"
+                                    fullWidth
+                                    variant="standard"
+                                    {...register('images.faceImages.face250x250')}
+                                    sx={{ mb: 2 }}
+                                    helperText={LABELS.IMAGE_URL_HELPER}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    label="Face Image (500x500)"
+                                    fullWidth
+                                    variant="standard"
+                                    {...register('images.faceImages.face500x500')}
+                                    sx={{ mb: 2 }}
+                                    helperText={LABELS.IMAGE_URL_HELPER}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    label="Full Image (600x800)"
+                                    fullWidth
+                                    variant="standard"
+                                    {...register('images.fullImages.full600x800')}
+                                    sx={{ mb: 3 }}
+                                    helperText={LABELS.IMAGE_URL_HELPER}
+                                />
+                            </>
+                        ) : (
+                            <>
+                                <TextField
+                                    margin="dense"
+                                    label="Banner Image (400x300)"
+                                    fullWidth
+                                    variant="standard"
+                                    {...register('images.banner400x300')}
+                                    sx={{ mb: 2 }}
+                                    helperText={LABELS.IMAGE_URL_HELPER}
+                                />
+                                <TextField
+                                    margin="dense"
+                                    label="Banner Image (800x600)"
+                                    fullWidth
+                                    variant="standard"
+                                    {...register('images.banner800x600')}
+                                    sx={{ mb: 3 }}
+                                    helperText={LABELS.IMAGE_URL_HELPER}
+                                />
+                            </>
+                        )}
                         {entityType.toLowerCase() === 'פילוסוף' && (
                             <>
                                 <TextField

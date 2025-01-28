@@ -8,24 +8,16 @@ import {
 import { Philosopher } from '../../philosopher/entities/philosopher.entity';
 import { Question } from '@/question/entities/question.entity';
 
-export interface IFaceImages {
-  face250x250?: string;
-  face500x500?: string;
-}
-
-export interface IFullImages {
-  full600x800?: string;
-}
-
-export interface IBannerImages {
+export interface IImages {
+  faceImages?: {
+    face250x250?: string;
+    face500x500?: string;
+  };
+  fullImages?: {
+    full600x800?: string;
+  };
   banner400x300?: string;
   banner800x600?: string;
-}
-
-export interface IImages {
-  faceImages?: IFaceImages;
-  fullImages?: IFullImages;
-  bannerImages?: IBannerImages;
 }
 
 @Entity()

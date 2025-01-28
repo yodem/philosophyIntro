@@ -68,26 +68,21 @@ export interface PhilosopherResponse extends Philosopher {
   id: string;
 }
 
-export interface IFaceImages {
-  face250x250?: string;
-  face500x500?: string;
-}
-
-export interface IFullImages {
-  full600x800?: string;
-}
-
-export interface IBannerImages {
-  banner400x300?: string;
-  banner800x600?: string;
-}
+// Remove these as they're no longer needed
+// export interface IFaceImages ...
+// export interface IFullImages ...
+// export interface IBannerImages ...
 
 export interface IImages {
-  banner400x300?: string;
   faceImages?: {
-    face500x500?: string;
     face250x250?: string;
+    face500x500?: string;
   };
+  fullImages?: {
+    full600x800?: string;
+  };
+  banner400x300?: string;
+  banner800x600?: string;
 }
 
 export type EntityType = "פילוסוף" | "מושג" | "שאלה";

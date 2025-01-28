@@ -1,15 +1,10 @@
-import { BasicEntity } from "./index";
+import { BasicEntity, IImages } from "./index";
 
 export interface FormInputs extends BasicEntity {
   title: string;
   content: string;
   description: string;
-  images: {
-    banner400x300?: string;
-    faceImages?: {
-      face500x500?: string;
-    };
-  };
+  images?: IImages;
   era?: string;
   birthDate?: string;
   deathDate?: string;

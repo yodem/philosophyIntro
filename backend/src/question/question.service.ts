@@ -5,7 +5,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, In, FindManyOptions, ILike } from 'typeorm';
+import { Repository, In, FindManyOptions, ILike, DataSource } from 'typeorm';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
@@ -24,10 +24,15 @@ export class QuestionService {
     private termRepository: Repository<Term>,
     @InjectRepository(Philosopher)
     private philosopherRepository: Repository<Philosopher>,
+    private dataSource: DataSource,
   ) {}
 
   async create(createQuestionDto: CreateQuestionDto): Promise<Question> {
     this.logger.log('Creating a new question');
+    const queryRunner = this.dataSource.createQueryRunner();
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
     try {
       const {
         associatedTerms,
@@ -56,10 +61,15 @@ export class QuestionService {
           });
       }
 
-      return this.questionRepository.save(question);
+      await queryRunner.manager.save(question);
+      await queryRunner.commitTransaction();
+      return question;
     } catch (error) {
+      await queryRunner.rollbackTransaction();
       this.logger.error('Failed to create question', error.stack);
       throw new InternalServerErrorException('Failed to create question');
+    } finally {
+      await queryRunner.release();
     }
   }
 
@@ -134,14 +144,23 @@ export class QuestionService {
   ): Promise<Question> {
     this.logger.log(`Updating question with ID ${id}`);
     try {
+      const existingQuestion = await this.findOne(id);
       const {
         associatedTerms,
         associatedQuestions,
         associatedPhilosophers,
+        images,
         ...questionData
       } = updateQuestionDto;
 
-      await this.questionRepository.update({ id }, questionData);
+      // Merge images with existing ones or keep existing if none provided
+      const updatedImages =
+        images !== undefined ? images : existingQuestion.images;
+
+      await this.questionRepository.update(
+        { id },
+        { ...questionData, images: updatedImages },
+      );
       const question = await this.findOne(id);
 
       if (associatedTerms) {

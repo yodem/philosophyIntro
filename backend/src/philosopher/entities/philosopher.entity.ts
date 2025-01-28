@@ -6,8 +6,17 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Term } from '../../term/entities/term.entity';
-import { IImages } from '../../term/entities/term.entity';
 import { Question } from '@/question/entities/question.entity';
+
+export interface IImages {
+  faceImages: {
+    face250x250?: string;
+    face500x500?: string;
+  };
+  fullImages: {
+    full600x800?: string;
+  };
+}
 
 @Entity()
 export class Philosopher {
