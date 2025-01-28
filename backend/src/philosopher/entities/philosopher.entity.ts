@@ -8,14 +8,20 @@ import {
 import { Term } from '../../term/entities/term.entity';
 import { Question } from '@/question/entities/question.entity';
 
+export interface IFaceImages {
+  face250x250: string;
+  face500x500: string;
+}
+
+export interface IFullImages {
+  full600x800: string;
+}
+
 export interface IImages {
-  faceImages: {
-    face250x250?: string;
-    face500x500?: string;
-  };
-  fullImages: {
-    full600x800?: string;
-  };
+  banner400x300?: string;
+  banner800x600?: string;
+  faceImages?: IFaceImages;
+  fullImages?: IFullImages;
 }
 
 @Entity()
@@ -53,11 +59,6 @@ export class Philosopher {
   associatedTerms: Term[];
 
   @ManyToMany(() => Question, (question) => question.associatedPhilosophers)
-  @JoinTable({
-    name: 'philosopher_questions',
-    joinColumn: { name: 'philosopher_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: 'id' },
-  })
   associatedQuestions: Question[];
 
   @ManyToMany(() => Philosopher)
@@ -68,7 +69,6 @@ export class Philosopher {
       name: 'related_philosopher_id',
       referencedColumnName: 'id',
     },
-    synchronize: false, // Add this to prevent TypeORM from trying to recreate the table
   })
   associatedPhilosophers: Philosopher[];
 }

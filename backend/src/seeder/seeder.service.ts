@@ -1,22 +1,13 @@
-import { Philosopher } from '@/philosopher/entities/philosopher.entity';
-import { Term } from '@/term/entities/term.entity';
+import { IImages, Term } from '@/term/entities/term.entity';
+import {
+  IImages as PImage,
+  Philosopher,
+} from '@/philosopher/entities/philosopher.entity';
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as philosophers from './philosophers.json';
 import * as terms from './categories.json';
-
-interface IImages {
-  banner400x300?: string;
-  banner800x600?: string;
-  faceImages?: {
-    face250x250: string;
-    face500x500: string;
-  };
-  fullImages?: {
-    full600x800: string;
-  };
-}
 
 interface ITermData {
   id: string;
@@ -30,7 +21,7 @@ interface ITermData {
 
 interface IPhilosopherData {
   id: string;
-  images: IImages;
+  images: PImage;
   birthDate: string;
   deathDate: string;
   title: string;
@@ -44,7 +35,7 @@ interface IPhilosopherData {
 const IMAGE_PREFIX = 'https://philosophersapi.com';
 
 // Helper function to add prefix to image URLs
-function addImagePrefix(images: IImages): IImages {
+function addImagePrefix(images: IImages): IImages | PImage {
   if (!images) return images;
 
   const prefixedImages: IImages = {};
@@ -88,7 +79,7 @@ export class SeederService {
       });
       const imagesWithPrefix = addImagePrefix(philData.images);
       if (philosopher) {
-        philosopher.images = imagesWithPrefix;
+        philosopher.images = imagesWithPrefix as PImage;
         philosopher.birthDate = philData.birthDate;
         philosopher.deathDate = philData.deathDate;
         philosopher.title = philData.title;

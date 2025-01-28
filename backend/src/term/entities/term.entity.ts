@@ -46,11 +46,6 @@ export class Term {
   associatedPhilosophers: Philosopher[];
 
   @ManyToMany(() => Question, (question) => question.associatedTerms)
-  @JoinTable({
-    name: 'term_questions',
-    joinColumn: { name: 'term_id', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'question_id', referencedColumnName: 'id' },
-  })
   associatedQuestions: Question[];
 
   @ManyToMany(() => Term)
@@ -64,7 +59,6 @@ export class Term {
       name: 'related_term_id',
       referencedColumnName: 'id',
     },
-    synchronize: false,
   })
   associatedTerms: Term[];
 }

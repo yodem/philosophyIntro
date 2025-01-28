@@ -30,6 +30,7 @@ export class QuestionService {
   async create(createQuestionDto: CreateQuestionDto): Promise<Question> {
     this.logger.log('Creating a new question');
     const queryRunner = this.dataSource.createQueryRunner();
+
     await queryRunner.connect();
     await queryRunner.startTransaction();
 
@@ -40,34 +41,56 @@ export class QuestionService {
         associatedPhilosophers,
         ...questionData
       } = createQuestionDto;
-      const question = this.questionRepository.create(questionData);
 
-      if (associatedTerms) {
-        question.associatedTerms = await this.termRepository.findBy({
+      // Create the base question entity
+      const question = this.questionRepository.create(questionData);
+      await queryRunner.manager.save(Question, question);
+
+      // Handle philosophers association if present
+      if (associatedPhilosophers?.length) {
+        const philosophers = await this.philosopherRepository.findBy({
+          id: In(associatedPhilosophers),
+        });
+
+        if (philosophers.length) {
+          question.associatedPhilosophers = philosophers;
+          await queryRunner.manager.save(Question, question);
+        }
+      }
+
+      // Handle terms association if present
+      if (associatedTerms?.length) {
+        const terms = await this.termRepository.findBy({
           id: In(associatedTerms),
         });
+
+        if (terms.length) {
+          question.associatedTerms = terms;
+          await queryRunner.manager.save(Question, question);
+        }
       }
 
-      if (associatedQuestions) {
-        question.associatedQuestions = await this.questionRepository.findBy({
+      // Handle related questions if present
+      if (associatedQuestions?.length) {
+        const relatedQuestions = await this.questionRepository.findBy({
           id: In(associatedQuestions),
         });
+
+        if (relatedQuestions.length) {
+          question.associatedQuestions = relatedQuestions;
+          await queryRunner.manager.save(Question, question);
+        }
       }
 
-      if (associatedPhilosophers) {
-        question.associatedPhilosophers =
-          await this.philosopherRepository.findBy({
-            id: In(associatedPhilosophers),
-          });
-      }
-
-      await queryRunner.manager.save(question);
       await queryRunner.commitTransaction();
-      return question;
+
+      return await this.findOne(question.id);
     } catch (error) {
-      await queryRunner.rollbackTransaction();
       this.logger.error('Failed to create question', error.stack);
-      throw new InternalServerErrorException('Failed to create question');
+      await queryRunner.rollbackTransaction();
+      throw new InternalServerErrorException(
+        `Failed to create question: ${error.message}`,
+      );
     } finally {
       await queryRunner.release();
     }
