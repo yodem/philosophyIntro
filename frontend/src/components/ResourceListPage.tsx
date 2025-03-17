@@ -6,11 +6,11 @@ import ResourceCard from './ResourceCard';
 import ResourceGrid from './ResourceGrid';
 import ResourceSkeleton from './ResourceSkeleton';
 import { LABELS } from '@/constants';
-import { BasicEntity } from '@/types';
+import { Content, ContentType } from '@/types';
 import { useNavigate } from '@tanstack/react-router';
 import AddIcon from '@mui/icons-material/Add';
 
-interface ResourceListPageProps<T extends BasicEntity> {
+interface ResourceListPageProps<T extends Content> {
     items: T[];
     page: number;
     total: number;
@@ -18,6 +18,7 @@ interface ResourceListPageProps<T extends BasicEntity> {
     addNewLabel: string;
     title: string;
     basePath: string;
+    contentType?: ContentType; // Add content type for filtering
     onAddNew: () => void;
     onItemClick: (id: string) => void;
 }
@@ -60,7 +61,7 @@ export function ResourceListSkeleton() {
     );
 }
 
-export function ResourceListPage<T extends BasicEntity>({
+export function ResourceListPage<T extends Content>({
     items,
     page,
     total,
@@ -70,6 +71,7 @@ export function ResourceListPage<T extends BasicEntity>({
     onAddNew,
     onItemClick,
     basePath,
+    contentType, // Use content type in search params
 }: ResourceListPageProps<T>) {
     const [searchValue, setSearchValue] = useState('');
     const debouncedSearch = useDebounce(searchValue, 300);
@@ -79,9 +81,14 @@ export function ResourceListPage<T extends BasicEntity>({
     useEffect(() => {
         navigate({
             to: basePath,
-            search: (prev) => ({ ...prev, search: debouncedSearch, page: 1 })
+            search: (prev) => ({
+                ...prev,
+                search: debouncedSearch,
+                page: 1,
+                ...(contentType ? { type: contentType } : {})
+            })
         })
-    }, [basePath, debouncedSearch, navigate]);
+    }, [basePath, contentType, debouncedSearch, navigate]);
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>

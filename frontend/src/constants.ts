@@ -36,6 +36,7 @@ export const LABELS = {
   EXPLORE_DEPTHS: "חקור את עומקי המחשבה והחוכמה האנושית",
   WHAT_IS_PHILOSOPHY: "מהי פילוסופיה?",
   PHILOSOPHY_HUB: "פילוסופיה",
+  INVALID_IMAGE_URL: "כתובת תמונה לא תקינה",
 
   // Philosophy section labels
   CLASSICAL_DEFINITION: "עיסוק בשאלות הגדולות",

@@ -1,8 +1,8 @@
 import { Card, CardContent, Typography, CardMedia, Box, Grow } from '@mui/material';
-import { BasicEntity } from '@/types';
+import { Content } from '@/types';
 
 interface ResourceCardProps {
-    resource: BasicEntity;
+    resource: Content;
     onClick: () => void;
 }
 

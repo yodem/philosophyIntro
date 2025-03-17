@@ -1,244 +1,72 @@
-import { Card, CardContent, Button, TextField, Autocomplete, Box, Typography } from '@mui/material';
-import { useForm, SubmitHandler, Controller } from 'react-hook-form';
-import { BasicEntity, EntityType } from '@/types';
-import { EditableRichText } from '../EditableRichText';
-import { EntityDisplay } from '../EntityDisplay';
-import { useSnackbar } from 'notistack';
-import { useNavigate } from '@tanstack/react-router';
-import { FormInputs, RelationConfig } from '@/types/form';
-import { LABELS } from '@/constants';
+import { useForm } from "react-hook-form";
+import { Box, Button, Card, CardContent, TextField } from "@mui/material";
+import { RelationFields } from "./RelationFields";
+import { FormInputs, RelationConfig } from "@/types/form";
+import { Content, ContentType } from "@/types";
+import { useEffect, useState } from "react";
+import { contentApi } from "@/api";
 
 interface GenericFormProps {
-    defaultValues: Partial<FormInputs>;
-    canEdit?: boolean;
-    isEditable?: boolean;
-    relations?: RelationConfig[];
-    onSubmit?: (data: FormInputs) => Promise<BasicEntity | undefined>;
-    setIsEditable?: (isEditable: boolean) => void;
-    entityType: EntityType;
-    entityRoute: string;
-    metadata?: Array<{ label: string; value: string }>;
+    defaultValues: Content;
+    isEditable: boolean;
+    setIsEditable: (value: boolean) => void;
+    onSubmit: (data: FormInputs) => Promise<void>;
 }
 
 export function GenericForm({
     defaultValues,
-    canEdit = false,
-    isEditable = true,
-    relations = [],
-    onSubmit,
+    isEditable,
     setIsEditable,
-    entityType,
-    entityRoute,
-    metadata = []
+    onSubmit,
 }: GenericFormProps) {
-    const { enqueueSnackbar } = useSnackbar();
-    const navigate = useNavigate();
+    const [relationOptions, setRelationOptions] = useState<{
+        philosopher: Content[];
+        question: Content[];
+        term: Content[];
+    }>({ philosopher: [], question: [], term: [] });
 
-    const { register, handleSubmit, watch, setValue, control } = useForm<FormInputs>({
-        defaultValues
-    });
+    const { control, handleSubmit, reset, setValue } = useForm<FormInputs>({ defaultValues });
 
-    const { title, content } = watch();
+    useEffect(() => { reset(defaultValues); }, [defaultValues, reset]);
+    useEffect(() => {
+        const fetchOptions = async () => {
+            const [philosophers, questions, terms] = await Promise.all([
+                contentApi.getAll({}, ContentType.PHILOSOPHER),
+                contentApi.getAll({}, ContentType.QUESTION),
+                contentApi.getAll({}, ContentType.TERM),
+            ]);
+            setRelationOptions({
+                philosopher: philosophers || [],
+                question: questions || [],
+                term: terms || [],
+            });
+        };
+        fetchOptions();
+    }, []);
 
-    const imageUrl = entityType === 'פילוסוף'
-        ? (defaultValues?.images?.fullImages?.full600x800 || defaultValues?.images?.faceImages?.face500x500)
-        : defaultValues?.images?.banner800x600 || defaultValues?.images?.banner400x300;
+    const relations: RelationConfig[] = [
+        { name: "philosopher", label: "פילוסופים קשורים", options: relationOptions.philosopher, baseRoute: "philosophers" },
+        { name: "question", label: "שאלות קשורות", options: relationOptions.question, baseRoute: "questions" },
+        { name: "term", label: "מושגים קשורים", options: relationOptions.term, baseRoute: "terms" }
+    ];
 
-    if (!isEditable) {
-        return (
-            <EntityDisplay
-                title={title}
-                content={content}
-                metadata={metadata}
-                relations={relations.map(rel => ({
-                    title: rel.label,
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-expect-error
-                    items: ((watch(rel.name) ?? []) as BasicEntity[]).filter((item): item is BasicEntity => item && 'id' in item && 'title' in item),
-                    getLabel: (item: BasicEntity) => item.title,
-                    getLink: (item: BasicEntity) => ({
-                        to: `/${rel.baseRoute}/$id`,
-                        params: { id: item.id.toString() }
-                    })
-                })).filter(r => r.items.length > 0)}
-                imageUrl={imageUrl}
-            />
-        );
-    }
-
-    const handleFormSubmit: SubmitHandler<FormInputs> = async (formData) => {
-        try {
-            if (!onSubmit) return;
-
-            const response = await onSubmit(formData);
-
-
-            if (canEdit && setIsEditable) {
-                setIsEditable(false);
-            } else if (response?.id) {
-                enqueueSnackbar(`הבקשה הצליחה`, { variant: 'success' });
-                navigate({ to: `/${entityRoute}/$id`, params: { id: response.id.toString() } });
-            } else {
-                enqueueSnackbar("בקשה נכשלה", { variant: 'error' });
-            }
-        } catch (error) {
-            const message = error instanceof Error ? error.message : LABELS.UNKNOWN_ERROR;
-            enqueueSnackbar(`${LABELS.FAILED_TO_UPDATE} ${entityType}: ${message}`, { variant: 'error' });
-        }
-    };
+    if (!isEditable) return null;
 
     return (
-        <Box p={2}>
-            <Card>
-                <CardContent>
-                    <form onSubmit={handleSubmit(handleFormSubmit)} noValidate>
-                        <Typography variant="h4" gutterBottom>
-                            {canEdit ? `${LABELS.EDIT_ENTITY} ${entityType}` : `${LABELS.NEW_ENTITY} ${entityType}`}
-                        </Typography>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            label={LABELS.TITLE}
-                            fullWidth
-                            required
-                            variant="standard"
-                            {...register('title', { required: LABELS.TITLE_REQUIRED })}
-                            sx={{ mb: 3 }}
-                        />
-                        <TextField
-                            margin="dense"
-                            label={LABELS.DESCRIPTION}
-                            fullWidth
-                            required
-                            variant="standard"
-                            {...register('description', { required: LABELS.DESCRIPTION_REQUIRED })}
-                            sx={{ mb: 3 }}
-                            multiline
-                            rows={3}
-                        />
-                        {entityType === 'פילוסוף' ? (
-                            <>
-                                <TextField
-                                    margin="dense"
-                                    label="Face Image (250x250)"
-                                    fullWidth
-                                    variant="standard"
-                                    {...register('images.faceImages.face250x250')}
-                                    sx={{ mb: 2 }}
-                                    helperText={LABELS.IMAGE_URL_HELPER}
-                                />
-                                <TextField
-                                    margin="dense"
-                                    label="Face Image (500x500)"
-                                    fullWidth
-                                    variant="standard"
-                                    {...register('images.faceImages.face500x500')}
-                                    sx={{ mb: 2 }}
-                                    helperText={LABELS.IMAGE_URL_HELPER}
-                                />
-                                <TextField
-                                    margin="dense"
-                                    label="Full Image (600x800)"
-                                    fullWidth
-                                    variant="standard"
-                                    {...register('images.fullImages.full600x800')}
-                                    sx={{ mb: 3 }}
-                                    helperText={LABELS.IMAGE_URL_HELPER}
-                                />
-                            </>
-                        ) : (
-                            <>
-                                <TextField
-                                    margin="dense"
-                                    label="Banner Image (400x300)"
-                                    fullWidth
-                                    variant="standard"
-                                    {...register('images.banner400x300')}
-                                    sx={{ mb: 2 }}
-                                    helperText={LABELS.IMAGE_URL_HELPER}
-                                />
-                                <TextField
-                                    margin="dense"
-                                    label="Banner Image (800x600)"
-                                    fullWidth
-                                    variant="standard"
-                                    {...register('images.banner800x600')}
-                                    sx={{ mb: 3 }}
-                                    helperText={LABELS.IMAGE_URL_HELPER}
-                                />
-                            </>
-                        )}
-                        {entityType.toLowerCase() === 'פילוסוף' && (
-                            <>
-                                <TextField
-                                    margin="dense"
-                                    label="Era"
-                                    fullWidth
-                                    variant="standard"
-                                    {...register('era')}
-                                    sx={{ mb: 3 }}
-                                    helperText="לדוגמה: עתיק, ימי הביניים, מודרני, עכשווי"
-                                />
-                                <Box sx={{ display: 'flex', gap: 2, mb: 3 }}>
-                                    <TextField
-                                        margin="dense"
-                                        label="Birth Date"
-                                        fullWidth
-                                        variant="standard"
-                                        {...register('birthDate')}
-                                        helperText="לדוגמה: 470 לפנה״ס, 1724"
-                                    />
-                                    <TextField
-                                        margin="dense"
-                                        label="Death Date"
-                                        fullWidth
-                                        variant="standard"
-                                        {...register('deathDate')}
-                                        helperText="לדוגמה: 399 לפנה״ס, 1804"
-                                    />
-                                </Box>
-                            </>
-                        )}
-                        <Box sx={{ mb: 3 }}>
-                            <EditableRichText
-                                initialContent={content || ''}
-                                onChange={(content) => setValue('content', content)}
-                            />
-                        </Box>
-                        {relations.map(({ name, label, options }) => (
-                            <Controller
-                                key={name}
-                                name={name}
-                                control={control}
-                                render={({ field: { onChange, value, ...props } }) => (
-                                    <Autocomplete<BasicEntity, true>
-                                        multiple
-                                        options={options}
-                                        getOptionLabel={(option) => option.title}
-                                        value={(value ?? []) as BasicEntity[]}
-                                        onChange={(_, data) => onChange(data)}
-                                        isOptionEqualToValue={(option, value) => option.id === value.id}
-                                        renderInput={(params) => (
-                                            <TextField {...params} label={label} sx={{ mb: 2 }} />
-                                        )}
-                                        {...props}
-                                    />
-                                )}
-                            />
-                        ))}
-                        <Box sx={{ mt: 3 }}>
-                            <Button
-                                variant="contained"
-                                type="submit"
-                                size="large"
-                                fullWidth
-                            >
-                                {canEdit ? LABELS.UPDATE : LABELS.SAVE}
-                            </Button>
-                        </Box>
-                    </form>
-                </CardContent>
-            </Card>
-        </Box>
+        <Card>
+            <CardContent>
+                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
+                    <TextField fullWidth label="כותרת" onChange={(e) => setValue("title", e.target.value)} defaultValue={defaultValues.title} sx={{ mb: 2 }} />
+                    <TextField fullWidth multiline rows={8} label="תוכן" onChange={(e) => setValue("content", e.target.value)} defaultValue={defaultValues.content} sx={{ mb: 2 }} />
+                    <TextField fullWidth label="תיאור" onChange={(e) => setValue("description", e.target.value)} defaultValue={defaultValues.description || ""} sx={{ mb: 2 }} />
+                    <TextField fullWidth label="תמונה (URL)" onChange={(e) => setValue("full_picture", e.target.value)} defaultValue={defaultValues.full_picture || ""} sx={{ mb: 2 }} />
+                    <RelationFields relations={relations} control={control} />
+                    <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
+                        <Button type="submit" variant="contained" color="primary">שמור</Button>
+                        <Button variant="outlined" onClick={() => setIsEditable(false)}>ביטול</Button>
+                    </Box>
+                </Box>
+            </CardContent>
+        </Card>
     );
 }

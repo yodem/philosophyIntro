@@ -3,12 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { PhilosopherModule } from './philosopher/philosopher.module';
-import { TermModule } from './term/term.module';
-import { QuestionModule } from './question/question.module';
-import { Philosopher } from './philosopher/entities/philosopher.entity';
-import { Term } from './term/entities/term.entity';
-import { Question } from './question/entities/question.entity';
+import { ContentModule } from './content/content.module';
+import { Content } from './content/entities/content.entity';
+import { ContentRelationship } from './content/entities/contentRelationship.entity';
 import { SeederModule } from './seeder/seeder.module';
 import { SeederService } from './seeder/seeder.service';
 
@@ -26,14 +23,12 @@ import { SeederService } from './seeder/seeder.service';
         username: configService.get<string>('DATABASE_USERNAME'),
         password: configService.get<string>('DATABASE_PASSWORD'),
         database: configService.get<string>('DATABASE_NAME'),
-        entities: [Philosopher, Term, Question],
+        entities: [Content, ContentRelationship],
         synchronize: true,
       }),
       inject: [ConfigService],
     }),
-    PhilosopherModule,
-    TermModule,
-    QuestionModule,
+    ContentModule,
     SeederModule,
   ],
   controllers: [AppController],

@@ -1,15 +1,6 @@
 [
   {
     "id": "FB944B6B-3638-496F-A6CC-66C4250ED9AD",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Adam-SmithFace.jpg",
-        "face500x500": "/Images/Adam-SmithFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Adam-SmithFull.jpg"
-      }
-    },
     "birthDate": "16 June 1723",
     "deathDate": "17 July 1790",
     "title": "אדם סמית",
@@ -20,19 +11,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Adam-SmithFull.jpg",
+    "description_picture": "/Images/Adam-SmithFace.jpg"
   },
   {
     "id": "68E5964C-2753-4873-8782-E95BDA30FD66",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Albert-CamusFace@2x.jpg",
-        "face250x250": "/Images/Albert-CamusFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Albert-CamusFull.jpg"
-      }
-    },
     "birthDate": "7 November 1913",
     "deathDate": "4 January 1960",
     "title": "אלבר קאמי",
@@ -43,38 +27,24 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Albert-CamusFull.jpg",
+    "description_picture": "/Images/Albert-CamusFace.jpg"
   },
   {
     "id": "F8320389-19D4-4095-95A3-A93A7F7F7997",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/AnaximanderFace.jpg",
-        "face500x500": "/Images/AnaximanderFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/AnaximanderFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "אנקסימנדרוס",
     "content": "<p>אנקסימנדרוס היה פילוסוף יווני קדם-סוקרטי שחי במאה ה-6 לפני הספירה. הוא נולד במילטוס, יוון (טורקיה המודרנית) בערך בשנת 611 לפני הספירה ונפטר בערך בשנת 546 לפני הספירה. הוא ידוע בעיקר בזכות תרומתו לתחום המטאפיזיקה, האסטרונומיה, הגיאומטריה והגיאוגרפיה.</p>\n<p>אחד הרעיונות המרכזיים שלו היה שהאדמה תלויה בחלל, במרחק שווה מכל הדברים האחרים, ושהיא גוף מוצק גלילי.</p>\n<p>ציטוט מפורסם שלו: \"אל המקום ממנו נוצרים הדברים הם חוזרים ונעלמים, כפי שנגזר; שכן הם עושים תיקון ופיצוי זה לזה על העוול לפי הזמן שנקבע.\"</p>",
     "topicalDescription": "פילוסוף יווני קדם-סוקרטי, הידוע בתרומתו לתחומים כמו מטאפיזיקה, אסטרונומיה, גיאומטריה וגיאוגרפיה.",
     "era": "קדם-סוקרטי",
-    "associatedCategories": []
+    "associatedCategories": [],
+    "full_picture": "/Images/AnaximanderFull.jpg",
+    "description_picture": "/Images/AnaximanderFace.jpg"
   },
   {
     "id": "E54F0371-327C-49FB-8EAA-53CEB7E4190A",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Angela-DavisFace.jpg",
-        "face500x500": "/Images/Angela-DavisFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Angela-DavisFull.jpg"
-      }
-    },
     "birthDate": "26 January 1944",
     "deathDate": null,
     "title": "אנג'לה דייוויס",
@@ -86,19 +56,12 @@
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Angela-DavisFull.jpg",
+    "description_picture": "/Images/Angela-DavisFace.jpg"
   },
   {
     "id": "D070CF3D-759D-47D0-8A7B-8B1637C89F78",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Anna-Julia-CooperFace@2x.jpg",
-        "face250x250": "/Images/Anna-Julia-CooperFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Anna-Julia-CooperFull.jpg"
-      }
-    },
     "birthDate": "10 August 1858",
     "deathDate": "27 February 1964",
     "title": "אנה ג'וליה קופר",
@@ -109,19 +72,12 @@
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Anna-Julia-CooperFull.jpg",
+    "description_picture": "/Images/Anna-Julia-CooperFace.jpg"
   },
   {
     "id": "01CBC5D4-55DE-4579-8DBB-D3B8762E545C",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Anne-ConwayFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Anne-ConwayFace@2x.jpg",
-        "face250x250": "/Images/Anne-ConwayFace.jpg"
-      }
-    },
     "birthDate": "14 December 1631",
     "deathDate": "23 February 1679",
     "title": "אן קונווי",
@@ -131,19 +87,12 @@
     "associatedCategories": [
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Anne-ConwayFull.jpg",
+    "description_picture": "/Images/Anne-ConwayFace.jpg"
   },
   {
     "id": "29CAB993-0821-4680-B05C-3DD5892EEC55",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/AristotleFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/AristotleFace@2x.jpg",
-        "face250x250": "/Images/AristotleFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "אריסטו",
@@ -154,19 +103,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/AristotleFull.jpg",
+    "description_picture": "/Images/AristotleFace.jpg"
   },
   {
     "id": "51165051-8479-477C-8491-8D508EF230E3",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Arthur-SchopenhauerFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Arthur-SchopenhauerFace@2x.jpg",
-        "face250x250": "/Images/Arthur-SchopenhauerFace.jpg"
-      }
-    },
     "birthDate": "22 בפברואר 1788",
     "deathDate": "21 בספטמבר 1860",
     "title": "ארתור שופנהאואר",
@@ -177,19 +119,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "4CAC0A7D-EFC8-40EB-A224-46591ECDD240",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
-    ]
+    ],
+    "full_picture": "/Images/Arthur-SchopenhauerFull.jpg",
+    "description_picture": "/Images/Arthur-SchopenhauerFace.jpg"
   },
   {
     "id": "389472AB-3BF9-4E5E-BB9E-A5B858BFD20D",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Auguste-ComteFace.jpg",
-        "face500x500": "/Images/Auguste-ComteFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Auguste-ComteFull.jpg"
-      }
-    },
     "birthDate": "19 January 1798",
     "deathDate": "5 September 1857",
     "title": "אוגוסט קונט",
@@ -200,19 +135,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Auguste-ComteFull.jpg",
+    "description_picture": "/Images/Auguste-ComteFace.jpg"
   },
   {
     "id": "6B723679-7DB0-47FB-8A19-EBDD7C812DE8",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Augustine-of-HippoFace.jpg",
-        "face500x500": "/Images/Augustine-of-HippoFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Augustine-of-HippoFull.jpg"
-      }
-    },
     "birthDate": "13 November 354",
     "deathDate": "28 August 430",
     "title": "אוגוסטינוס מהיפו",
@@ -222,19 +150,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Augustine-of-HippoFull.jpg",
+    "description_picture": "/Images/Augustine-of-HippoFace.jpg"
   },
   {
     "id": "3ED20891-9043-47CC-BF2F-13F135A07246",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Ayn-RandFace@2x.jpg",
-        "face250x250": "/Images/Ayn-RandFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Ayn-RandFull.jpg"
-      }
-    },
     "birthDate": "2 February 1905",
     "deathDate": "6 March 1982",
     "title": "איין ראנד",
@@ -245,19 +166,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "content": "<p><b>איין ראנד</b> (2 בפברואר 1905 - 6 במרץ 1982) הייתה סופרת ופילוסופית יהודיה-אמריקאית ילידת רוסיה, הידועה בעיקר בפיתוחה של הפילוסופיה האובייקטיביסטית.</p>\n\n<p><b>רעיונות מרכזיים:</b></p>\n<ul>\n <li>בני אדם הם גיבורים והאושר של האדם עצמו הוא המטרה המוסרית של החיים.</li>\n <li>אין ידע <i>א-פריורי</i>; כל הידע מגיע דרך תפיסה חושית.</li>\n <li>האינדיבידואל צריך להתקיים למען עצמו, לא להקריב את עצמו לאחרים ולא להקריב אחרים למען עצמו (אינטרס עצמי רציונלי).</li>\n</ul>\n\n<p><b>עבודות מרכזיות:</b></p>\n<ul>\n <li>מבוא לאפיסטמולוגיה אובייקטיביסטית</li>\n <li>המעלה של האנוכיות</li>\n</ul>\n\n<p><b>ציטוטים:</b></p>\n<ul>\n <li>\"זכרו גם שהמיעוט הקטן ביותר על פני כדור הארץ הוא האינדיבידואל. אלה השוללים זכויות אינדיבידואליות, אינם יכולים לטעון שהם מגנים על מיעוטים.\" - <i>קפיטליזם: האידיאל הלא נודע</i></li>\n <li>\"שישאל את עצמו כל מי שמאמין שרמת חיים גבוהה היא הישג של איגודי עובדים ופיקוח ממשלתי את השאלה הבאה: אם היה \"מכונת זמן\" ומשנעים את ראשי איגודי העבודה המאוחדים של אמריקה, בתוספת שלושה מיליון ביורוקרטים ממשלתיים, חזרה למאה העשירית - האם הם יהיו מסוגלים לספק לצמית ימי הביניים אור חשמלי, מקררים, מכוניות ומכשירי טלוויזיה?\" - <i>קפיטליזם: האידיאל הלא נודע</i></li>\n <li>\"במקדש רוחו, כל אדם לבד.\" - <i>המנון</i></li>\n <li>\"אינני צריך צו על קיומי, ולא מילה של אישור על קיומי. אני הצו והאישור.\" - <i>המנון</i></li>\n <li>\"אנוכיות אינה אומרת לעשות רק דברים למען עצמך. אדם יכול לעשות דברים, המשפיעים על אחרים, למען ההנאה והתועלת שלו. זה לא לא מוסרי, אלא הגבוה ביותר של המוסר.\" - <i>יומניה של איין ראנד</i></li>\n <li>\"הקניבליזם המוסרי של כל הדוקטרינות ההדוניסטיות והאלטרואיסטיות טמון בהנחה שאושרו של אדם אחד מחייב את הפגיעה באחר.\" - <i>המעלה של האנוכיות</i></li>\n <li>\"כל מונופול כפייתי נוצר על ידי התערבות ממשלתית בכלכלה: על ידי הרשאות מיוחדות, כגון זיכיונות או סובסידיות, שסגרו את כניסת המתחרים לתחום נתון, על ידי פעולה חקיקתית.\" - <i>קול ההיגיון</i></li>\n</ul>\n<p>ראנד נולדה בסנט פטרבורג, רוסיה.</p>"
+    "content": "<p><b>איין ראנד</b> (2 בפברואר 1905 - 6 במרץ 1982) הייתה סופרת ופילוסופית יהודיה-אמריקאית ילידת רוסיה, הידועה בעיקר בפיתוחה של הפילוסופיה האובייקטיביסטית.</p>\n\n<p><b>רעיונות מרכזיים:</b></p>\n<ul>\n <li>בני אדם הם גיבורים והאושר של האדם עצמו הוא המטרה המוסרית של החיים.</li>\n <li>אין ידע <i>א-פריורי</i>; כל הידע מגיע דרך תפיסה חושית.</li>\n <li>האינדיבידואל צריך להתקיים למען עצמו, לא להקריב את עצמו לאחרים ולא להקריב אחרים למען עצמו (אינטרס עצמי רציונלי).</li>\n</ul>\n\n<p><b>עבודות מרכזיות:</b></p>\n<ul>\n <li>מבוא לאפיסטמולוגיה אובייקטיביסטית</li>\n <li>המעלה של האנוכיות</li>\n</ul>\n\n<p><b>ציטוטים:</b></p>\n<ul>\n <li>\"זכרו גם שהמיעוט הקטן ביותר על פני כדור הארץ הוא האינדיבידואל. אלה השוללים זכויות אינדיבידואליות, אינם יכולים לטעון שהם מגנים על מיעוטים.\" - <i>קפיטליזם: האידיאל הלא נודע</i></li>\n <li>\"שישאל את עצמו כל מי שמאמין שרמת חיים גבוהה היא הישג של איגודי עובדים ופיקוח ממשלתי את השאלה הבאה: אם היה \"מכונת זמן\" ומשנעים את ראשי איגודי העבודה המאוחדים של אמריקה, בתוספת שלושה מיליון ביורוקרטים ממשלתיים, חזרה למאה העשירית - האם הם יהיו מסוגלים לספק לצמית ימי הביניים אור חשמלי, מקררים, מכוניות ומכשירי טלוויזיה?\" - <i>קפיטליזם: האידיאל הלא נודע</i></li>\n <li>\"במקדש רוחו, כל אדם לבד.\" - <i>המנון</i></li>\n <li>\"אינני צריך צו על קיומי, ולא מילה של אישור על קיומי. אני הצו והאישור.\" - <i>המנון</i></li>\n <li>\"אנוכיות אינה אומרת לעשות רק דברים למען עצמך. אדם יכול לעשות דברים, המשפיעים על אחרים, למען ההנאה והתועלת שלו. זה לא לא מוסרי, אלא הגבוה ביותר של המוסר.\" - <i>יומניה של איין ראנד</i></li>\n <li>\"הקניבליזם המוסרי של כל הדוקטרינות ההדוניסטיות והאלטרואיסטיות טמון בהנחה שאושרו של אדם אחד מחייב את הפגיעה באחר.\" - <i>המעלה של האנוכיות</i></li>\n <li>\"כל מונופול כפייתי נוצר על ידי התערבות ממשלתית בכלכלה: על ידי הרשאות מיוחדות, כגון זיכיונות או סובסידיות, שסגרו את כניסת המתחרים לתחום נתון, על ידי פעולה חקיקתית.\" - <i>קול ההיגיון</i></li>\n</ul>\n<p>ראנד נולדה בסנט פטרבורג, רוסיה.</p>",
+    "full_picture": "/Images/Ayn-RandFull.jpg",
+    "description_picture": "/Images/Ayn-RandFace.jpg"
   },
   {
     "id": "93D94133-3DC0-42B9-A212-4348EC053CF3",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Baruch-SpinozaFace@2x.jpg",
-        "face250x250": "/Images/Baruch-SpinozaFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Baruch-SpinozaFull.jpg"
-      }
-    },
     "birthDate": "24 November 1632",
     "deathDate": "21 February 1677",
     "title": "ברוך שפינוזה",
@@ -268,19 +182,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/Baruch-SpinozaFull.jpg",
+    "description_picture": "/Images/Baruch-SpinozaFace.jpg"
   },
   {
     "id": "0862B666-7295-4882-AE1C-2D84BCE4D8C8",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/bell-hooksFace@2x.jpg",
-        "face250x250": "/Images/bell-hooksFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/bell-hooksFull.jpg"
-      }
-    },
     "birthDate": "25 September 1952",
     "deathDate": null,
     "title": "בל הוקס",
@@ -290,19 +197,12 @@
     "associatedCategories": [
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/bell-hooksFull.jpg",
+    "description_picture": "/Images/bell-hooksFace.jpg"
   },
   {
     "id": "FA2E9B06-057A-44A6-AD55-0771949584D3",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Bertrand-RussellFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Bertrand-RussellFace@2x.jpg",
-        "face250x250": "/Images/Bertrand-RussellFace.jpg"
-      }
-    },
     "birthDate": "18 May 1872",
     "deathDate": "2 February 1970",
     "title": "ברטרנד ראסל",
@@ -312,19 +212,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/Bertrand-RussellFull.jpg",
+    "description_picture": "/Images/Bertrand-RussellFace.jpg"
   },
   {
     "id": "70D74337-9BB7-4E5A-959B-7AA38D034313",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Betty-FriedanFace@2x.jpg",
-        "face250x250": "/Images/Betty-FriedanFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Betty-FriedanFull.jpg"
-      }
-    },
     "birthDate": "4 February 1921",
     "deathDate": "4 February 2006",
     "title": "בטי פרידן",
@@ -335,19 +228,12 @@
     "associatedCategories": [
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Betty-FriedanFull.jpg",
+    "description_picture": "/Images/Betty-FriedanFace.jpg"
   },
   {
     "id": "FF162966-A088-498E-B984-0735E96858F3",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Carl-JungFace@2x.jpg",
-        "face250x250": "/Images/Carl-JungFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Carl-JungFull.jpg"
-      }
-    },
     "birthDate": "26 July 1875",
     "deathDate": "6 June 1961",
     "title": "קארל יונג",
@@ -355,19 +241,12 @@
     "topicalDescription": "פסיכיאטר ופסיכואנליטיקאי שווייצרי, מייסד הפסיכולוגיה האנליטית, הידוע בעיקר בזכות עבודתו על הלא מודע הקולקטיבי והארכיטיפים.",
     "era": "המאה ה-20",
     "associatedCategories": [],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Carl-JungFull.jpg",
+    "description_picture": "/Images/Carl-JungFace.jpg"
   },
   {
     "id": "5068DB3C-3870-439A-B470-FEB4CFE4E78B",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/CiceroFace@2x.jpg",
-        "face250x250": "/Images/CiceroFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/CiceroFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": "7 December 43",
     "title": "ציקרו",
@@ -376,19 +255,12 @@
     "era": "העת העתיקה",
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/CiceroFull.jpg",
+    "description_picture": "/Images/CiceroFace.jpg"
   },
   {
     "id": "8D733901-82BE-416A-A9B6-ECCFBA9B196D",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Damaris-Cudworth-MashamFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Damaris-Cudworth-MashamFace.jpg",
-        "face500x500": "/Images/Damaris-Cudworth-MashamFace@2x.jpg"
-      }
-    },
     "birthDate": "18 January 1659",
     "deathDate": "20 April 1708",
     "title": "דמריס קודוורת' משאם",
@@ -399,19 +271,12 @@
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
     ],
-    "interests": "מטאפיזיקה, לוגיקה, תיאודציה, שפה אוניברסלית"
+    "interests": "מטאפיזיקה, לוגיקה, תיאודציה, שפה אוניברסלית",
+    "full_picture": "/Images/Damaris-Cudworth-MashamFull.jpg",
+    "description_picture": "/Images/Damaris-Cudworth-MashamFace.jpg"
   },
   {
     "id": "9AB7B738-3926-4290-BA69-70D0A2F5EEC2",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Dante-AlighieriFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Dante-AlighieriFace@2x.jpg",
-        "face250x250": "/Images/Dante-AlighieriFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": "13 September 1321",
     "title": "דנטה אליגיירי",
@@ -422,19 +287,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Dante-AlighieriFull.jpg",
+    "description_picture": "/Images/Dante-AlighieriFace.jpg"
   },
   {
     "id": "0506F72D-FCD9-4F55-BD23-38953ADD2F88",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/David-HumeFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/David-HumeFace@2x.jpg",
-        "face250x250": "/Images/David-HumeFace.jpg"
-      }
-    },
     "birthDate": "7 May 1711",
     "deathDate": "25 August 1776",
     "title": "דייוויד יום",
@@ -445,19 +303,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/David-HumeFull.jpg",
+    "description_picture": "/Images/David-HumeFace.jpg"
   },
   {
     "id": "75D800D1-AB13-4192-931A-5866DAF44773",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Denis-DiderotFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Denis-DiderotFace@2x.jpg",
-        "face250x250": "/Images/Denis-DiderotFace.jpg"
-      }
-    },
     "birthDate": "5 October 1713",
     "deathDate": "31 July 1784",
     "title": "דני דידרו",
@@ -468,19 +319,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Denis-DiderotFull.jpg",
+    "description_picture": "/Images/Denis-DiderotFace.jpg"
   },
   {
     "id": "28FC9356-FD10-49E5-A10B-F3B3D06B6A3B",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/DiogenesFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/DiogenesFace@2x.jpg",
-        "face250x250": "/Images/DiogenesFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "דיוגנס",
@@ -491,19 +335,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/DiogenesFull.jpg",
+    "description_picture": "/Images/DiogenesFace.jpg"
   },
   {
     "id": "2361B39D-5581-4134-97DC-ED03F1E325D1",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Edmund-BurkeFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Edmund-BurkeFace.jpg",
-        "face500x500": "/Images/Edmund-BurkeFace@2x.jpg"
-      }
-    },
     "birthDate": "12 January 1729",
     "deathDate": "9 July 1797",
     "title": "אדמונד ברק",
@@ -512,19 +349,12 @@
     "era": "המאה ה-18",
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Edmund-BurkeFull.jpg",
+    "description_picture": "/Images/Edmund-BurkeFace.jpg"
   },
   {
     "id": "B03D878D-9657-4EB1-A886-59C19F52BDA5",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Edmund-HusserlFace@2x.jpg",
-        "face250x250": "/Images/Edmund-HusserlFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Edmund-HusserlFull.jpg"
-      }
-    },
     "birthDate": "8 April 1859",
     "deathDate": "27 April 1938",
     "title": "אדמונד הוסרל",
@@ -534,19 +364,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "4CAC0A7D-EFC8-40EB-A224-46591ECDD240"
-    ]
+    ],
+    "full_picture": "/Images/Edmund-HusserlFull.jpg",
+    "description_picture": "/Images/Edmund-HusserlFace.jpg"
   },
   {
     "id": "FD34BB43-EDB4-42D7-A484-4E97190C6061",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Edward-SaidFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Edward-SaidFace@2x.jpg",
-        "face250x250": "/Images/Edward-SaidFace.jpg"
-      }
-    },
     "birthDate": "1 November 1935",
     "deathDate": "24 September 2003",
     "title": "אדוארד סעיד",
@@ -557,19 +380,12 @@
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Edward-SaidFull.jpg",
+    "description_picture": "/Images/Edward-SaidFace.jpg"
   },
   {
     "id": "215CFEFE-7D4B-400D-A14B-CD4BE9E0AA30",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Elizabeth-AnscombeFace.jpg",
-        "face500x500": "/Images/Elizabeth-AnscombeFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Elizabeth-AnscombeFull.jpg"
-      }
-    },
     "birthDate": "18 March 1919",
     "deathDate": "5 January 2001",
     "title": "אליזבת אנסקומב",
@@ -579,19 +395,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/Elizabeth-AnscombeFull.jpg",
+    "description_picture": "/Images/Elizabeth-AnscombeFace.jpg"
   },
   {
     "id": "80EC6998-C414-4615-90F8-D7B18D5B3854",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Emma-GoldmanFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Emma-GoldmanFace.jpg",
-        "face500x500": "/Images/Emma-GoldmanFace@2x.jpg"
-      }
-    },
     "birthDate": "27 June 1869",
     "deathDate": "14 May 1940",
     "title": "אמה גולדמן",
@@ -602,19 +411,12 @@
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "content": "<p>אמה גולדמן הייתה אנרכיסטית, אנרכו-פמיניסטית ואנרכו-קומוניסטית ידועה. היא נולדה ב-27 ביוני 1869 ונפטרה ב-14 במאי 1940. היא הייתה הוגה פוליטית, פעילה וסופרת. </p>\n\n<p><b>רעיונות מרכזיים:</b></p>\n<ul>\n <li>\"אנרכיזם הוא שחרור המוח מהדת, שחרור הגוף מהרכוש ושחרור מאילוצי הממשלה.\"</li>\n <li>\"קפיטליזם אינו עולה בקנה אחד עם החירות האנושית.\"</li>\n <li>\"אתאיזם מציע את ההתרחבות והצמיחה של המוח האנושי; תאיזם הוא סטטי וקבוע.\"</li>\n</ul>\n\n<p><b>ציטוטים בולטים:</b></p>\n<ul>\n <li>\"אין שום תקווה שאפילו האישה, עם זכותה להצביע, אי פעם תטהר את הפוליטיקה.\"</li>\n <li>\"הדרישה לשוויון זכויות בכל עיסוק בחיים היא צודקת והוגנת; אבל, בסופו של דבר, הזכות החיונית ביותר היא הזכות לאהוב ולהיות נאהב.\"</li>\n <li>\"מאפיין את ה'סובלנות' התיאיסטית שאף אחד לא באמת אכפת במה אנשים מאמינים, כל עוד הם מאמינים או מעמידים פנים שהם מאמינים.\"</li>\n <li>\"גברים ונשים חושבים ברחבי העולם מתחילים להבין שפטריוטיזם הוא תפיסה צרה ומוגבלת מדי כדי לענות על צורכי זמננו.\"</li>\n <li>\"אנרכיזם הוא הפילוסופיה היחידה שמביאה לאדם את התודעה של עצמו; שטוענת שאלוהים, המדינה והחברה אינם קיימים, שהבטחותיהם בטלות ומבוטלות, מכיוון שניתן לממש אותם רק באמצעות כפיפותו של האדם.\"</li>\n <li>\"אנחנו האמריקאים טוענים שאנחנו אנשים אוהבי שלום. אנחנו שונאים שפיכות דמים; אנחנו מתנגדים לאלימות. עם זאת, אנו נכנסים להתקפי שמחה על האפשרות להטיל פצצות דינמיט ממכונות מעופפות על אזרחים חסרי ישע.\"</li>\n <li>\"...המבצר הגדול ביותר של הקפיטליזם הוא מיליטריזם.\"</li>\n <li>\"אבות הכנסייה יכולים להרשות לעצמם להטיף את בשורת המשיח. אין בה שום דבר מסוכן למשטר הסמכות והעושר; היא תומכת בהכחשה עצמית ובהכנעה עצמית, בכפרה ובחרטה, והיא אינרטית לחלוטין מול כל השפלה, כל עוול שהוטל על האנושות.\"</li>\n <li>\"אלה שלא יעבדו במקדש הכסף, לא צריכים לקוות להכרה. מצד שני, הם גם לא יצטרכו לחשוב את המחשבות של אנשים אחרים או ללבוש את הבגדים הפוליטיים של אנשים אחרים. הם לא יצטרכו להכריז כאמת את מה שאינו נכון, ולא לשבח כאנושי את מה שהוא אכזרי.\"</li>\n</ul>\n\n<p><b>יצירות עיקריות:</b></p>\n<ul>\n <li>\"אנרכיזם ומאמרים אחרים\"</li>\n</ul>\n"
+    "content": "<p>אמה גולדמן הייתה אנרכיסטית, אנרכו-פמיניסטית ואנרכו-קומוניסטית ידועה. היא נולדה ב-27 ביוני 1869 ונפטרה ב-14 במאי 1940. היא הייתה הוגה פוליטית, פעילה וסופרת. </p>\n\n<p><b>רעיונות מרכזיים:</b></p>\n<ul>\n <li>\"אנרכיזם הוא שחרור המוח מהדת, שחרור הגוף מהרכוש ושחרור מאילוצי הממשלה.\"</li>\n <li>\"קפיטליזם אינו עולה בקנה אחד עם החירות האנושית.\"</li>\n <li>\"אתאיזם מציע את ההתרחבות והצמיחה של המוח האנושי; תאיזם הוא סטטי וקבוע.\"</li>\n</ul>\n\n<p><b>ציטוטים בולטים:</b></p>\n<ul>\n <li>\"אין שום תקווה שאפילו האישה, עם זכותה להצביע, אי פעם תטהר את הפוליטיקה.\"</li>\n <li>\"הדרישה לשוויון זכויות בכל עיסוק בחיים היא צודקת והוגנת; אבל, בסופו של דבר, הזכות החיונית ביותר היא הזכות לאהוב ולהיות נאהב.\"</li>\n <li>\"מאפיין את ה'סובלנות' התיאיסטית שאף אחד לא באמת אכפת במה אנשים מאמינים, כל עוד הם מאמינים או מעמידים פנים שהם מאמינים.\"</li>\n <li>\"גברים ונשים חושבים ברחבי העולם מתחילים להבין שפטריוטיזם הוא תפיסה צרה ומוגבלת מדי כדי לענות על צורכי זמננו.\"</li>\n <li>\"אנרכיזם הוא הפילוסופיה היחידה שמביאה לאדם את התודעה של עצמו; שטוענת שאלוהים, המדינה והחברה אינם קיימים, שהבטחותיהם בטלות ומבוטלות, מכיוון שניתן לממש אותם רק באמצעות כפיפותו של האדם.\"</li>\n <li>\"אנחנו האמריקאים טוענים שאנחנו אנשים אוהבי שלום. אנחנו שונאים שפיכות דמים; אנחנו מתנגדים לאלימות. עם זאת, אנו נכנסים להתקפי שמחה על האפשרות להטיל פצצות דינמיט ממכונות מעופפות על אזרחים חסרי ישע.\"</li>\n <li>\"...המבצר הגדול ביותר של הקפיטליזם הוא מיליטריזם.\"</li>\n <li>\"אבות הכנסייה יכולים להרשות לעצמם להטיף את בשורת המשיח. אין בה שום דבר מסוכן למשטר הסמכות והעושר; היא תומכת בהכחשה עצמית ובהכנעה עצמית, בכפרה ובחרטה, והיא אינרטית לחלוטין מול כל השפלה, כל עוול שהוטל על האנושות.\"</li>\n <li>\"אלה שלא יעבדו במקדש הכסף, לא צריכים לקוות להכרה. מצד שני, הם גם לא יצטרכו לחשוב את המחשבות של אנשים אחרים או ללבוש את הבגדים הפוליטיים של אנשים אחרים. הם לא יצטרכו להכריז כאמת את מה שאינו נכון, ולא לשבח כאנושי את מה שהוא אכזרי.\"</li>\n</ul>\n\n<p><b>יצירות עיקריות:</b></p>\n<ul>\n <li>\"אנרכיזם ומאמרים אחרים\"</li>\n</ul>\n",
+    "full_picture": "/Images/Emma-GoldmanFull.jpg",
+    "description_picture": "/Images/Emma-GoldmanFace.jpg"
   },
   {
     "id": "590E6793-C4CA-4BDE-B8DD-E828951339B3",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/EpicurusFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/EpicurusFace@2x.jpg",
-        "face250x250": "/Images/EpicurusFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "אפיקורוס",
@@ -625,19 +427,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/EpicurusFull.jpg",
+    "description_picture": "/Images/EpicurusFace.jpg"
   },
   {
     "id": "4E6E7356-E6E7-4F0A-BA66-5502F858E1CF",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Francis-BaconFace.jpg",
-        "face500x500": "/Images/Francis-BaconFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Francis-BaconFull.jpg"
-      }
-    },
     "birthDate": "22 January 1561",
     "deathDate": "9 April 1626",
     "title": "פרנסיס בייקון",
@@ -648,19 +443,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Francis-BaconFull.jpg",
+    "description_picture": "/Images/Francis-BaconFace.jpg"
   },
   {
     "id": "18E45730-7891-48FD-A3EA-1447CBD25273",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Francis-FukuyamaFace.jpg",
-        "face500x500": "/Images/Francis-FukuyamaFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Francis-FukuyamaFull.jpg"
-      }
-    },
     "birthDate": "27 October 1952",
     "deathDate": null,
     "title": "פרנסיס פוקויאמה",
@@ -669,19 +457,12 @@
     "era": "המאה ה-21",
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Francis-FukuyamaFull.jpg",
+    "description_picture": "/Images/Francis-FukuyamaFace.jpg"
   },
   {
     "id": "98C768D9-67A3-44F9-9799-F80A0C29BED4",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Frantz-FanonFace@2x.jpg",
-        "face250x250": "/Images/Frantz-FanonFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Frantz-FanonFull.jpg"
-      }
-    },
     "birthDate": "20 July 1925",
     "deathDate": "6 December 1961",
     "title": "פרנץ פאנון",
@@ -690,19 +471,12 @@
     "era": "פוסט-קולוניאליזם, תאוריה ביקורתית",
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Frantz-FanonFull.jpg",
+    "description_picture": "/Images/Frantz-FanonFace.jpg"
   },
   {
     "id": "D719C6D9-93D0-49F0-9EC9-3E2351553B10",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Friedrich-HayekFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Friedrich-HayekFace@2x.jpg",
-        "face250x250": "/Images/Friedrich-HayekFace.jpg"
-      }
-    },
     "birthDate": "8 May 1899",
     "deathDate": "23 March 1992",
     "title": "פרידריך האייק",
@@ -714,19 +488,12 @@
     ],
     "associatedPhilosophers": [
       "לודוויג פון מיזס"
-    ]
+    ],
+    "full_picture": "/Images/Friedrich-HayekFull.jpg",
+    "description_picture": "/Images/Friedrich-HayekFace.jpg"
   },
   {
     "id": "EEDE0B1A-815C-4456-8D2B-0D55028035F8",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Friedrich-NietzscheFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Friedrich-NietzscheFace@2x.jpg",
-        "face250x250": "/Images/Friedrich-NietzscheFace.jpg"
-      }
-    },
     "birthDate": "15 October 1844",
     "deathDate": "25 August 1900",
     "title": "פרידריך ניטשה",
@@ -737,19 +504,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Friedrich-NietzscheFull.jpg",
+    "description_picture": "/Images/Friedrich-NietzscheFace.jpg"
   },
   {
     "id": "47279BDA-DC4B-4B98-83E6-7DE1D7B5C4AD",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/George-BerkeleyFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/George-BerkeleyFace.jpg",
-        "face500x500": "/Images/George-BerkeleyFace@2x.jpg"
-      }
-    },
     "birthDate": "12 March 1685",
     "deathDate": "14 January 1753",
     "title": "ג'ורג' ברקלי",
@@ -759,19 +519,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/George-BerkeleyFull.jpg",
+    "description_picture": "/Images/George-BerkeleyFace.jpg"
   },
   {
     "id": "55ADA2C7-9126-4A97-BA26-E7D7CBF08D73",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Georges-BatailleFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Georges-BatailleFace.jpg",
-        "face500x500": "/Images/Georges-BatailleFace@2x.jpg"
-      }
-    },
     "birthDate": "10 September 1897",
     "deathDate": "9 July 1962",
     "title": "ז'ורז' בטאיי",
@@ -779,19 +532,12 @@
     "topicalDescription": "פילוסוף צרפתי חשוב שהתמקד בארוטיקה, מיסטיקה וכלכלה פוליטית",
     "era": "המאה ה-20",
     "associatedCategories": [],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Georges-BatailleFull.jpg",
+    "description_picture": "/Images/Georges-BatailleFace.jpg"
   },
   {
     "id": "1180AEE2-37F0-4A03-A2F0-F8F63DD7A5E2",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Georg-Wilhelm-Friedrich-HegelFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Georg-Wilhelm-Friedrich-HegelFace.jpg",
-        "face500x500": "/Images/Georg-Wilhelm-Friedrich-HegelFace@2x.jpg"
-      }
-    },
     "birthDate": "27 August 1770",
     "deathDate": "14 November 1831",
     "title": "גאורג וילהלם פרידריך הגל",
@@ -801,19 +547,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Georg-Wilhelm-Friedrich-HegelFull.jpg",
+    "description_picture": "/Images/Georg-Wilhelm-Friedrich-HegelFace.jpg"
   },
   {
     "id": "C3CC174E-1109-4E7A-B5BF-239C3612CA3B",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Giambattista-VicoFace@2x.jpg",
-        "face250x250": "/Images/Giambattista-VicoFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Giambattista-VicoFull.jpg"
-      }
-    },
     "birthDate": "23 June 1668",
     "deathDate": "23 January 1744",
     "title": "ג'אמבטיסטה ויקו",
@@ -823,19 +562,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Giambattista-VicoFull.jpg",
+    "description_picture": "/Images/Giambattista-VicoFace.jpg"
   },
   {
     "id": "645F4A3B-9F64-47D4-B757-A7B4FDE705D1",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Gilles-DeleuzeFace.jpg",
-        "face500x500": "/Images/Gilles-DeleuzeFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Gilles-DeleuzeFull.jpg"
-      }
-    },
     "birthDate": "18 January 1925",
     "deathDate": "4 November 1995",
     "title": "ז'יל דלז",
@@ -843,19 +575,12 @@
     "era": "המאה ה-20",
     "content": "<h1>ז'יל דלז</h1>\n\n<p>ז'יל דלז (1925-1995) היה פילוסוף צרפתי בולט, שתרם תרומות משמעותיות לפוסט-סטרוקטורליזם. הגותו עסקה במגוון נושאים, כולל אסתטיקה ומטאפיזיקה. דלז ידוע בגישתו היצירתית לפילוסופיה, בטענה שהיא תהליך של בניית מושגים ולא רק גילוי מציאות.</p>\n\n<h2>רעיונות מרכזיים</h2>\n<ul>\n <li><b>הפילוסופיה כתהליך יצירתי:</b> דלז ראה בפילוסופיה תהליך יצירתי לבניית מושגים, ולא ניסיון לחשוף את המציאות.</li>\n <li><b>היסטוריה של הפילוסופיה כבנייה:</b> עבודות העוסקות בהיסטוריה של הפילוסופיה יכולות להיות בונות ולא רק פרשניות.</li>\n <li><b>זהות מתוך שוני:</b> ההבנה המסורתית של הזהות בפילוסופיה, לפיה השוני הוא נגזרת של הזהות, הפוכה. הזהות נגזרת מהשוני.</li>\n</ul>\n\n<h2>ציטוטים נבחרים</h2>\n<ul>\n <li><q>איזו טעות הייתה לומר את זה. בכל מקום אלו מכונות - אמיתיות, לא פיגורטיביות: מכונות המניעות מכונות אחרות, מכונות המונעות על ידי מכונות אחרות, עם כל הצימודים והחיבורים הדרושים. מכונת איברים מחוברת למכונת מקור אנרגיה: האחת מייצרת זרימה שהשנייה קוטעת. השד הוא מכונה שמייצרת חלב, והפה מכונה המחוברת אליו.</q> <i>מתוך \"אנטי-אדיפוס קפיטליזם וסכיזופרניה\", 1977</i></li>\n <li><q>שנית, אנחנו לא מבחינים בין אדם לטבע: המהות האנושית של הטבע והמהות הטבעית של האדם הופכות לאחת בתוך הטבע בצורה של ייצור או תעשייה, בדיוק כפי שהן עושות בתוך חיי האדם כמין. התעשייה אינה נחשבת עוד מנקודת מבט חיצונית של תועלת, אלא מנקודת מבט של זהותה המהותית עם הטבע כיצירתו של האדם ועל ידי האדם.</q> <i>מתוך \"אנטי-אדיפוס קפיטליזם וסכיזופרניה\", 1977</i></li>\n <li><q>ספר הוא גלגל שיניים קטן במכונה חיצונית ומורכבת בהרבה. כתיבה היא זרימה בין אחרות; אין לה זכות מיוחדת והיא נכנסת ליחסים של זרם וזרם נגדי, של שטיפה חוזרת עם זרמים אחרים - זרמי חרא, זרע, דיבור, פעולה, ארוטיקה, כסף, פוליטיקה וכו'. כמו בלום, כותב על החול ביד אחת ומאונן בשנייה - שני זרמים באיזה יחס?</q> <i>מתוך \"אין לי מה להודות\", 1977</i></li>\n <li><q>כאשר ניטשה משבח את האגואיזם זה תמיד בצורה אגרסיבית או פולמוסית, נגד המידות הטובות, נגד המידה הטובה של חוסר העניין. אבל למעשה אגואיזם הוא פרשנות גרועה של הרצון, בדיוק כפי שאטומיזם הוא פרשנות גרועה של הכוח. כדי שיהיה אגואיזם חייב להיות אגו.</q> <i>מתוך \"ניטשה והפילוסופיה\", 1962</i></li>\n <li><q>אם לפילוסופיה יש יחס חיובי וישיר לדברים, זה רק עד כמה הפילוסופיה טוענת לתפוס את הדבר עצמו, לפי מה שהוא, בשונותו מכל מה שהוא לא, במילים אחרות, בשונותו הפנימית.</q> <i>מתוך \"איי המדבר\", 1953</i></li>\n</ul>\n\n<h2>עבודות נבחרות</h2>\n<ul>\n <li>מהי פילוסופיה?</li>\n</ul>\n",
     "associatedCategories": [],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Gilles-DeleuzeFull.jpg",
+    "description_picture": "/Images/Gilles-DeleuzeFace.jpg"
   },
   {
     "id": "C752B815-05B8-4CAC-805E-856A35B46952",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Gottfried-Wilhelm-LeibnizFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Gottfried-Wilhelm-LeibnizFace.jpg",
-        "face500x500": "/Images/Gottfried-Wilhelm-LeibnizFace@2x.jpg"
-      }
-    },
     "birthDate": "1 July 1646",
     "deathDate": "14 November 1716",
     "title": "גוטפריד וילהלם לייבניץ",
@@ -863,19 +588,12 @@
     "topicalDescription": "לייבניץ היה פילוסוף רציונליסט חשוב, שתרם רבות לתחומי המטאפיזיקה, הלוגיקה והמתמטיקה.",
     "era": "תקופת הנאורות",
     "associatedPhilosophers": [],
-    "associatedCategories": []
+    "associatedCategories": [],
+    "full_picture": "/Images/Gottfried-Wilhelm-LeibnizFull.jpg",
+    "description_picture": "/Images/Gottfried-Wilhelm-LeibnizFace.jpg"
   },
   {
     "id": "67D1A0D2-6C50-4D1A-B733-AC2D21662EE8",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Guy-DebordFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Guy-DebordFace.jpg",
-        "face500x500": "/Images/Guy-DebordFace@2x.jpg"
-      }
-    },
     "birthDate": "28 בדצמבר 1931",
     "deathDate": "30 בנובמבר 1994",
     "title": "גי דבור",
@@ -946,19 +664,12 @@
       "name": "פריז, צרפת"
     },
     "life": "(1931-1994)",
-    "birthYear": "1931 לספירה"
+    "birthYear": "1931 לספירה",
+    "full_picture": "/Images/Guy-DebordFull.jpg",
+    "description_picture": "/Images/Guy-DebordFace.jpg"
   },
   {
     "id": "E1D85DE9-595F-40A3-B281-E41B2A68F222",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Hannah-ArendtFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Hannah-ArendtFace@2x.jpg",
-        "face250x250": "/Images/Hannah-ArendtFace.jpg"
-      }
-    },
     "birthDate": "14 October 1906",
     "deathDate": "4 December 1975",
     "title": "חנה ארנדט",
@@ -968,19 +679,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Hannah-ArendtFull.jpg",
+    "description_picture": "/Images/Hannah-ArendtFace.jpg"
   },
   {
     "id": "33164B45-3F93-45AC-8B88-FA48BC3FDFBD",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Henri-BergsonFace.jpg",
-        "face500x500": "/Images/Henri-BergsonFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Henri-BergsonFull.jpg"
-      }
-    },
     "birthDate": "18 October 1859",
     "deathDate": "4 January 1941",
     "title": "אנרי ברגסון",
@@ -990,19 +694,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Henri-BergsonFull.jpg",
+    "description_picture": "/Images/Henri-BergsonFace.jpg"
   },
   {
     "id": "9F6757B1-D0C9-4FAC-9ABE-A51F8E4C1961",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Henry-David-ThoreauFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Henry-David-ThoreauFace.jpg",
-        "face500x500": "/Images/Henry-David-ThoreauFace@2x.jpg"
-      }
-    },
     "birthDate": "12 July 1817",
     "deathDate": "6 May 1862",
     "title": "הנרי דייוויד ת'ורו",
@@ -1013,19 +710,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Henry-David-ThoreauFull.jpg",
+    "description_picture": "/Images/Henry-David-ThoreauFace.jpg"
   },
   {
     "id": "410D7B25-4F70-4346-A01A-CA556498FFFE",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/HeraclitusFace@2x.jpg",
-        "face250x250": "/Images/HeraclitusFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/HeraclitusFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "הרקליטוס",
@@ -1036,19 +726,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/HeraclitusFull.jpg",
+    "description_picture": "/Images/HeraclitusFace.jpg"
   },
   {
     "id": "1B5A089D-F27A-4D71-BE93-959B0FCD7600",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Herbert-MarcuseFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Herbert-MarcuseFace@2x.jpg",
-        "face250x250": "/Images/Herbert-MarcuseFace.jpg"
-      }
-    },
     "birthDate": "19 July 1898",
     "deathDate": "29 July 1979",
     "title": "הרברט מרקוזה",
@@ -1058,19 +741,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/Herbert-MarcuseFull.jpg",
+    "description_picture": "/Images/Herbert-MarcuseFace.jpg"
   },
   {
     "id": "5A8FE409-3961-4472-B28D-2201CD4B9311",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Herbert-SpencerFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Herbert-SpencerFace@2x.jpg",
-        "face250x250": "/Images/Herbert-SpencerFace.jpg"
-      }
-    },
     "birthDate": "27 April 1820",
     "deathDate": "8 December 1903",
     "title": "הרברט ספנסר",
@@ -1080,19 +756,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Herbert-SpencerFull.jpg",
+    "description_picture": "/Images/Herbert-SpencerFace.jpg"
   },
   {
     "id": "8D0D5B08-94A1-401D-AF81-25377AEE86DA",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Immanuel-KantFace.jpg",
-        "face500x500": "/Images/Immanuel-KantFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Immanuel-KantFull.jpg"
-      }
-    },
     "birthDate": "22 April 1724",
     "deathDate": "12 February 1804",
     "title": "עמנואל קאנט",
@@ -1103,19 +772,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Immanuel-KantFull.jpg",
+    "description_picture": "/Images/Immanuel-KantFace.jpg"
   },
   {
     "id": "4C870661-2E10-4B20-B3D0-2462DA8192DF",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Jacques-DerridaFace.jpg",
-        "face500x500": "/Images/Jacques-DerridaFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Jacques-DerridaFull.jpg"
-      }
-    },
     "birthDate": "15 July 1930",
     "deathDate": "9 October 2004",
     "title": "ז'אק דרידה",
@@ -1126,19 +788,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/Jacques-DerridaFull.jpg",
+    "description_picture": "/Images/Jacques-DerridaFace.jpg"
   },
   {
     "id": "9361456C-B420-49CC-A1CB-773BB44F079A",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Jacques-LacanFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Jacques-LacanFace.jpg",
-        "face500x500": "/Images/Jacques-LacanFace@2x.jpg"
-      }
-    },
     "birthDate": "13 באפריל 1901",
     "deathDate": "9 בספטמבר 1981",
     "title": "ז'אק לאקאן",
@@ -1147,19 +802,12 @@
     "era": "המאה ה-20",
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/Jacques-LacanFull.jpg",
+    "description_picture": "/Images/Jacques-LacanFace.jpg"
   },
   {
     "id": "590670FA-ADBE-4D76-8791-02A88B5E4CC0",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Jane-AddamsFace.jpg",
-        "face500x500": "/Images/Jane-AddamsFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Jane-AddamsFull.jpg"
-      }
-    },
     "birthDate": "6 September 1860",
     "deathDate": "21 May 1935",
     "title": "ג'יין אדמס",
@@ -1170,19 +818,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Jane-AddamsFull.jpg",
+    "description_picture": "/Images/Jane-AddamsFace.jpg"
   },
   {
     "id": "78438BE8-DAE1-455A-81C1-2925921AE831",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Jean-BaudrillardFace@2x.jpg",
-        "face250x250": "/Images/Jean-BaudrillardFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Jean-BaudrillardFull.jpg"
-      }
-    },
     "birthDate": "27 July 1929",
     "deathDate": "6 March 2007",
     "title": "ז'אן בודריאר",
@@ -1193,19 +834,12 @@
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Jean-BaudrillardFull.jpg",
+    "description_picture": "/Images/Jean-BaudrillardFace.jpg"
   },
   {
     "id": "805013E1-53ED-414C-9E43-6D776354B8C2",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Jean-Francois-LyotardFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Jean-Francois-LyotardFace@2x.jpg",
-        "face250x250": "/Images/Jean-Francois-LyotardFace.jpg"
-      }
-    },
     "birthDate": "10 August 1924",
     "deathDate": "21 April 1998",
     "title": "ז'אן-פרנסואה ליאוֹטָר",
@@ -1216,19 +850,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Jean-Francois-LyotardFull.jpg",
+    "description_picture": "/Images/Jean-Francois-LyotardFace.jpg"
   },
   {
     "id": "BB4F146D-92C5-4E69-B6B4-F1F946C84377",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Jean-Jacques-RousseauFace@2x.jpg",
-        "face250x250": "/Images/Jean-Jacques-RousseauFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Jean-Jacques-RousseauFull.jpg"
-      }
-    },
     "birthDate": "28 June 1712",
     "deathDate": "2 July 1778",
     "title": "ז'אן-ז'אק רוסו",
@@ -1239,19 +866,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Jean-Jacques-RousseauFull.jpg",
+    "description_picture": "/Images/Jean-Jacques-RousseauFace.jpg"
   },
   {
     "id": "5C4140C8-E55F-42D3-A1A6-952D31F524F9",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Jean-Paul-SartreFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Jean-Paul-SartreFace.jpg",
-        "face500x500": "/Images/Jean-Paul-SartreFace@2x.jpg"
-      }
-    },
     "birthDate": "21 June 1905",
     "deathDate": "15 April 1980",
     "title": "ז'אן-פול סארטר",
@@ -1264,19 +884,12 @@
       "4CAC0A7D-EFC8-40EB-A224-46591ECDD240",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Jean-Paul-SartreFull.jpg",
+    "description_picture": "/Images/Jean-Paul-SartreFace.jpg"
   },
   {
     "id": "0775D2F7-5F3D-4003-B101-A27738F1DF5D",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Jeremy-BenthamFace.jpg",
-        "face500x500": "/Images/Jeremy-BenthamFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Jeremy-BenthamFull.jpg"
-      }
-    },
     "birthDate": "15 February 1748",
     "deathDate": "6 June 1832",
     "title": "ג'רמי בנת'ם",
@@ -1287,19 +900,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Jeremy-BenthamFull.jpg",
+    "description_picture": "/Images/Jeremy-BenthamFace.jpg"
   },
   {
     "id": "2EE09BAD-1395-4394-8F6F-EB591069AE66",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Johann-Gottlieb-FichteFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Johann-Gottlieb-FichteFace@2x.jpg",
-        "face250x250": "/Images/Johann-Gottlieb-FichteFace.jpg"
-      }
-    },
     "birthDate": "19 May 1762",
     "deathDate": "27 January 1814",
     "title": "יוהאן גוטליב פיכטה",
@@ -1310,19 +916,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Johann-Gottlieb-FichteFull.jpg",
+    "description_picture": "/Images/Johann-Gottlieb-FichteFace.jpg"
   },
   {
     "id": "35859990-0911-447A-8254-CDFE783671BF",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/John-DeweyFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/John-DeweyFace.jpg",
-        "face500x500": "/Images/John-DeweyFace@2x.jpg"
-      }
-    },
     "birthDate": "20 October 1859",
     "deathDate": "1 June 1952",
     "title": "ג'ון דיואי",
@@ -1334,19 +933,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/John-DeweyFull.jpg",
+    "description_picture": "/Images/John-DeweyFace.jpg"
   },
   {
     "id": "FBB201D1-729F-47E6-9B9F-537091E3F9F3",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/John-LockeFace@2x.jpg",
-        "face250x250": "/Images/John-LockeFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/John-LockeFull.jpg"
-      }
-    },
     "birthDate": "29 August 1632",
     "deathDate": "28 October 1704",
     "title": "ג'ון לוק",
@@ -1357,19 +949,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/John-LockeFull.jpg",
+    "description_picture": "/Images/John-LockeFace.jpg"
   },
   {
     "id": "9F487385-705B-4E30-A9A6-6D272E0D4DF4",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/John-RawlsFace.jpg",
-        "face500x500": "/Images/John-RawlsFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/John-RawlsFull.jpg"
-      }
-    },
     "birthDate": "21 February 1921",
     "deathDate": "24 November 2002",
     "title": "ג'ון רולס",
@@ -1380,19 +965,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/John-RawlsFull.jpg",
+    "description_picture": "/Images/John-RawlsFace.jpg"
   },
   {
     "id": "7051875D-8E55-451A-A540-A1044F7F8015",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/John-Stuart-MillFace@2x.jpg",
-        "face250x250": "/Images/John-Stuart-MillFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/John-Stuart-MillFull.jpg"
-      }
-    },
     "birthDate": "20 May 1806",
     "deathDate": "7 May 1873",
     "title": "ג'ון סטיוארט מיל",
@@ -1403,19 +981,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/John-Stuart-MillFull.jpg",
+    "description_picture": "/Images/John-Stuart-MillFace.jpg"
   },
   {
     "id": "9FB6BB7A-086C-4FB8-B3EF-7E2857C7E0F3",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Judith-ButlerFace.jpg",
-        "face500x500": "/Images/Judith-ButlerFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Judith-ButlerFull.jpg"
-      }
-    },
     "birthDate": "24 February 1956",
     "deathDate": null,
     "title": "ג'ודית באטלר",
@@ -1427,19 +998,12 @@
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Judith-ButlerFull.jpg",
+    "description_picture": "/Images/Judith-ButlerFace.jpg"
   },
   {
     "id": "4952AE75-FBF7-47C7-B1D7-D2F70F843AE4",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Karl-MarxFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Karl-MarxFace.jpg",
-        "face500x500": "/Images/Karl-MarxFace@2x.jpg"
-      }
-    },
     "birthDate": "5 May 1818",
     "deathDate": "14 March 1883",
     "title": "קרל מרקס",
@@ -1449,19 +1013,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Karl-MarxFull.jpg",
+    "description_picture": "/Images/Karl-MarxFace.jpg"
   },
   {
     "id": "E3315583-3AD8-4AD0-BF0B-603D92C1D731",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Karl-PopperFace.jpg",
-        "face500x500": "/Images/Karl-PopperFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Karl-PopperFull.jpg"
-      }
-    },
     "birthDate": "28 July 1902",
     "deathDate": "17 September 1994",
     "title": "קרל פופר",
@@ -1470,19 +1027,12 @@
     "era": "המאה ה-20",
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA"
-    ]
+    ],
+    "full_picture": "/Images/Karl-PopperFull.jpg",
+    "description_picture": "/Images/Karl-PopperFace.jpg"
   },
   {
     "id": "2CEA35DB-CBEA-462E-BADB-FAB360F437FA",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Leo-StraussFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Leo-StraussFace@2x.jpg",
-        "face250x250": "/Images/Leo-StraussFace.jpg"
-      }
-    },
     "birthDate": "20 September 1899",
     "deathDate": "18 October 1973",
     "title": "לאו שטראוס",
@@ -1494,19 +1044,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "4CAC0A7D-EFC8-40EB-A224-46591ECDD240",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Leo-StraussFull.jpg",
+    "description_picture": "/Images/Leo-StraussFace.jpg"
   },
   {
     "id": "CB9D4E17-71FE-46FD-B08C-C090398FDA95",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Louis-AlthusserFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Louis-AlthusserFace.jpg",
-        "face500x500": "/Images/Louis-AlthusserFace@2x.jpg"
-      }
-    },
     "birthDate": "16 October 1918",
     "deathDate": "22 October 1990",
     "title": "לואי אלתוסר",
@@ -1516,19 +1059,12 @@
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Louis-AlthusserFull.jpg",
+    "description_picture": "/Images/Louis-AlthusserFace.jpg"
   },
   {
     "id": "A0060293-AADA-4C38-A85B-7080664BB0DC",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Luce-IrigarayFace@2x.jpg",
-        "face250x250": "/Images/Luce-IrigarayFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Luce-IrigarayFull.jpg"
-      }
-    },
     "birthDate": "3 May 1930",
     "deathDate": null,
     "title": "לוּס איריגאריי",
@@ -1539,19 +1075,12 @@
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Luce-IrigarayFull.jpg",
+    "description_picture": "/Images/Luce-IrigarayFace.jpg"
   },
   {
     "id": "DDF1B09F-D509-4476-AE27-CB52146A6A41",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Ludwig-WittgensteinFace@2x.jpg",
-        "face250x250": "/Images/Ludwig-WittgensteinFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Ludwig-WittgensteinFull.jpg"
-      }
-    },
     "birthDate": "26 באפריל 1889",
     "deathDate": "29 באפריל 1951",
     "title": "לודוויג ויטגנשטיין",
@@ -1560,19 +1089,12 @@
     "era": "המאה ה-20",
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA"
-    ]
+    ],
+    "full_picture": "/Images/Ludwig-WittgensteinFull.jpg",
+    "description_picture": "/Images/Ludwig-WittgensteinFace.jpg"
   },
   {
     "id": "9167C1C4-D3E7-4081-B3F8-00371397B356",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Marcus-AureliusFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Marcus-AureliusFace@2x.jpg",
-        "face250x250": "/Images/Marcus-AureliusFace.jpg"
-      }
-    },
     "birthDate": "26 April 121",
     "deathDate": "17 March 180",
     "title": "מרקוס אורליוס",
@@ -1583,19 +1105,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Marcus-AureliusFull.jpg",
+    "description_picture": "/Images/Marcus-AureliusFace.jpg"
   },
   {
     "id": "7C09B8AB-C552-421C-8740-EDBE668CFFF4",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Marshall-McLuhanFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Marshall-McLuhanFace@2x.jpg",
-        "face250x250": "/Images/Marshall-McLuhanFace.jpg"
-      }
-    },
     "birthDate": "21 July 1911",
     "deathDate": "31 December 1980",
     "title": "מרשל מקלוהן",
@@ -1604,19 +1119,12 @@
     "era": "המאה ה-20",
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Marshall-McLuhanFull.jpg",
+    "description_picture": "/Images/Marshall-McLuhanFace.jpg"
   },
   {
     "id": "8B5AF904-C30C-4656-A054-C55CF714F22A",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Martin-HeideggerFace.jpg",
-        "face500x500": "/Images/Martin-HeideggerFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Martin-HeideggerFull.jpg"
-      }
-    },
     "birthDate": "26 September 1889",
     "deathDate": "26 May 1976",
     "title": "מרטין היידגר",
@@ -1626,19 +1134,12 @@
     "associatedCategories": [
       "4CAC0A7D-EFC8-40EB-A224-46591ECDD240",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
-    ]
+    ],
+    "full_picture": "/Images/Martin-HeideggerFull.jpg",
+    "description_picture": "/Images/Martin-HeideggerFace.jpg"
   },
   {
     "id": "CCC2816D-0CB9-44F4-98C9-CAE66F2EACD3",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Mary-WollstonecraftFace@2x.jpg",
-        "face250x250": "/Images/Mary-WollstonecraftFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Mary-WollstonecraftFull.jpg"
-      }
-    },
     "birthDate": "27 April 1759",
     "deathDate": "10 September 1797",
     "title": "מרי וולסטונקראפט",
@@ -1649,19 +1150,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Mary-WollstonecraftFull.jpg",
+    "description_picture": "/Images/Mary-WollstonecraftFace.jpg"
   },
   {
     "id": "E869677C-23CB-41F7-8F39-AB8F499CAAC2",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Maurice-Merleau-PontyFace@2x.jpg",
-        "face250x250": "/Images/Maurice-Merleau-PontyFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Maurice-Merleau-PontyFull.jpg"
-      }
-    },
     "birthDate": "14 March 1908",
     "deathDate": "3 May 1961",
     "title": "מוריס מרלו-פונטי",
@@ -1672,19 +1166,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "4CAC0A7D-EFC8-40EB-A224-46591ECDD240",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Maurice-Merleau-PontyFull.jpg",
+    "description_picture": "/Images/Maurice-Merleau-PontyFace.jpg"
   },
   {
     "id": "96DB522E-2DB7-4F43-8D44-ABD78ECDF1E2",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Max-WeberFace@2x.jpg",
-        "face250x250": "/Images/Max-WeberFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Max-WeberFull.jpg"
-      }
-    },
     "birthDate": "21 April 1864",
     "deathDate": "14 June 1920",
     "title": "מקס ובר",
@@ -1694,19 +1181,12 @@
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Max-WeberFull.jpg",
+    "description_picture": "/Images/Max-WeberFace.jpg"
   },
   {
     "id": "C3897DE8-3A6B-456E-9CEE-387FC96C738C",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Michel-de-MontaigneFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Michel-de-MontaigneFace.jpg",
-        "face500x500": "/Images/Michel-de-MontaigneFace@2x.jpg"
-      }
-    },
     "birthDate": "28 February 1533",
     "deathDate": "13 September 1592",
     "title": "מישל דה מונטן",
@@ -1716,19 +1196,12 @@
     "associatedCategories": [
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Michel-de-MontaigneFull.jpg",
+    "description_picture": "/Images/Michel-de-MontaigneFace.jpg"
   },
   {
     "id": "3998C923-0B91-4150-8F41-E74D27EC11E7",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Michel-FoucaultFace@2x.jpg",
-        "face250x250": "/Images/Michel-FoucaultFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Michel-FoucaultFull.jpg"
-      }
-    },
     "birthDate": "15 October 1926",
     "deathDate": "25 June 1984",
     "title": "מישל פוקו",
@@ -1739,19 +1212,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
-    ]
+    ],
+    "full_picture": "/Images/Michel-FoucaultFull.jpg",
+    "description_picture": "/Images/Michel-FoucaultFace.jpg"
   },
   {
     "id": "A9272AC1-8524-4429-A7C1-2EECBDBB4920",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/MontesquieuFace.jpg",
-        "face500x500": "/Images/MontesquieuFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/MontesquieuFull.jpg"
-      }
-    },
     "birthDate": "18 January 1689",
     "deathDate": "10 February 1755",
     "title": "מונטסקייה",
@@ -1760,19 +1226,12 @@
     "era": "הנאורות",
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/MontesquieuFull.jpg",
+    "description_picture": "/Images/MontesquieuFace.jpg"
   },
   {
     "id": "4ECF88A5-4159-410A-97CA-ED1984280CF6",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Niccolo-MachiavelliFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Niccolo-MachiavelliFace@2x.jpg",
-        "face250x250": "/Images/Niccolo-MachiavelliFace.jpg"
-      }
-    },
     "birthDate": "3 May 1469",
     "deathDate": "21 June 1527",
     "title": "ניקולו מקיאוולי",
@@ -1782,19 +1241,12 @@
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Niccolo-MachiavelliFull.jpg",
+    "description_picture": "/Images/Niccolo-MachiavelliFace.jpg"
   },
   {
     "id": "3CC9B965-9C88-423A-BDA0-481F078FA3A1",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Noam-ChomskyFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Noam-ChomskyFace.jpg",
-        "face500x500": "/Images/Noam-ChomskyFace@2x.jpg"
-      }
-    },
     "birthDate": "7 December 1928",
     "deathDate": null,
     "title": "נועם חומסקי",
@@ -1805,19 +1257,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Noam-ChomskyFull.jpg",
+    "description_picture": "/Images/Noam-ChomskyFace.jpg"
   },
   {
     "id": "73E6F183-7335-458F-883E-83A9A8F9E562",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/ParmenidesFace@2x.jpg",
-        "face250x250": "/Images/ParmenidesFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/ParmenidesFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "פרמנידס",
@@ -1825,19 +1270,12 @@
     "topicalDescription": "פילוסוף יווני פרה-סוקרטי, הידוע בזכות הגותו המטאפיזית והאונטולוגית על טבע הקיום והמציאות.",
     "era": "פרה-סוקרטי",
     "associatedCategories": [],
-    "interests": "מטאפיזיקה, אונטולוגיה"
+    "interests": "מטאפיזיקה, אונטולוגיה",
+    "full_picture": "/Images/ParmenidesFull.jpg",
+    "description_picture": "/Images/ParmenidesFace.jpg"
   },
   {
     "id": "2C530DBE-E736-4F42-A285-3F2236174CA2",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Peter-SingerFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Peter-SingerFace.jpg",
-        "face500x500": "/Images/Peter-SingerFace@2x.jpg"
-      }
-    },
     "birthDate": "6 July 1946",
     "deathDate": null,
     "title": "פיטר סינגר",
@@ -1847,19 +1285,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Peter-SingerFull.jpg",
+    "description_picture": "/Images/Peter-SingerFace.jpg"
   },
   {
     "id": "EA176C3B-45C2-4814-8BC5-EF69D2643F4A",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Pierre-Joseph-ProudhonFace.jpg",
-        "face500x500": "/Images/Pierre-Joseph-ProudhonFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Pierre-Joseph-ProudhonFull.jpg"
-      }
-    },
     "birthDate": "15 January 1809",
     "deathDate": "19 January 1865",
     "title": "פייר-ז'וזף פרודון",
@@ -1869,19 +1300,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Pierre-Joseph-ProudhonFull.jpg",
+    "description_picture": "/Images/Pierre-Joseph-ProudhonFace.jpg"
   },
   {
     "id": "4B7B8E3A-A01C-41B5-89B7-F6464C64A104",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/PlatoFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/PlatoFace@2x.jpg",
-        "face250x250": "/Images/PlatoFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "אפלטון",
@@ -1893,38 +1317,24 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/PlatoFull.jpg",
+    "description_picture": "/Images/PlatoFace.jpg"
   },
   {
     "id": "33931CEB-8DE0-4239-9FA9-0EB300056C97",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/PlotinusFace@2x.jpg",
-        "face250x250": "/Images/PlotinusFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/PlotinusFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "פלוטינוס",
     "content": "<p>פלוטינוס היה פילוסוף ניאופלטוני שחי במאות ה-3 לספירה. הוא נחשב לאחד הפילוסופים המשפיעים ביותר בעת העתיקה המאוחרת. רעיונותיו עיצבו את ההגות המערבית במשך מאות שנים, במיוחד בתחומי המיסטיקה והמטאפיזיקה.</p>\n\n<p><b>רעיונות מרכזיים:</b></p>\n<ul>\n <li><b>מציאות היא תוצר של מחשבה:</b> כדי שמשהו יתקיים, יש לחשוב עליו.</li>\n <li><b>היררכיית ההוויה:</b> קיימת היררכיה של הוויה, כאשר הנפש, האינטלקט והטוב נמצאים ברמות שונות.</li>\n <li><b>החתירה לאחדות:</b> בעקבות הטוב, עלינו לנסות לעלות לעבר האחדות.</li>\n</ul>\n\n<p><b>יצירות מרכזיות:</b></p>\n<ul>\n <li>\"מאמר על היופי\"</li>\n <li>\"שש האנאדות\"</li>\n</ul>\n\n<p><b>ציטוטים נבחרים:</b></p>\n<ul>\n <li>\"אולי, הטוב והיפה הם אותו הדבר, ויש לחקור אותם באותו התהליך; וכך גם הבזוי והרע.\" - מתוך \"מאמר על היופי\"</li>\n <li>\"הגיע הזמן, כשעזבנו כל אובייקט של חוש הרחק מאחור, להתבונן, באמצעות עליה מסוימת, ביופי מסדר גבוה בהרבה; יופי שאינו נראה לעין הגשמית, אלא מתגלה רק לעין הבהירה יותר של הנפש, ללא כל עזרה גופנית.\" - מתוך \"מאמר על היופי\"</li>\n <li>\"לפיכך היופי מתבסס בריבוי כאשר הרבים מצטמצמים לאחד, ובמקרה זה הוא מעביר את עצמו הן לחלקים והן לכלל. אבל כאשר אחד מסוים, המורכב מחלקים דומים, מתקבל, הוא מעניק את עצמו לכלל, מבלי לסטות מהזהות והשלמות של טבעו.\" - מתוך \"מאמר על היופי\"</li>\n <li>\"הנאה ומצוקה, פחד ואומץ, תשוקה ודחייה, היכן יושבות חיבה וחוויות אלו? ברור, או בנפש לבדה, או בנפש כשהיא משתמשת בגוף, או בישות שלישית כלשהי הנובעת משניהם.\" - מתוך \"האנאדה הראשונה\"</li>\n <li>\"הכל שופע סמל; החכם הוא האדם שיכול לקרוא דבר אחר בכל דבר.\" - מתוך \"האנאדה הראשונה\"</li>\n <li>\"אנו יכולים לדון בנפש כשהיא בגוף – בין אם היא ממוקמת מעליו או בתוכו – שכן שילוב השניים מהווה את הדבר האחד הנקרא אורגניזם חי, בעל חיים.\" - מתוך \"האנאדה הראשונה\"</li>\n</ul>\n",
     "topicalDescription": "פילוסוף ניאופלטוני משפיע ביותר, שרעיונותיו עיצבו את ההגות המערבית",
     "era": "העת העתיקה המאוחרת",
-    "associatedCategories": []
+    "associatedCategories": [],
+    "full_picture": "/Images/PlotinusFull.jpg",
+    "description_picture": "/Images/PlotinusFace.jpg"
   },
   {
     "id": "A839315F-7D16-4116-8352-D26707C36D6E",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/ProtagorasFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/ProtagorasFace@2x.jpg",
-        "face250x250": "/Images/ProtagorasFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "פרוטגורס",
@@ -1935,19 +1345,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
-    ]
+    ],
+    "full_picture": "/Images/ProtagorasFull.jpg",
+    "description_picture": "/Images/ProtagorasFace.jpg"
   },
   {
     "id": "F8E59A25-343E-4ACA-ACB2-BFC9514488B2",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/PythagorasFace.jpg",
-        "face500x500": "/Images/PythagorasFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/PythagorasFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "פיתגורס",
@@ -1958,19 +1361,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/PythagorasFull.jpg",
+    "description_picture": "/Images/PythagorasFace.jpg"
   },
   {
     "id": "3E3804E0-17AB-4AB9-B647-D4CA2E9C23D5",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Ralph-Waldo-EmersonFace@2x.jpg",
-        "face250x250": "/Images/Ralph-Waldo-EmersonFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Ralph-Waldo-EmersonFull.jpg"
-      }
-    },
     "birthDate": "25 May 1803",
     "deathDate": "27 April 1882",
     "title": "ראלף וולדו אמרסון",
@@ -1980,19 +1376,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Ralph-Waldo-EmersonFull.jpg",
+    "description_picture": "/Images/Ralph-Waldo-EmersonFace.jpg"
   },
   {
     "id": "3C6BCB23-5C68-4F54-B680-BFF333FB6683",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Rene-DescartesFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Rene-DescartesFace@2x.jpg",
-        "face250x250": "/Images/Rene-DescartesFace.jpg"
-      }
-    },
     "birthDate": "31 March 1596",
     "deathDate": "11 February 1650",
     "title": "רנה דקארט",
@@ -2002,19 +1391,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA"
-    ]
+    ],
+    "full_picture": "/Images/Rene-DescartesFull.jpg",
+    "description_picture": "/Images/Rene-DescartesFace.jpg"
   },
   {
     "id": "5F255A15-B2C6-41A7-ACDB-ECF9B824C8E6",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Richard-RortyFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Richard-RortyFace@2x.jpg",
-        "face250x250": "/Images/Richard-RortyFace.jpg"
-      }
-    },
     "birthDate": "4 October 1931",
     "deathDate": "8 June 2007",
     "title": "ריצ'רד רורטי",
@@ -2026,19 +1408,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "225DF61D-555D-4EF7-80C8-C9EB4FF2D7A4"
-    ]
+    ],
+    "full_picture": "/Images/Richard-RortyFull.jpg",
+    "description_picture": "/Images/Richard-RortyFace.jpg"
   },
   {
     "id": "236B155A-FD0A-47E4-943A-14C0B57293BB",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Robert-NozickFace@2x.jpg",
-        "face250x250": "/Images/Robert-NozickFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Robert-NozickFull.jpg"
-      }
-    },
     "birthDate": "16 November 1938",
     "deathDate": "23 January 2002",
     "title": "רוברט נוזיק",
@@ -2050,19 +1425,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Robert-NozickFull.jpg",
+    "description_picture": "/Images/Robert-NozickFace.jpg"
   },
   {
     "id": "B312F276-6D2F-4A0F-BE45-C4F561FD6358",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Roger-BaconFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Roger-BaconFace@2x.jpg",
-        "face250x250": "/Images/Roger-BaconFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "רוג'ר בייקון",
@@ -2073,19 +1441,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Roger-BaconFull.jpg",
+    "description_picture": "/Images/Roger-BaconFace.jpg"
   },
   {
     "id": "2D20127D-37CB-4D70-B0D0-DC30C6F9A2C3",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Roland-BarthesFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Roland-BarthesFace@2x.jpg",
-        "face250x250": "/Images/Roland-BarthesFace.jpg"
-      }
-    },
     "birthDate": "12 November 1915",
     "deathDate": "26 March 1980",
     "title": "רולאן בארת",
@@ -2093,19 +1454,12 @@
     "topicalDescription": "תאורטיקן ספרות, פילוסוף, מבקר ספרות וסמיוטיקאי צרפתי, אשר השפיע רבות על הסטרוקטורליזם והפוסט-סטרוקטורליזם.",
     "era": "המאה ה-20",
     "associatedPhilosophers": [],
-    "associatedCategories": []
+    "associatedCategories": [],
+    "full_picture": "/Images/Roland-BarthesFull.jpg",
+    "description_picture": "/Images/Roland-BarthesFace.jpg"
   },
   {
     "id": "20B6AF0E-BCAA-4BEC-9C65-49E2BEC41585",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Rosa-LuxemburgFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Rosa-LuxemburgFace.jpg",
-        "face500x500": "/Images/Rosa-LuxemburgFace@2x.jpg"
-      }
-    },
     "birthDate": "5 March 1871",
     "deathDate": "15 January 1919",
     "title": "רוזה לוקסמבורג",
@@ -2115,19 +1469,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Rosa-LuxemburgFull.jpg",
+    "description_picture": "/Images/Rosa-LuxemburgFace.jpg"
   },
   {
     "id": "8CDFDB0C-F4F4-40F9-B00D-0C7EB20E9D1F",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/SenecaFace@2x.jpg",
-        "face250x250": "/Images/SenecaFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/SenecaFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "סנקה",
@@ -2136,19 +1483,12 @@
     "era": "האימפריה הרומית",
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/SenecaFull.jpg",
+    "description_picture": "/Images/SenecaFace.jpg"
   },
   {
     "id": "197B49D7-F130-485D-A49F-9A89248E5958",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Sigmund-FreudFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/Sigmund-FreudFace@2x.jpg",
-        "face250x250": "/Images/Sigmund-FreudFace.jpg"
-      }
-    },
     "birthDate": "6 May 1856",
     "deathDate": "23 September 1939",
     "title": "זיגמונד פרויד",
@@ -2156,19 +1496,12 @@
     "topicalDescription": "זיגמונד פרויד היה נוירולוג אוסטרי יהודי ומייסד הפסיכואנליזה, אסכולה בפסיכולוגיה ופסיכותרפיה שמשפיעה רבות על התחומים הללו.",
     "era": "המאה ה-19 והמאה ה-20",
     "associatedPhilosophers": [],
-    "associatedCategories": []
+    "associatedCategories": [],
+    "full_picture": "/Images/Sigmund-FreudFull.jpg",
+    "description_picture": "/Images/Sigmund-FreudFace.jpg"
   },
   {
     "id": "0515F212-B273-41C9-8C90-C08414451714",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Simone-de-BeauvoirFace@2x.jpg",
-        "face250x250": "/Images/Simone-de-BeauvoirFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Simone-de-BeauvoirFull.jpg"
-      }
-    },
     "birthDate": "9 January 1908",
     "deathDate": "14 April 1986",
     "title": "סימון דה בובואר",
@@ -2181,19 +1514,12 @@
       "4CAC0A7D-EFC8-40EB-A224-46591ECDD240",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "interests": "פילוסופיה פוליטית, פמיניזם, אתיקה, פנומנולוגיה אקזיסטנציאלית"
+    "interests": "פילוסופיה פוליטית, פמיניזם, אתיקה, פנומנולוגיה אקזיסטנציאלית",
+    "full_picture": "/Images/Simone-de-BeauvoirFull.jpg",
+    "description_picture": "/Images/Simone-de-BeauvoirFace.jpg"
   },
   {
     "id": "8D8B3352-8007-4BDD-BCCE-0D281E1FB1AF",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Slavoj-ZizekFace@2x.jpg",
-        "face250x250": "/Images/Slavoj-ZizekFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Slavoj-ZizekFull.jpg"
-      }
-    },
     "birthDate": "21 March 1949",
     "deathDate": null,
     "title": "סלבוי ז'יז'ק",
@@ -2204,19 +1530,12 @@
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Slavoj-ZizekFull.jpg",
+    "description_picture": "/Images/Slavoj-ZizekFace.jpg"
   },
   {
     "id": "3F7ED55D-F092-445A-99BB-3C232FC9A132",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/SocratesFace@2x.jpg",
-        "face250x250": "/Images/SocratesFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/SocratesFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "סוקרטס",
@@ -2227,19 +1546,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/SocratesFull.jpg",
+    "description_picture": "/Images/SocratesFace.jpg"
   },
   {
     "id": "23D25599-26AE-4D64-BA4F-801B054D41DB",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Sojourner-TruthFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Sojourner-TruthFace.jpg",
-        "face500x500": "/Images/Sojourner-TruthFace@2x.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": "26 November 1883",
     "title": "סוג'ורנר טרוּת",
@@ -2249,19 +1561,12 @@
     "associatedCategories": [
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Sojourner-TruthFull.jpg",
+    "description_picture": "/Images/Sojourner-TruthFace.jpg"
   },
   {
     "id": "EA908AB3-5EA0-41A3-A2F3-1A10C7117046",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Soren-KierkegaardFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Soren-KierkegaardFace.jpg",
-        "face500x500": "/Images/Soren-KierkegaardFace@2x.jpg"
-      }
-    },
     "birthDate": "5 May 1813",
     "deathDate": "11 November 1855",
     "title": "סרן קירקגור",
@@ -2273,19 +1578,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Soren-KierkegaardFull.jpg",
+    "description_picture": "/Images/Soren-KierkegaardFace.jpg"
   },
   {
     "id": "482D1A47-AE79-4B8F-B160-EFCB131D271E",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Susan-SontagFace.jpg",
-        "face500x500": "/Images/Susan-SontagFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Susan-SontagFull.jpg"
-      }
-    },
     "birthDate": "16 January 1933",
     "deathDate": "28 December 2004",
     "title": "סוזן סונטאג",
@@ -2295,19 +1593,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "E4D4545B-B7EF-4EE0-AB18-FB2ADFB76DAB"
-    ]
+    ],
+    "full_picture": "/Images/Susan-SontagFull.jpg",
+    "description_picture": "/Images/Susan-SontagFace.jpg"
   },
   {
     "id": "5B8D36E5-56E2-47E4-9C4C-34A0F107D9B1",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Thales-of-MiletusFace.jpg",
-        "face500x500": "/Images/Thales-of-MiletusFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Thales-of-MiletusFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "תאלס ממילטוס",
@@ -2316,19 +1607,12 @@
     "era": "יוון העתיקה",
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF"
-    ]
+    ],
+    "full_picture": "/Images/Thales-of-MiletusFull.jpg",
+    "description_picture": "/Images/Thales-of-MiletusFace.jpg"
   },
   {
     "id": "C9D4FE75-42D4-4F88-9E9D-A8ECCC08CB7C",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Theodor-W.-AdornoFace@2x.jpg",
-        "face250x250": "/Images/Theodor-W.-AdornoFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Theodor-W.-AdornoFull.jpg"
-      }
-    },
     "birthDate": "11 September 1903",
     "deathDate": "6 August 1969",
     "title": "תאודור ו. אדורנו",
@@ -2340,19 +1624,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Theodor-W.-AdornoFull.jpg",
+    "description_picture": "/Images/Theodor-W.-AdornoFace.jpg"
   },
   {
     "id": "843F1E7E-6AE7-4E3E-8FD7-780CB10BA017",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Thomas-AquinasFace@2x.jpg",
-        "face250x250": "/Images/Thomas-AquinasFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Thomas-AquinasFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": "7 March 1274",
     "title": "תומאס אקווינס",
@@ -2365,19 +1642,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/Thomas-AquinasFull.jpg",
+    "description_picture": "/Images/Thomas-AquinasFace.jpg"
   },
   {
     "id": "EADA6FFC-5014-484E-988E-6A06F5AD949A",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Thomas-HobbesFace.jpg",
-        "face500x500": "/Images/Thomas-HobbesFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Thomas-HobbesFull.jpg"
-      }
-    },
     "birthDate": "5 April 1588",
     "deathDate": "4 December 1679",
     "title": "תומאס הובס",
@@ -2387,19 +1657,12 @@
     "associatedCategories": [
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Thomas-HobbesFull.jpg",
+    "description_picture": "/Images/Thomas-HobbesFace.jpg"
   },
   {
     "id": "E503AC1C-CDCC-424B-A18F-5EDC57A41979",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Thomas-KuhnFace@2x.jpg",
-        "face250x250": "/Images/Thomas-KuhnFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Thomas-KuhnFull.jpg"
-      }
-    },
     "birthDate": "18 July 1922",
     "deathDate": "17 June 1996",
     "title": "תומס קון",
@@ -2409,19 +1672,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA"
     ],
-    "interests": "פילוסופיה של המדע, אקסטרנליזם היסטוריוגרפי"
+    "interests": "פילוסופיה של המדע, אקסטרנליזם היסטוריוגרפי",
+    "full_picture": "/Images/Thomas-KuhnFull.jpg",
+    "description_picture": "/Images/Thomas-KuhnFace.jpg"
   },
   {
     "id": "87CC8B86-67A2-4481-B7C6-F4E8CE10DEA0",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/Thomas-NagelFull.jpg"
-      },
-      "faceImages": {
-        "face250x250": "/Images/Thomas-NagelFace.jpg",
-        "face500x500": "/Images/Thomas-NagelFace@2x.jpg"
-      }
-    },
     "birthDate": "4 July 1937",
     "deathDate": null,
     "title": "תומס נייגל",
@@ -2433,19 +1689,12 @@
       "8EE0CCCC-DC36-48E7-ADB2-25686F6EEBDF",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/Thomas-NagelFull.jpg",
+    "description_picture": "/Images/Thomas-NagelFace.jpg"
   },
   {
     "id": "0A1BF11A-9343-4EB1-BDFC-FDE556F448D5",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/VoltaireFace.jpg",
-        "face500x500": "/Images/VoltaireFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/VoltaireFull.jpg"
-      }
-    },
     "birthDate": "21 November 1694",
     "deathDate": "30 May 1778",
     "title": "וולטר",
@@ -2455,19 +1704,12 @@
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
     ],
-    "associatedPhilosophers": []
+    "associatedPhilosophers": [],
+    "full_picture": "/Images/VoltaireFull.jpg",
+    "description_picture": "/Images/VoltaireFace.jpg"
   },
   {
     "id": "21EA4F15-56AC-40E0-9BA9-3CBF23D3A669",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/Walter-BenjaminFace.jpg",
-        "face500x500": "/Images/Walter-BenjaminFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Walter-BenjaminFull.jpg"
-      }
-    },
     "birthDate": "15 July 1892",
     "deathDate": "26 September 1940",
     "title": "וולטר בנימין",
@@ -2477,19 +1719,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA"
-    ]
+    ],
+    "full_picture": "/Images/Walter-BenjaminFull.jpg",
+    "description_picture": "/Images/Walter-BenjaminFace.jpg"
   },
   {
     "id": "3569A488-D7FE-4C58-BB4F-50AACF2A0FBA",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/W.-E.-B.-Du-BoisFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/W.-E.-B.-Du-BoisFace@2x.jpg",
-        "face250x250": "/Images/W.-E.-B.-Du-BoisFace.jpg"
-      }
-    },
     "birthDate": "23 February 1868",
     "deathDate": "27 August 1963",
     "title": "וו. אי. בי. דו בויז",
@@ -2498,19 +1733,12 @@
     "era": "המאה ה-20",
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/W.-E.-B.-Du-BoisFull.jpg",
+    "description_picture": "/Images/W.-E.-B.-Du-BoisFace.jpg"
   },
   {
     "id": "00F678EA-6C9A-4D0F-90D1-D3CA9ADE11CB",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/Wilhelm-von-HumboldtFace@2x.jpg",
-        "face250x250": "/Images/Wilhelm-von-HumboldtFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/Wilhelm-von-HumboldtFull.jpg"
-      }
-    },
     "birthDate": "22 June 1767",
     "deathDate": "8 April 1835",
     "title": "וילהלם פון הומבולדט",
@@ -2520,19 +1748,12 @@
     "associatedPhilosophers": [],
     "associatedCategories": [
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7"
-    ]
+    ],
+    "full_picture": "/Images/Wilhelm-von-HumboldtFull.jpg",
+    "description_picture": "/Images/Wilhelm-von-HumboldtFace.jpg"
   },
   {
     "id": "779AABA4-26E6-4437-A979-03B83C75BA30",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/William-JamesFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/William-JamesFace@2x.jpg",
-        "face250x250": "/Images/William-JamesFace.jpg"
-      }
-    },
     "birthDate": "11 January 1842",
     "deathDate": "26 August 1910",
     "title": "ויליאם ג'יימס",
@@ -2541,19 +1762,12 @@
     "era": "המאה ה-19 וה-20",
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA"
-    ]
+    ],
+    "full_picture": "/Images/William-JamesFull.jpg",
+    "description_picture": "/Images/William-JamesFace.jpg"
   },
   {
     "id": "3172E773-E550-47A1-AB2A-2FE312A5B2C0",
-    "images": {
-      "faceImages": {
-        "face500x500": "/Images/William-of-OckhamFace@2x.jpg",
-        "face250x250": "/Images/William-of-OckhamFace.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/William-of-OckhamFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "ויליאם איש אוקאם",
@@ -2565,19 +1779,12 @@
       "6E629269-01CB-4229-8262-3566721145AA",
       "CAC65828-3920-42AF-B9F3-3ED0245EB8F7",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/William-of-OckhamFull.jpg",
+    "description_picture": "/Images/William-of-OckhamFace.jpg"
   },
   {
     "id": "1A1D6463-9FD7-4683-B2C3-103656395889",
-    "images": {
-      "fullImages": {
-        "full600x800": "/Images/XenophanesFull.jpg"
-      },
-      "faceImages": {
-        "face500x500": "/Images/XenophanesFace@2x.jpg",
-        "face250x250": "/Images/XenophanesFace.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "קסנופנס",
@@ -2587,19 +1794,12 @@
     "associatedCategories": [
       "6E629269-01CB-4229-8262-3566721145AA",
       "7A5A4D25-0F06-4E4C-9BE3-0DFF63F5B68C"
-    ]
+    ],
+    "full_picture": "/Images/XenophanesFull.jpg",
+    "description_picture": "/Images/XenophanesFace.jpg"
   },
   {
     "id": "F6B6F3C0-C082-471A-945A-5AC37C8968D4",
-    "images": {
-      "faceImages": {
-        "face250x250": "/Images/ZenoFace.jpg",
-        "face500x500": "/Images/ZenoFace@2x.jpg"
-      },
-      "fullImages": {
-        "full600x800": "/Images/ZenoFull.jpg"
-      }
-    },
     "birthDate": null,
     "deathDate": null,
     "title": "זנון",
@@ -2607,6 +1807,8 @@
     "topicalDescription": "פילוסוף יווני קדם-סוקרטי, ידוע בפרדוקסים שלו",
     "era": "התקופה הקדם-סוקרטית",
     "associatedPhilosophers": [],
-    "associatedCategories": []
+    "associatedCategories": [],
+    "full_picture": "/Images/ZenoFull.jpg",
+    "description_picture": "/Images/ZenoFace.jpg"
   }
 ]

@@ -1,21 +1,14 @@
-import { BasicEntity, IImages } from "./index";
+import { Content } from "@/types";
 
-export interface FormInputs extends BasicEntity {
-  title: string;
-  content: string;
-  description: string;
-  images?: IImages;
-  era?: string;
-  birthDate?: string;
-  deathDate?: string;
-  associatedTerms?: BasicEntity[];
-  associatedPhilosophers?: BasicEntity[];
-  associatedQuestions?: BasicEntity[];
-}
+export type FormInputs = Content & {
+  philosopher?: Content[];
+  question?: Content[];
+  term?: Content[];
+};
 
 export interface RelationConfig {
-  name: keyof FormInputs;
+  name: keyof Pick<FormInputs, "philosopher" | "question" | "term">;
   label: string;
-  options: BasicEntity[];
+  options: Content[];
   baseRoute: string;
 }

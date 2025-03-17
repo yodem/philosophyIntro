@@ -1,56 +1,136 @@
 import axios from "axios";
 import {
-  Philosopher,
-  Question,
-  Term,
-  UpdatePhilosopherDto,
-  UpdateQuestionDto,
-  UpdateTermDto,
   PaginatedResponse,
   SearchParams,
+  Content,
+  ContentType,
 } from "../types";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
 });
 
-export const philosophersApi = {
+// Common function to get related content
+export const getRelatedContent = async (id: string, type?: ContentType) => {
+  try {
+    const params = type ? { type } : {};
+    const res = await api.get<Content[]>(`/content/${id}/related`, { params });
+    return res.data;
+  } catch (error) {
+    console.error("Failed to fetch related content:", error);
+    return [];
+  }
+};
+
+// Generic content API functions
+export const contentApi = {
   getAll: async (
-    params: SearchParams = { limit: 1000, page: 1, search: "" }
+    params: SearchParams = { limit: 1000, page: 1, search: "" },
+    type?: ContentType
   ) => {
     try {
-      const res = await api.get<PaginatedResponse<Philosopher>>(
-        "/philosophers",
-        { params }
-      );
-      return res.data;
+      const queryParams = { ...params };
+      if (type) queryParams.type = type;
+
+      const res = await api.get<PaginatedResponse<Content>>("/content", {
+        params: queryParams,
+      });
+      return res.data.items;
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch content:", error);
+      return [];
     }
   },
   getOne: async (id: string) => {
     try {
-      const res = await api.get<Philosopher>(`/philosophers/${id}`);
+      const res = await api.get<Content>(`/content/${id}`);
       return res.data;
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch content:", error);
+      return null;
     }
   },
-  update: async (id: string, data: UpdatePhilosopherDto) => {
+  update: async (id: string, data: Partial<Content>) => {
     try {
-      const res = await api.patch<Philosopher>(`/philosophers/${id}`, data);
+      // Extract related content IDs from nested objects
+      const relatedContentIds: string[] = [];
+
+      // Extract related content IDs from each related content array
+      ["philosopher", "question", "term"].forEach((relationType) => {
+        if (data[relationType as keyof typeof data]) {
+          const relatedItems = data[
+            relationType as keyof typeof data
+          ] as Content[];
+          if (Array.isArray(relatedItems)) {
+            relatedItems.forEach((item) => {
+              if (item?.id) relatedContentIds.push(item.id);
+            });
+          }
+        }
+        // Remove the related arrays from the update payload as they're now in relatedContentIds
+        delete data[relationType as keyof typeof data];
+      });
+
+      const res = await api.patch<Content>(`/content/${id}`, {
+        ...data,
+        relatedContentIds:
+          relatedContentIds.length > 0 ? relatedContentIds : undefined,
+      });
+
       return res.data;
     } catch (error) {
-      console.error(error);
+      console.error("Failed to update content:", error);
+      throw error;
     }
   },
-  create: async (data: UpdatePhilosopherDto) => {
+  create: async (data: Partial<Content>) => {
     try {
-      const res = await api.post<Philosopher>("/philosophers", data);
+      // Extract related content IDs from nested objects
+      const relatedContentIds: string[] = [];
+
+      // Extract related content IDs from each related content array
+      ["philosopher", "question", "term"].forEach((relationType) => {
+        if (data[relationType as keyof typeof data]) {
+          const relatedItems = data[
+            relationType as keyof typeof data
+          ] as Content[];
+          if (Array.isArray(relatedItems)) {
+            relatedItems.forEach((item) => {
+              if (item?.id) relatedContentIds.push(item.id);
+            });
+          }
+        }
+        // Remove the related arrays from the create payload
+        delete data[relationType as keyof typeof data];
+      });
+
+      const res = await api.post<Content>("/content", {
+        ...data,
+        relatedContentIds:
+          relatedContentIds.length > 0 ? relatedContentIds : undefined,
+      });
       return res.data;
     } catch (error) {
-      console.error(error);
+      console.error("Failed to create content:", error);
+      throw error;
     }
+  },
+};
+
+// Type-specific API functions that use the generic content API
+export const philosophersApi = {
+  getAll: async (
+    params: SearchParams = { limit: 1000, page: 1, search: "" }
+  ) => {
+    return contentApi.getAll(params, ContentType.PHILOSOPHER);
+  },
+  getOne: contentApi.getOne,
+  update: contentApi.update,
+  create: async (data: Partial<Content>) => {
+    return contentApi.create({
+      ...data,
+      type: ContentType.PHILOSOPHER,
+    });
   },
 };
 
@@ -58,38 +138,15 @@ export const questionsApi = {
   getAll: async (
     params: SearchParams = { limit: 1000, page: 1, search: "" }
   ) => {
-    try {
-      const res = await api.get<PaginatedResponse<Question>>("/questions", {
-        params,
-      });
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    }
+    return contentApi.getAll(params, ContentType.QUESTION);
   },
-  getOne: async (id: string) => {
-    try {
-      const res = await api.get<Question>(`/questions/${id}`);
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  update: async (id: string, data: UpdateQuestionDto) => {
-    try {
-      const res = await api.patch<Question>(`/questions/${id}`, data);
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    }
-  },
-  create: async (data: UpdateQuestionDto) => {
-    try {
-      const res = await api.post<Question>("/questions", data);
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    }
+  getOne: contentApi.getOne,
+  update: contentApi.update,
+  create: async (data: Partial<Content>) => {
+    return contentApi.create({
+      ...data,
+      type: ContentType.QUESTION,
+    });
   },
 };
 
@@ -97,35 +154,36 @@ export const termsApi = {
   getAll: async (
     params: SearchParams = { limit: 1000, page: 1, search: "" }
   ) => {
-    try {
-      const res = await api.get<PaginatedResponse<Term>>("/terms", { params });
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    }
+    return contentApi.getAll(params, ContentType.TERM);
   },
-  getOne: async (id: string) => {
-    try {
-      const res = await api.get<Term>(`/terms/${id}`);
-      return res.data;
-    } catch (error) {
-      console.error(error);
-    }
+  getOne: contentApi.getOne,
+  update: contentApi.update,
+  create: async (data: Partial<Content>) => {
+    return contentApi.create({
+      ...data,
+      type: ContentType.TERM,
+    });
   },
-  update: async (id: string, data: UpdateTermDto) => {
+};
+
+// New function to get available metadata keys
+export const metadataApi = {
+  getKeys: async (entityType?: string): Promise<string[]> => {
     try {
-      const res = await api.patch<Term>(`/terms/${id}`, data);
+      const params = entityType ? { type: entityType } : {};
+      const res = await api.get<string[]>("/content/metadata-keys", { params });
       return res.data;
     } catch (error) {
-      console.error(error);
-    }
-  },
-  create: async (data: UpdateTermDto) => {
-    try {
-      const res = await api.post<Term>("/terms", data);
-      return res.data;
-    } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch metadata keys:", error);
+      // Return some sensible defaults if API fails
+      return [
+        "era",
+        "birthDate",
+        "deathDate",
+        "description",
+        "origin",
+        "language",
+      ];
     }
   },
 };
