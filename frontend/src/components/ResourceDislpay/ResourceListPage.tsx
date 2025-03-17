@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
 import ResourceCard from './ResourceCard';
 import ResourceGrid from './ResourceGrid';
-import ResourceSkeleton from './ResourceSkeleton';
+import ResourceSkeleton from '../ResourceSkeleton';
 import { LABELS } from '@/constants';
 import { Content, ContentType } from '@/types';
 import { useNavigate } from '@tanstack/react-router';

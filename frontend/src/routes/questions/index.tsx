@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { questionsApi } from '@/api';
-import { ResourceListPage, ResourceListSkeleton } from '@/components/ResourceListPage';
+import { ResourceListPage, ResourceListSkeleton } from '@/components/ResourceDislpay/ResourceListPage';
 import { LABELS } from '@/constants';
 import { SearchParams } from '@/types';
 

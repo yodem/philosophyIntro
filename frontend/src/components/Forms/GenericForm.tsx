@@ -1,10 +1,11 @@
 import { useForm } from "react-hook-form";
-import { Box, Button, Card, CardContent, TextField } from "@mui/material";
+import { Box, Button, Card, CardContent, Stack, TextField } from "@mui/material";
 import { RelationFields } from "./RelationFields";
 import { FormInputs, RelationConfig } from "@/types/form";
 import { Content, ContentType } from "@/types";
 import { useEffect, useState } from "react";
 import { contentApi } from "@/api";
+import { EditableRichText } from "@/components/TextEditor/EditableRichText";
 
 interface GenericFormProps {
     defaultValues: Content;
@@ -25,7 +26,7 @@ export function GenericForm({
         term: Content[];
     }>({ philosopher: [], question: [], term: [] });
 
-    const { control, handleSubmit, reset, setValue } = useForm<FormInputs>({ defaultValues });
+    const { control, handleSubmit, reset, setValue, watch, register } = useForm<FormInputs>({ defaultValues });
 
     useEffect(() => { reset(defaultValues); }, [defaultValues, reset]);
     useEffect(() => {
@@ -55,17 +56,18 @@ export function GenericForm({
     return (
         <Card>
             <CardContent>
-                <Box component="form" onSubmit={handleSubmit(onSubmit)}>
-                    <TextField fullWidth label="כותרת" onChange={(e) => setValue("title", e.target.value)} defaultValue={defaultValues.title} sx={{ mb: 2 }} />
-                    <TextField fullWidth multiline rows={8} label="תוכן" onChange={(e) => setValue("content", e.target.value)} defaultValue={defaultValues.content} sx={{ mb: 2 }} />
-                    <TextField fullWidth label="תיאור" onChange={(e) => setValue("description", e.target.value)} defaultValue={defaultValues.description || ""} sx={{ mb: 2 }} />
-                    <TextField fullWidth label="תמונה (URL)" onChange={(e) => setValue("full_picture", e.target.value)} defaultValue={defaultValues.full_picture || ""} sx={{ mb: 2 }} />
+                <Stack gap={1} component="form" onSubmit={handleSubmit(onSubmit)}>
+                    <TextField fullWidth label="כותרת" {...register("title")} sx={{ mb: 2 }} />
+                    <EditableRichText initialContent={watch("content")} onChange={(newContent) => setValue("content", newContent)} />
+                    <TextField fullWidth label="תיאור" {...register("description")} sx={{ mb: 2 }} />
+                    <TextField fullWidth label="תמונה (URL)" {...register("full_picture")} sx={{ mb: 2 }} />
+                    <TextField fullWidth label="תמונה לתיאור (URL)" {...register("description_picture")} sx={{ mb: 2 }} />
                     <RelationFields relations={relations} control={control} />
                     <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
                         <Button type="submit" variant="contained" color="primary">שמור</Button>
                         <Button variant="outlined" onClick={() => setIsEditable(false)}>ביטול</Button>
                     </Box>
-                </Box>
+                </Stack>
             </CardContent>
         </Card>
     );
