@@ -35,10 +35,10 @@ export const contentApi = {
       const res = await api.get<PaginatedResponse<Content>>("/content", {
         params: queryParams,
       });
-      return res.data.items;
+      return res.data;
     } catch (error) {
       console.error("Failed to fetch content:", error);
-      return [];
+      return { items: [], total: 0, page: 1 };
     }
   },
   getOne: async (id: string) => {

@@ -7,8 +7,7 @@ interface ResourceCardProps {
 }
 
 export default function ResourceCard({ resource, onClick }: ResourceCardProps) {
-    const image = resource.images?.faceImages?.face250x250 || resource.images?.banner400x300;
-
+    const image = resource.description_picture
     return (
         <Grow in={true} timeout={500}>
             <Card

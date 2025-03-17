@@ -12,10 +12,11 @@ export const Route = createFileRoute('/philosophers/')({
       search: query.search as string || '',
     };
   },
-  loaderDeps: ({ search }) => {
-    const { limit, page, search: searchQuery } = search;
-    return ({ page: page || 1, limit: limit || 8, search: searchQuery || '' })
-  },
+  loaderDeps: ({ search }) => ({
+    page: search.page,
+    limit: search.limit,
+    search: search.search
+  }),
   loader: async ({ deps }) => {
     return await philosophersApi.getAll(deps);
   },
@@ -25,7 +26,20 @@ export const Route = createFileRoute('/philosophers/')({
 
 function PhilosophersComponent() {
   const navigate = Route.useNavigate();
+  const search = Route.useSearch();
   const { items = [], page = 1, total = 0 } = Route.useLoaderData() ?? {};
+
+  const handleSearch = (searchQuery: string) => {
+    navigate({
+      search: (prev) => ({ ...prev, search: searchQuery, page: 1 })
+    });
+  };
+
+  const handlePageChange = (newPage: number) => {
+    navigate({
+      search: (prev) => ({ ...prev, page: newPage })
+    });
+  };
 
   return (
     <ResourceListPage
@@ -38,6 +52,10 @@ function PhilosophersComponent() {
       basePath="/philosophers"
       onAddNew={() => navigate({ to: '/philosophers/new' })}
       onItemClick={(id) => navigate({ to: '/philosophers/$id', params: { id } })}
+      onSearch={handleSearch}
+      onPageChange={handlePageChange}
+      currentSearch={search.search}
+      pageSize={search.limit}
     />
   );
 }
