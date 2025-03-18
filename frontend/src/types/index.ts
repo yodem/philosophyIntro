@@ -23,6 +23,21 @@ export interface Content {
   term?: Content[];
 }
 
+export type CreateContent = {
+  title: string;
+  content: string;
+  description: string;
+  full_picture: string;
+  description_picture: string;
+  philosopher?: string[];
+  question?: string[];
+  term?: string[];
+};
+
+export type UpdateContent = Partial<CreateContent> & {
+  id: string;
+};
+
 export type Sections = {
   title: string;
   description: string;

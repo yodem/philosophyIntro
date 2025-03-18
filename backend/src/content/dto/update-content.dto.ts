@@ -1,12 +1,11 @@
 import {
   IsOptional,
-  IsEnum,
   IsString,
   IsObject,
   IsArray,
   IsUUID,
 } from 'class-validator';
-import { ContentType, ContentMetadata } from '../entities/content.entity';
+import { ContentMetadata } from '../entities/content.entity';
 
 export class UpdateContentDto {
   @IsString()
@@ -21,9 +20,13 @@ export class UpdateContentDto {
   @IsOptional() // Keep optional for updates
   description?: string;
 
-  @IsEnum(ContentType)
+  @IsString()
   @IsOptional()
-  type?: ContentType;
+  full_picture?: string;
+
+  @IsString()
+  @IsOptional()
+  description_picture?: string;
 
   @IsOptional()
   @IsObject()

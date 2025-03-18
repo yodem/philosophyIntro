@@ -106,16 +106,6 @@ export class ContentService {
     try {
       const content = await this.findOne(id);
 
-      // If there's legacy metadata with description, move it to the description field
-      if (
-        dto.metadata &&
-        (dto.metadata as any).description &&
-        !dto.description
-      ) {
-        dto.description = (dto.metadata as any).description;
-        delete (dto.metadata as any).description;
-      }
-
       // Handle related content IDs if provided
       if (dto.relatedContentIds && dto.relatedContentIds.length > 0) {
         // Remove existing relationships first

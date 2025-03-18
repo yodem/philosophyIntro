@@ -11,7 +11,7 @@ interface GenericFormProps {
     defaultValues: Content;
     isEditable: boolean;
     setIsEditable: (value: boolean) => void;
-    onSubmit: (data: FormInputs) => Promise<void>;
+    onSubmit: (data: FormInputs) => Promise<Content>;
 }
 
 export function GenericForm({
@@ -37,9 +37,9 @@ export function GenericForm({
                 contentApi.getAll({}, ContentType.TERM),
             ]);
             setRelationOptions({
-                philosopher: philosophers || [],
-                question: questions || [],
-                term: terms || [],
+                philosopher: philosophers.items || [],
+                question: questions.items || [],
+                term: terms.items || [],
             });
         };
         fetchOptions();

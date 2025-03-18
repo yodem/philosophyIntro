@@ -1,10 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { philosophersApi, termsApi, questionsApi } from '../../api';
-import { UpdatePhilosopherDto } from '@/types';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { philosophersApi } from '../../api';
+import { ContentType } from '@/types';
 import { GenericForm } from '../../components/Forms/GenericForm';
 import { FormInputs } from '@/types/form';
-import { LABELS } from '@/constants';
+import { useState } from 'react';
+import { Content } from '@/types';
 
 export const Route = createFileRoute('/philosophers/new')({
     component: NewPhilosopherComponent,
@@ -13,109 +14,38 @@ export const Route = createFileRoute('/philosophers/new')({
 function NewPhilosopherComponent() {
     const queryClient = useQueryClient();
     const navigate = Route.useNavigate();
-
-    const { data: allTerms } = useQuery({
-        queryKey: ['terms'],
-        queryFn: () => termsApi.getAll()
-    });
-
-    const { data: allQuestions } = useQuery({
-        queryKey: ['questions'],
-        queryFn: () => questionsApi.getAll()
-    });
-
-    const { data: allPhilosophers } = useQuery({
-        queryKey: ['philosophers'],
-        queryFn: () => philosophersApi.getAll()
-    });
+    const [isEditable, setIsEditable] = useState(true);
 
     const createPhilosopherMutation = useMutation({
-        mutationFn: (newPhilosopher: UpdatePhilosopherDto) => philosophersApi.create(newPhilosopher),
+        mutationFn: (newPhilosopher: Content) => philosophersApi.create(newPhilosopher),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['philosophers'] });
-            if (data?.id) {
-                navigate({ to: '/philosophers/$id', params: { id: data.id.toString() } });
-            } else {
-                navigate({ to: '/philosophers' });
-            }
+            navigate({ to: data?.id ? `/philosophers/${data.id}` : '/philosophers' });
         },
     });
 
     const onSubmit = async (data: FormInputs) => {
-        return createPhilosopherMutation.mutateAsync({
-            ...data,
-            era: data.era || '',
-            birthDate: data.birthDate || '',
-            deathDate: data.deathDate || '',
-            associatedPhilosophers: data.associatedPhilosophers?.map((p: { id: string } | string) => typeof p === 'string' ? p : p.id),
-            associatedQuestions: data.associatedQuestions?.map((q: { id: string } | string) => typeof q === 'string' ? q : q.id),
-            associatedTerms: data.associatedTerms?.map((t: { id: string } | string) => typeof t === 'string' ? t : t.id),
-        });
+        return createPhilosopherMutation.mutateAsync(data)
+    };
+
+    const defaultValues: Content = {
+        id: '',
+        title: '',
+        content: '',
+        description: '',
+        full_picture: '',
+        description_picture: '',
+        philosopher: [],
+        question: [],
+        term: [],
+        type: ContentType.PHILOSOPHER
     };
 
     return (
         <GenericForm
-            defaultValues={{
-                title: '',
-                content: '',
-                era: '',
-                birthDate: '',
-                deathDate: '',
-                associatedTerms: [],
-                associatedQuestions: [],
-                associatedPhilosophers: []
-            }}
-            entityType="פילוסוף"
-            entityRoute="philosophers"
-            relations={[
-                {
-                    name: 'associatedTerms',
-                    label: LABELS.RELATED_TERMS,
-                    options: allTerms?.items || [],
-                    baseRoute: 'terms'
-                },
-                {
-                    name: 'associatedQuestions',
-                    label: LABELS.RELATED_QUESTIONS,
-                    options: allQuestions?.items || [],
-                    baseRoute: 'questions'
-                },
-                {
-                    name: 'associatedPhilosophers',
-                    label: LABELS.RELATED_PHILOSOPHERS,
-                    options: allPhilosophers?.items || [],
-                    baseRoute: 'philosophers'
-                }
-            ]}
-            // renderAdditionalFields={(register) => (
-            //     <>
-            //         <TextField
-            //             margin="dense"
-            //             label={LABELS.ERA}
-            //             fullWidth
-            //             required
-            //             variant="standard"
-            //             {...register('era', { required: LABELS.ERA })}
-            //             sx={{ mb: 3 }}
-            //         />
-            //         <TextField
-            //             margin="dense"
-            //             label={LABELS.BIRTH_DATE}
-            //             fullWidth
-            //             variant="standard"
-            //             {...register('birthDate')}
-            //             sx={{ mb: 3 }}
-            //         />
-            //         <TextField
-            //             margin="dense"
-            //             label={LABELS.DEATH_DATE}
-            //             fullWidth
-            //             variant="standard"
-            //             {...register('deathDate')}
-            //             sx={{ mb: 3 }}
-            //         />
-            //     </>)}
-
+            defaultValues={defaultValues}
+            isEditable={isEditable}
+            setIsEditable={setIsEditable}
             onSubmit={onSubmit}
         />
     );
