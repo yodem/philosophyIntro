@@ -15,16 +15,10 @@ import { Route as AboutImport } from './routes/about'
 import { Route as AdminImport } from './routes/_admin'
 import { Route as IndexImport } from './routes/index'
 import { Route as UsersIndexImport } from './routes/users/index'
-import { Route as TermsIndexImport } from './routes/terms/index'
-import { Route as QuestionsIndexImport } from './routes/questions/index'
-import { Route as PhilosophersIndexImport } from './routes/philosophers/index'
+import { Route as ContentIndexImport } from './routes/content/index'
 import { Route as UsersIdImport } from './routes/users/$id'
-import { Route as TermsNewImport } from './routes/terms/new'
-import { Route as TermsIdImport } from './routes/terms/$id'
-import { Route as QuestionsNewImport } from './routes/questions/new'
-import { Route as QuestionsIdImport } from './routes/questions/$id'
-import { Route as PhilosophersNewImport } from './routes/philosophers/new'
-import { Route as PhilosophersIdImport } from './routes/philosophers/$id'
+import { Route as ContentNewImport } from './routes/content/new'
+import { Route as ContentIdImport } from './routes/content/$id'
 import { Route as AdminPanelImport } from './routes/_admin/panel'
 
 // Create/Update Routes
@@ -52,21 +46,9 @@ const UsersIndexRoute = UsersIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const TermsIndexRoute = TermsIndexImport.update({
-  id: '/terms/',
-  path: '/terms/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const QuestionsIndexRoute = QuestionsIndexImport.update({
-  id: '/questions/',
-  path: '/questions/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PhilosophersIndexRoute = PhilosophersIndexImport.update({
-  id: '/philosophers/',
-  path: '/philosophers/',
+const ContentIndexRoute = ContentIndexImport.update({
+  id: '/content/',
+  path: '/content/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -76,39 +58,15 @@ const UsersIdRoute = UsersIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const TermsNewRoute = TermsNewImport.update({
-  id: '/terms/new',
-  path: '/terms/new',
+const ContentNewRoute = ContentNewImport.update({
+  id: '/content/new',
+  path: '/content/new',
   getParentRoute: () => rootRoute,
 } as any)
 
-const TermsIdRoute = TermsIdImport.update({
-  id: '/terms/$id',
-  path: '/terms/$id',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const QuestionsNewRoute = QuestionsNewImport.update({
-  id: '/questions/new',
-  path: '/questions/new',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const QuestionsIdRoute = QuestionsIdImport.update({
-  id: '/questions/$id',
-  path: '/questions/$id',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PhilosophersNewRoute = PhilosophersNewImport.update({
-  id: '/philosophers/new',
-  path: '/philosophers/new',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const PhilosophersIdRoute = PhilosophersIdImport.update({
-  id: '/philosophers/$id',
-  path: '/philosophers/$id',
+const ContentIdRoute = ContentIdImport.update({
+  id: '/content/$id',
+  path: '/content/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -150,46 +108,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPanelImport
       parentRoute: typeof AdminImport
     }
-    '/philosophers/$id': {
-      id: '/philosophers/$id'
-      path: '/philosophers/$id'
-      fullPath: '/philosophers/$id'
-      preLoaderRoute: typeof PhilosophersIdImport
+    '/content/$id': {
+      id: '/content/$id'
+      path: '/content/$id'
+      fullPath: '/content/$id'
+      preLoaderRoute: typeof ContentIdImport
       parentRoute: typeof rootRoute
     }
-    '/philosophers/new': {
-      id: '/philosophers/new'
-      path: '/philosophers/new'
-      fullPath: '/philosophers/new'
-      preLoaderRoute: typeof PhilosophersNewImport
-      parentRoute: typeof rootRoute
-    }
-    '/questions/$id': {
-      id: '/questions/$id'
-      path: '/questions/$id'
-      fullPath: '/questions/$id'
-      preLoaderRoute: typeof QuestionsIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/questions/new': {
-      id: '/questions/new'
-      path: '/questions/new'
-      fullPath: '/questions/new'
-      preLoaderRoute: typeof QuestionsNewImport
-      parentRoute: typeof rootRoute
-    }
-    '/terms/$id': {
-      id: '/terms/$id'
-      path: '/terms/$id'
-      fullPath: '/terms/$id'
-      preLoaderRoute: typeof TermsIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/terms/new': {
-      id: '/terms/new'
-      path: '/terms/new'
-      fullPath: '/terms/new'
-      preLoaderRoute: typeof TermsNewImport
+    '/content/new': {
+      id: '/content/new'
+      path: '/content/new'
+      fullPath: '/content/new'
+      preLoaderRoute: typeof ContentNewImport
       parentRoute: typeof rootRoute
     }
     '/users/$id': {
@@ -199,25 +129,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersIdImport
       parentRoute: typeof rootRoute
     }
-    '/philosophers/': {
-      id: '/philosophers/'
-      path: '/philosophers'
-      fullPath: '/philosophers'
-      preLoaderRoute: typeof PhilosophersIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/questions/': {
-      id: '/questions/'
-      path: '/questions'
-      fullPath: '/questions'
-      preLoaderRoute: typeof QuestionsIndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/terms/': {
-      id: '/terms/'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsIndexImport
+    '/content/': {
+      id: '/content/'
+      path: '/content'
+      fullPath: '/content'
+      preLoaderRoute: typeof ContentIndexImport
       parentRoute: typeof rootRoute
     }
     '/users/': {
@@ -247,16 +163,10 @@ export interface FileRoutesByFullPath {
   '': typeof AdminRouteWithChildren
   '/about': typeof AboutRoute
   '/panel': typeof AdminPanelRoute
-  '/philosophers/$id': typeof PhilosophersIdRoute
-  '/philosophers/new': typeof PhilosophersNewRoute
-  '/questions/$id': typeof QuestionsIdRoute
-  '/questions/new': typeof QuestionsNewRoute
-  '/terms/$id': typeof TermsIdRoute
-  '/terms/new': typeof TermsNewRoute
+  '/content/$id': typeof ContentIdRoute
+  '/content/new': typeof ContentNewRoute
   '/users/$id': typeof UsersIdRoute
-  '/philosophers': typeof PhilosophersIndexRoute
-  '/questions': typeof QuestionsIndexRoute
-  '/terms': typeof TermsIndexRoute
+  '/content': typeof ContentIndexRoute
   '/users': typeof UsersIndexRoute
 }
 
@@ -265,16 +175,10 @@ export interface FileRoutesByTo {
   '': typeof AdminRouteWithChildren
   '/about': typeof AboutRoute
   '/panel': typeof AdminPanelRoute
-  '/philosophers/$id': typeof PhilosophersIdRoute
-  '/philosophers/new': typeof PhilosophersNewRoute
-  '/questions/$id': typeof QuestionsIdRoute
-  '/questions/new': typeof QuestionsNewRoute
-  '/terms/$id': typeof TermsIdRoute
-  '/terms/new': typeof TermsNewRoute
+  '/content/$id': typeof ContentIdRoute
+  '/content/new': typeof ContentNewRoute
   '/users/$id': typeof UsersIdRoute
-  '/philosophers': typeof PhilosophersIndexRoute
-  '/questions': typeof QuestionsIndexRoute
-  '/terms': typeof TermsIndexRoute
+  '/content': typeof ContentIndexRoute
   '/users': typeof UsersIndexRoute
 }
 
@@ -284,16 +188,10 @@ export interface FileRoutesById {
   '/_admin': typeof AdminRouteWithChildren
   '/about': typeof AboutRoute
   '/_admin/panel': typeof AdminPanelRoute
-  '/philosophers/$id': typeof PhilosophersIdRoute
-  '/philosophers/new': typeof PhilosophersNewRoute
-  '/questions/$id': typeof QuestionsIdRoute
-  '/questions/new': typeof QuestionsNewRoute
-  '/terms/$id': typeof TermsIdRoute
-  '/terms/new': typeof TermsNewRoute
+  '/content/$id': typeof ContentIdRoute
+  '/content/new': typeof ContentNewRoute
   '/users/$id': typeof UsersIdRoute
-  '/philosophers/': typeof PhilosophersIndexRoute
-  '/questions/': typeof QuestionsIndexRoute
-  '/terms/': typeof TermsIndexRoute
+  '/content/': typeof ContentIndexRoute
   '/users/': typeof UsersIndexRoute
 }
 
@@ -304,16 +202,10 @@ export interface FileRouteTypes {
     | ''
     | '/about'
     | '/panel'
-    | '/philosophers/$id'
-    | '/philosophers/new'
-    | '/questions/$id'
-    | '/questions/new'
-    | '/terms/$id'
-    | '/terms/new'
+    | '/content/$id'
+    | '/content/new'
     | '/users/$id'
-    | '/philosophers'
-    | '/questions'
-    | '/terms'
+    | '/content'
     | '/users'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -321,16 +213,10 @@ export interface FileRouteTypes {
     | ''
     | '/about'
     | '/panel'
-    | '/philosophers/$id'
-    | '/philosophers/new'
-    | '/questions/$id'
-    | '/questions/new'
-    | '/terms/$id'
-    | '/terms/new'
+    | '/content/$id'
+    | '/content/new'
     | '/users/$id'
-    | '/philosophers'
-    | '/questions'
-    | '/terms'
+    | '/content'
     | '/users'
   id:
     | '__root__'
@@ -338,16 +224,10 @@ export interface FileRouteTypes {
     | '/_admin'
     | '/about'
     | '/_admin/panel'
-    | '/philosophers/$id'
-    | '/philosophers/new'
-    | '/questions/$id'
-    | '/questions/new'
-    | '/terms/$id'
-    | '/terms/new'
+    | '/content/$id'
+    | '/content/new'
     | '/users/$id'
-    | '/philosophers/'
-    | '/questions/'
-    | '/terms/'
+    | '/content/'
     | '/users/'
   fileRoutesById: FileRoutesById
 }
@@ -356,16 +236,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRouteWithChildren
   AboutRoute: typeof AboutRoute
-  PhilosophersIdRoute: typeof PhilosophersIdRoute
-  PhilosophersNewRoute: typeof PhilosophersNewRoute
-  QuestionsIdRoute: typeof QuestionsIdRoute
-  QuestionsNewRoute: typeof QuestionsNewRoute
-  TermsIdRoute: typeof TermsIdRoute
-  TermsNewRoute: typeof TermsNewRoute
+  ContentIdRoute: typeof ContentIdRoute
+  ContentNewRoute: typeof ContentNewRoute
   UsersIdRoute: typeof UsersIdRoute
-  PhilosophersIndexRoute: typeof PhilosophersIndexRoute
-  QuestionsIndexRoute: typeof QuestionsIndexRoute
-  TermsIndexRoute: typeof TermsIndexRoute
+  ContentIndexRoute: typeof ContentIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
 }
 
@@ -373,16 +247,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRouteWithChildren,
   AboutRoute: AboutRoute,
-  PhilosophersIdRoute: PhilosophersIdRoute,
-  PhilosophersNewRoute: PhilosophersNewRoute,
-  QuestionsIdRoute: QuestionsIdRoute,
-  QuestionsNewRoute: QuestionsNewRoute,
-  TermsIdRoute: TermsIdRoute,
-  TermsNewRoute: TermsNewRoute,
+  ContentIdRoute: ContentIdRoute,
+  ContentNewRoute: ContentNewRoute,
   UsersIdRoute: UsersIdRoute,
-  PhilosophersIndexRoute: PhilosophersIndexRoute,
-  QuestionsIndexRoute: QuestionsIndexRoute,
-  TermsIndexRoute: TermsIndexRoute,
+  ContentIndexRoute: ContentIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
 }
 
@@ -399,16 +267,10 @@ export const routeTree = rootRoute
         "/",
         "/_admin",
         "/about",
-        "/philosophers/$id",
-        "/philosophers/new",
-        "/questions/$id",
-        "/questions/new",
-        "/terms/$id",
-        "/terms/new",
+        "/content/$id",
+        "/content/new",
         "/users/$id",
-        "/philosophers/",
-        "/questions/",
-        "/terms/",
+        "/content/",
         "/users/"
       ]
     },
@@ -428,35 +290,17 @@ export const routeTree = rootRoute
       "filePath": "_admin/panel.tsx",
       "parent": "/_admin"
     },
-    "/philosophers/$id": {
-      "filePath": "philosophers/$id.tsx"
+    "/content/$id": {
+      "filePath": "content/$id.tsx"
     },
-    "/philosophers/new": {
-      "filePath": "philosophers/new.tsx"
-    },
-    "/questions/$id": {
-      "filePath": "questions/$id.tsx"
-    },
-    "/questions/new": {
-      "filePath": "questions/new.tsx"
-    },
-    "/terms/$id": {
-      "filePath": "terms/$id.tsx"
-    },
-    "/terms/new": {
-      "filePath": "terms/new.tsx"
+    "/content/new": {
+      "filePath": "content/new.tsx"
     },
     "/users/$id": {
       "filePath": "users/$id.tsx"
     },
-    "/philosophers/": {
-      "filePath": "philosophers/index.tsx"
-    },
-    "/questions/": {
-      "filePath": "questions/index.tsx"
-    },
-    "/terms/": {
-      "filePath": "terms/index.tsx"
+    "/content/": {
+      "filePath": "content/index.tsx"
     },
     "/users/": {
       "filePath": "users/index.tsx"

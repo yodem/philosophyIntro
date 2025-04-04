@@ -7,6 +7,7 @@ export const ROUTES = {
 } as const;
 
 export const LABELS = {
+  CONTENT_NOT_FOUND: "לא נמצא תוכן",
   TERM_NOT_FOUND: "המושג לא נמצא",
   RELATED_QUESTIONS: "שאלות קשורות",
   RELATED_PHILOSOPHERS: "פילוסופים קשורים",

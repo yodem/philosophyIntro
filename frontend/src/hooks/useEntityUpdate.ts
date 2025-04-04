@@ -1,35 +1,43 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "notistack";
-import { Content } from "@/types";
+import { ContentTypes, ContentWithRelations } from "@/types";
 
-type EntityType = "term" | "question" | "philosopher";
+// Define EntityType locally since it's not in the types file
+type EntityType = ContentTypes;
+
 type EntityMessages = {
   success: string;
   error: string;
 };
 
-const entityMessages: Record<EntityType, EntityMessages> = {
-  term: {
+const entityMessages: Record<ContentTypes, EntityMessages> = {
+  TERM: {
     success: "המושג עודכן בהצלחה",
     error: "שגיאה בעדכון המושג",
   },
-  question: {
+  QUESTION: {
     success: "השאלה עודכנה בהצלחה",
     error: "שגיאה בעדכון השאלה",
   },
-  philosopher: {
+  PHILOSOPHER: {
     success: "הפילוסוף עודכן בהצלחה",
     error: "שגיאה בעדכון הפילוסוף",
   },
 };
 
-type UpdateFn = (id: string, data: Partial<Content>) => Promise<Content>;
+type UpdateFn = (
+  id: string,
+  data: Partial<ContentWithRelations>
+) => Promise<ContentWithRelations>;
 
 export function useEntityUpdate(entityType: EntityType, updateApi: UpdateFn) {
   const queryClient = useQueryClient();
   const { enqueueSnackbar } = useSnackbar();
 
-  const updateEntity = async (id: string, data: Partial<Content>) => {
+  const updateEntity = async (
+    id: string,
+    data: Partial<ContentWithRelations>
+  ) => {
     try {
       const res = await updateApi(id, data);
       if (res) {

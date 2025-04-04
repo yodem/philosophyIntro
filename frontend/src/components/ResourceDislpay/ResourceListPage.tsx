@@ -1,15 +1,15 @@
-import { Button, TextField, Box, Pagination, Paper, Typography, Divider } from '@mui/material';
+import { Button, TextField, Box, Pagination, Paper, Typography, Divider, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
 import { LABELS } from '@/constants';
-import { Content, ContentType } from '@/types';
+import { ContentWithRelations, ContentTypes } from '@/types';
 import AddIcon from '@mui/icons-material/Add';
 import ResourceGrid from '@/components/ResourceDislpay/ResourceGrid';
 import ResourceCard from '@/components/ResourceDislpay/ResourceCard';
 import ResourceSkeleton from '@/components/ResourceSkeleton';
 
-interface ResourceListPageProps<T extends Content> {
+interface ResourceListPageProps<T extends ContentWithRelations> {
     items: T[];
     page: number;
     total: number;
@@ -17,13 +17,14 @@ interface ResourceListPageProps<T extends Content> {
     addNewLabel: string;
     title: string;
     basePath: string;
-    contentType?: ContentType; // Add content type for filtering
     onAddNew: () => void;
     onItemClick: (id: string) => void;
     onSearch: (searchQuery: string) => void;
     onPageChange: (newPage: number) => void;
     currentSearch?: string;
     pageSize?: number;
+    type: ContentTypes; // Add this prop to handle content type
+    handleContentTypeChange: (type: ContentTypes) => void; // Add this prop to handle content type change
 }
 
 interface Iprops {
@@ -64,7 +65,7 @@ export function ResourceListSkeleton() {
     );
 }
 
-export function ResourceListPage<T extends Content>({
+export function ResourceListPage<T extends ContentWithRelations>({
     items,
     page,
     total,
@@ -77,6 +78,8 @@ export function ResourceListPage<T extends Content>({
     onPageChange,
     currentSearch = '',
     pageSize = 8,
+    type,
+    handleContentTypeChange
 }: ResourceListPageProps<T>) {
     const [searchValue, setSearchValue] = useState(currentSearch || '');
     const debouncedSearch = useDebounce(searchValue, 300);
@@ -103,6 +106,20 @@ export function ResourceListPage<T extends Content>({
                         sx={{ textAlign: 'right', width: 300 }}
                         onChange={(e) => setSearchValue(e.target.value)}
                     />
+                    <FormControl variant="outlined" size="small" sx={{ minWidth: 150 }}>
+                        <InputLabel id="content-type-select-label">סוג תוכן</InputLabel>
+                        <Select
+                            labelId="content-type-select-label"
+                            id="content-type-select"
+                            value={type}
+                            onChange={(e) => handleContentTypeChange(e.target.value as ContentTypes)}
+                            label="סוג תוכן"
+                        >
+                            <MenuItem value={ContentTypes.TERM}>מושגים</MenuItem>
+                            <MenuItem value={ContentTypes.QUESTION}>שאלות</MenuItem>
+                            <MenuItem value={ContentTypes.PHILOSOPHER}>פילוסופים</MenuItem>
+                        </Select>
+                    </FormControl>
                     <Button size='medium' variant="contained" onClick={onAddNew} startIcon={<AddIcon />}>
                         {addNewLabel}
                     </Button>

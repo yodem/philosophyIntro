@@ -4,6 +4,7 @@ import {
   SearchParams,
   Content,
   ContentType,
+  ContentTypes,
 } from "../types";
 
 const api = axios.create({
@@ -116,14 +117,14 @@ export const philosophersApi = {
   getAll: async (
     params: SearchParams = { limit: 1000, page: 1, search: "" }
   ) => {
-    return contentApi.getAll(params, ContentType.PHILOSOPHER);
+    return contentApi.getAll(params, ContentTypes.PHILOSOPHER);
   },
   getOne: contentApi.getOne,
   update: contentApi.update,
   create: async (data: Partial<Content>) => {
     return contentApi.create({
       ...data,
-      type: ContentType.PHILOSOPHER,
+      type: ContentTypes.PHILOSOPHER,
     });
   },
 };
@@ -132,14 +133,14 @@ export const questionsApi = {
   getAll: async (
     params: SearchParams = { limit: 1000, page: 1, search: "" }
   ) => {
-    return contentApi.getAll(params, ContentType.QUESTION);
+    return contentApi.getAll(params, ContentTypes.QUESTION);
   },
   getOne: contentApi.getOne,
   update: contentApi.update,
   create: async (data: Partial<Content>) => {
     return contentApi.create({
       ...data,
-      type: ContentType.QUESTION,
+      type: ContentTypes.QUESTION,
     });
   },
 };
@@ -148,14 +149,14 @@ export const termsApi = {
   getAll: async (
     params: SearchParams = { limit: 1000, page: 1, search: "" }
   ) => {
-    return contentApi.getAll(params, ContentType.TERM);
+    return contentApi.getAll(params, ContentTypes.TERM);
   },
   getOne: contentApi.getOne,
   update: contentApi.update,
   create: async (data: Partial<Content>) => {
     return contentApi.create({
       ...data,
-      type: ContentType.TERM,
+      type: ContentTypes.TERM,
     });
   },
 };

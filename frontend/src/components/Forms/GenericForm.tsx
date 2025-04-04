@@ -1,17 +1,16 @@
 import { useForm } from "react-hook-form";
 import { Box, Button, Card, CardContent, Stack, TextField } from "@mui/material";
 import { RelationFields } from "./RelationFields";
-import { FormInputs, RelationConfig } from "@/types/form";
-import { Content, ContentType } from "@/types";
+import { ContentWithRelations, ContentTypes, CreateContent } from "@/types";
 import { useEffect, useState } from "react";
 import { contentApi } from "@/api";
 import { EditableRichText } from "@/components/TextEditor/EditableRichText";
 
 interface GenericFormProps {
-    defaultValues: Content;
+    defaultValues: ContentWithRelations;
     isEditable: boolean;
     setIsEditable: (value: boolean) => void;
-    onSubmit: (data: FormInputs) => Promise<unknown>;
+    onSubmit: (data: Partial<CreateContent>) => Promise<unknown>;
 }
 
 export function GenericForm({
@@ -21,20 +20,20 @@ export function GenericForm({
     onSubmit,
 }: GenericFormProps) {
     const [relationOptions, setRelationOptions] = useState<{
-        philosopher: Content[];
-        question: Content[];
-        term: Content[];
+        philosopher: ContentWithRelations[];
+        question: ContentWithRelations[];
+        term: ContentWithRelations[];
     }>({ philosopher: [], question: [], term: [] });
 
-    const { control, handleSubmit, reset, setValue, watch, register } = useForm<FormInputs>({ defaultValues });
+    const { control, handleSubmit, reset, setValue, watch, register } = useForm<CreateContent>({ defaultValues });
 
     useEffect(() => { reset(defaultValues); }, [defaultValues, reset]);
     useEffect(() => {
         const fetchOptions = async () => {
             const [philosophers, questions, terms] = await Promise.all([
-                contentApi.getAll({}, ContentType.PHILOSOPHER),
-                contentApi.getAll({}, ContentType.QUESTION),
-                contentApi.getAll({}, ContentType.TERM),
+                contentApi.getAll({}, ContentTypes.PHILOSOPHER),
+                contentApi.getAll({}, ContentTypes.QUESTION),
+                contentApi.getAll({}, ContentTypes.TERM),
             ]);
             setRelationOptions({
                 philosopher: philosophers.items || [],

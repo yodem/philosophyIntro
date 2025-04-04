@@ -5,6 +5,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useNavigate } from "@tanstack/react-router";
 import philosopherIcon from "@/assets/philosopher.png";
+import { ContentTypes } from "@/types";
 
 const NavBar = () => {
     const { mode, toggleMode } = useTheme();
@@ -20,9 +21,9 @@ const NavBar = () => {
                         alt="philosopherIcon"
                     />
                 </Box>
-                <RouterButton color="inherit" to="/philosophers">פילוסופים</RouterButton>
-                <RouterButton color="inherit" to="/questions">שאלות</RouterButton>
-                <RouterButton color="inherit" to="/terms">מושגים</RouterButton>
+                <RouterButton color="inherit" to="/content" search={{ type: ContentTypes.PHILOSOPHER }}>פילוסופים</RouterButton>
+                <RouterButton color="inherit" to="/content" search={{ type: ContentTypes.QUESTION }}>שאלות</RouterButton>
+                <RouterButton color="inherit" to="/content" search={{ type: ContentTypes.TERM }}>מושגים</RouterButton>
                 {/* <RouterButton color="inherit" to="/about">אודות</RouterButton>
                 <RouterButton color="inherit" to="/panel">ניהול</RouterButton> */}
                 <IconButton onClick={toggleMode} color="inherit">

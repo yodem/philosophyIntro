@@ -3,28 +3,21 @@ import { ParseRoute } from "@tanstack/react-router";
 import { LucideProps } from "lucide-react";
 import { ForwardRefExoticComponent, RefAttributes } from "react";
 
-export enum ContentType {
+export enum ContentTypes {
   PHILOSOPHER = "philosopher",
-  QUESTION = "question",
   TERM = "term",
+  QUESTION = "question",
 }
 
-export interface Content {
+export interface ContentWithRelations {
   id: string;
   title: string;
-  content: string;
-  type: ContentType;
-  description: string;
-  full_picture: string;
-  description_picture: string;
-  metadata?: Record<string, string>;
+  description?: string;
+  type: ContentTypes;
+  metadata?: Record<string, unknown>;
+  relatedContent?: ContentWithRelations[];
+  relatedContentIds?: string[];
 }
-
-export type ContentWithRelations = Content & {
-  philosopher: Content[];
-  question: Content[];
-  term: Content[];
-};
 
 export type CreateContent = {
   title: string;
@@ -48,6 +41,7 @@ export type Sections = {
     Omit<LucideProps, "ref"> & RefAttributes<SVGSVGElement>
   >;
   to: ParseRoute<typeof routeTree>["fullPath"];
+  type: ContentTypes;
 };
 
 export interface PaginatedResponse<T> {
@@ -61,5 +55,5 @@ export interface SearchParams {
   page?: number;
   limit?: number;
   search?: string;
-  type?: ContentType;
+  type: ContentTypes;
 }

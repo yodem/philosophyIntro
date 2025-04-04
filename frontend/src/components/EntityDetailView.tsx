@@ -1,22 +1,18 @@
 import { useState } from 'react';
 import { Box } from '@mui/material';
-import { Content } from '@/types';
-import { FormInputs } from '@/types/form';
-import { GenericForm } from './Forms/GenericForm';
+import { ContentWithRelations } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { EntityDetailDisplay } from './ContentDisplay/EntityDetailDisplay';
+import { GenericForm } from './Forms/GenericForm';
 
 interface EntityDetailViewProps {
-    entity: Content;
-    entityType: string;
-    entityRoute: string;
-    updateMutation: (id: string, data: Partial<Content>) => Promise<Content | undefined>;
+    entity: ContentWithRelations;
+    updateMutation: (id: string, data: Partial<ContentWithRelations>) => Promise<ContentWithRelations | undefined>;
     queryKey: Array<string>;
 }
 
 export function EntityDetailView({
     entity,
-    entityType,
     updateMutation,
     queryKey,
 }: EntityDetailViewProps) {
@@ -24,7 +20,7 @@ export function EntityDetailView({
     const queryClient = useQueryClient();
 
     const { mutateAsync: update } = useMutation({
-        mutationFn: (data: FormInputs) => updateMutation(entity.id, data),
+        mutationFn: (data: Partial<ContentWithRelations>) => updateMutation(entity.id, data),
         onSuccess: () => {
             // Use the provided queryKey for invalidation
             queryClient.invalidateQueries({ queryKey });
@@ -36,11 +32,11 @@ export function EntityDetailView({
         },
     });
 
-    const handleSubmit = async (data: FormInputs) => {
+    const handleSubmit = async (data: Partial<ContentWithRelations>) => {
         try {
             await update(data);
         } catch (error) {
-            console.error(`Failed to update ${entityType}:`, error);
+            console.error(`Failed to update ${entity.type}:`, error);
         }
     };
 

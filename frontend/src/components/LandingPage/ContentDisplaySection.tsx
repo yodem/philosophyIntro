@@ -2,27 +2,29 @@ import { motion } from 'framer-motion'
 import ContentDisplayCard from './ContentDisplayCard'
 import { CircleHelp, Users, Lightbulb } from 'lucide-react'
 import { LABELS } from '@/constants'
-import { Sections } from '@/types'
-
+import { ContentTypes, Sections } from '@/types'
 
 const sections: Sections[] = [
   {
     title: LABELS.BIG_PHILOSOPHERS,
     description: LABELS.JOURNEY_THROUGH_HISTORY,
     icon: Users,
-    to: "/philosophers"
+    to: "/content",
+    type: ContentTypes.PHILOSOPHER
   },
   {
     title: LABELS.BIG_QUESTIONS,
     description: LABELS.EXPLORE_QUESTIONS,
     icon: CircleHelp,
-    to: "/questions"
+    to: "/content",
+    type: ContentTypes.QUESTION
   },
   {
     title: LABELS.CONCEPT_EXPLORER,
     description: LABELS.UNDERSTAND_CONCEPTS,
     icon: Lightbulb,
-    to: "/terms"
+    to: "/content",
+    type: ContentTypes.TERM
   }
 ]
 

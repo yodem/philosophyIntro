@@ -1,7 +1,8 @@
+import { ContentWithRelations } from '@/types';
 import { Chip, Box } from '@mui/material';
 
 interface MetadataDisplayProps {
-    metadata: Record<string, string>;
+    metadata: ContentWithRelations['metadata'];
 }
 
 export function MetadataDisplay({ metadata }: MetadataDisplayProps) {

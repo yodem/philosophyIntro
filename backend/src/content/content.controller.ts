@@ -13,7 +13,7 @@ import { ContentService } from './content.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { LinkContentsDto } from './dto/link-contents.dto';
-import { SearchParams } from '../types/pagination.types';
+import { SearchParamsDto } from '../types/pagination.types';
 import { ContentType } from './entities/content.entity';
 
 @Controller('content')
@@ -29,54 +29,12 @@ export class ContentController {
   }
 
   @Get()
-  findAll(@Query() searchParams: SearchParams) {
+  findAll(@Query() searchParams: SearchParamsDto) {
     const { page = 1, limit = 10, search, type } = searchParams;
     this.logger.log(
       `Finding all content with params: ${JSON.stringify(searchParams)}`,
     );
-    return this.contentService.findAll(
-      page,
-      limit,
-      search,
-      type as ContentType,
-    );
-  }
-
-  @Get('philosophers')
-  findPhilosophers(@Query() searchParams: SearchParams) {
-    const { page = 1, limit = 10, search } = searchParams;
-    this.logger.log(
-      `Finding all philosophers with params: ${JSON.stringify(searchParams)}`,
-    );
-    return this.contentService.findAll(
-      page,
-      limit,
-      search,
-      ContentType.PHILOSOPHER,
-    );
-  }
-
-  @Get('terms')
-  findTerms(@Query() searchParams: SearchParams) {
-    const { page = 1, limit = 10, search } = searchParams;
-    this.logger.log(
-      `Finding all terms with params: ${JSON.stringify(searchParams)}`,
-    );
-    return this.contentService.findAll(page, limit, search, ContentType.TERM);
-  }
-
-  @Get('questions')
-  findQuestions(@Query() searchParams: SearchParams) {
-    const { page = 1, limit = 10, search } = searchParams;
-    this.logger.log(
-      `Finding all questions with params: ${JSON.stringify(searchParams)}`,
-    );
-    return this.contentService.findAll(
-      page,
-      limit,
-      search,
-      ContentType.QUESTION,
-    );
+    return this.contentService.findAll(page, limit, search, type);
   }
 
   @Get(':id')
