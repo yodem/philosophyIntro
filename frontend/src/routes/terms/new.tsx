@@ -1,11 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { termsApi } from '../../api';
-import { ContentType } from '@/types';
+import { ContentType, ContentWithRelations } from '@/types';
 import { GenericForm } from '@/components/Forms/GenericForm';
 import { FormInputs } from '@/types/form';
 import { useState } from 'react';
-import { Content } from '@/types';
 
 export const Route = createFileRoute('/terms/new')({
     component: NewTermComponent,
@@ -17,7 +16,7 @@ function NewTermComponent() {
     const [isEditable, setIsEditable] = useState(true);
 
     const createTermMutation = useMutation({
-        mutationFn: (newTerm: Content) => termsApi.create(newTerm),
+        mutationFn: (newTerm: Partial<ContentWithRelations>) => termsApi.create(newTerm),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['terms'] });
             navigate({ to: data?.id ? `/terms/${data.id}` : '/terms' });
@@ -25,10 +24,11 @@ function NewTermComponent() {
     });
 
     const onSubmit = async (data: FormInputs) => {
-        return createTermMutation.mutateAsync(data)
+        await createTermMutation.mutateAsync(data);
+        return; // explicitly return void
     };
 
-    const defaultValues: Content = {
+    const defaultValues: ContentWithRelations = {
         id: '',
         title: '',
         content: '',

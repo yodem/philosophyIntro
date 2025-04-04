@@ -11,7 +11,7 @@ interface GenericFormProps {
     defaultValues: Content;
     isEditable: boolean;
     setIsEditable: (value: boolean) => void;
-    onSubmit: (data: FormInputs) => Promise<Content>;
+    onSubmit: (data: FormInputs) => Promise<unknown>;
 }
 
 export function GenericForm({

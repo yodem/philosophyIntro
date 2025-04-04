@@ -57,15 +57,12 @@ export const contentApi = {
 
       // Extract related content IDs from each related content array
       ["philosopher", "question", "term"].forEach((relationType) => {
-        if (data[relationType as keyof typeof data]) {
-          const relatedItems = data[
-            relationType as keyof typeof data
-          ] as Content[];
-          if (Array.isArray(relatedItems)) {
-            relatedItems.forEach((item) => {
-              if (item?.id) relatedContentIds.push(item.id);
-            });
-          }
+        const fieldValue = data[relationType as keyof typeof data];
+        if (fieldValue && Array.isArray(fieldValue)) {
+          const relatedItems = fieldValue as Content[];
+          relatedItems.forEach((item) => {
+            if (item?.id) relatedContentIds.push(item.id);
+          });
         }
         // Remove the related arrays from the update payload as they're now in relatedContentIds
         delete data[relationType as keyof typeof data];
@@ -90,15 +87,12 @@ export const contentApi = {
 
       // Extract related content IDs from each related content array
       ["philosopher", "question", "term"].forEach((relationType) => {
-        if (data[relationType as keyof typeof data]) {
-          const relatedItems = data[
-            relationType as keyof typeof data
-          ] as Content[];
-          if (Array.isArray(relatedItems)) {
-            relatedItems.forEach((item) => {
-              if (item?.id) relatedContentIds.push(item.id);
-            });
-          }
+        const fieldValue = data[relationType as keyof typeof data];
+        if (fieldValue && Array.isArray(fieldValue)) {
+          const relatedItems = fieldValue as Content[];
+          relatedItems.forEach((item) => {
+            if (item?.id) relatedContentIds.push(item.id);
+          });
         }
         // Remove the related arrays from the create payload
         delete data[relationType as keyof typeof data];

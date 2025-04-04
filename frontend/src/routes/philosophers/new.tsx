@@ -1,11 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { philosophersApi } from '../../api';
-import { ContentType } from '@/types';
+import { ContentType, ContentWithRelations } from '@/types';
 import { GenericForm } from '../../components/Forms/GenericForm';
 import { FormInputs } from '@/types/form';
 import { useState } from 'react';
-import { Content } from '@/types';
 
 export const Route = createFileRoute('/philosophers/new')({
     component: NewPhilosopherComponent,
@@ -17,7 +16,7 @@ function NewPhilosopherComponent() {
     const [isEditable, setIsEditable] = useState(true);
 
     const createPhilosopherMutation = useMutation({
-        mutationFn: (newPhilosopher: Content) => philosophersApi.create(newPhilosopher),
+        mutationFn: (newPhilosopher: Partial<ContentWithRelations>) => philosophersApi.create(newPhilosopher),
         onSuccess: (data) => {
             queryClient.invalidateQueries({ queryKey: ['philosophers'] });
             navigate({ to: data?.id ? `/philosophers/${data.id}` : '/philosophers' });
@@ -25,10 +24,11 @@ function NewPhilosopherComponent() {
     });
 
     const onSubmit = async (data: FormInputs) => {
-        return createPhilosopherMutation.mutateAsync(data)
+        await createPhilosopherMutation.mutateAsync(data);
+        return; // explicitly return void
     };
 
-    const defaultValues: Content = {
+    const defaultValues: ContentWithRelations = {
         id: '',
         title: '',
         content: '',

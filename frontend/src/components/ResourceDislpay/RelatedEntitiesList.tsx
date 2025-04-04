@@ -3,7 +3,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { Content } from '@/types';
 
 interface RelatedEntitiesListProps {
-    entity: Content;
+    entity: Content;  // Changed from ContentWithRelations to Content
 }
 
 export default function RelatedEntitiesList({ entity }: RelatedEntitiesListProps) {
@@ -16,9 +16,12 @@ export default function RelatedEntitiesList({ entity }: RelatedEntitiesListProps
     ];
 
     const hasRelatedEntities = relatedTypes.some(
-        type => entity[type.type as keyof Content] &&
-            Array.isArray(entity[type.type as keyof Content]) &&
-            (entity[type.type as keyof Content] as Content[]).length > 0
+        type => {
+            const relations = entity[type.type as keyof Content];
+            return relations &&
+                Array.isArray(relations) &&
+                relations.length > 0;
+        }
     );
 
     if (!hasRelatedEntities) return null;
@@ -29,7 +32,7 @@ export default function RelatedEntitiesList({ entity }: RelatedEntitiesListProps
 
             <Stack spacing={3}>
                 {relatedTypes.map(type => {
-                    const relatedEntities = entity[type.type as keyof Content] as Content[] | undefined;
+                    const relatedEntities = entity[type.type as keyof Content];
 
                     if (!relatedEntities || !Array.isArray(relatedEntities) || relatedEntities.length === 0) {
                         return null;
@@ -41,7 +44,7 @@ export default function RelatedEntitiesList({ entity }: RelatedEntitiesListProps
                                 {type.label}:
                             </Typography>
                             <Stack direction="row" spacing={1} flexWrap="wrap" sx={{ p: 1, borderRadius: 1 }}>
-                                {relatedEntities.map(related => (
+                                {relatedEntities.map((related: Content) => (
                                     <Chip
                                         key={related.id}
                                         label={related.title}

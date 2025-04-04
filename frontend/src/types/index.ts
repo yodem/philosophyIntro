@@ -18,10 +18,13 @@ export interface Content {
   full_picture: string;
   description_picture: string;
   metadata?: Record<string, string>;
-  philosopher?: Content[];
-  question?: Content[];
-  term?: Content[];
 }
+
+export type ContentWithRelations = Content & {
+  philosopher: Content[];
+  question: Content[];
+  term: Content[];
+};
 
 export type CreateContent = {
   title: string;

@@ -1,10 +1,6 @@
-import { Content } from "@/types";
+import { Content, ContentWithRelations } from "@/types";
 
-export type FormInputs = Content & {
-  philosopher?: Content[];
-  question?: Content[];
-  term?: Content[];
-};
+export type FormInputs = ContentWithRelations;
 
 export interface RelationConfig {
   name: keyof Pick<FormInputs, "philosopher" | "question" | "term">;

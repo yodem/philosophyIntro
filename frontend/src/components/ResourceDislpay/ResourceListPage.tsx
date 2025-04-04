@@ -2,13 +2,12 @@ import { Button, TextField, Box, Pagination, Paper, Typography, Divider } from '
 import { styled } from '@mui/material/styles';
 import { useState, useEffect } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
-import ResourceCard from './ResourceCard';
-import ResourceGrid from './ResourceGrid';
-import ResourceSkeleton from '../ResourceSkeleton';
 import { LABELS } from '@/constants';
 import { Content, ContentType } from '@/types';
-import { useNavigate } from '@tanstack/react-router';
 import AddIcon from '@mui/icons-material/Add';
+import ResourceGrid from '@/components/ResourceDislpay/ResourceGrid';
+import ResourceCard from '@/components/ResourceDislpay/ResourceCard';
+import ResourceSkeleton from '@/components/ResourceSkeleton';
 
 interface ResourceListPageProps<T extends Content> {
     items: T[];
@@ -21,6 +20,10 @@ interface ResourceListPageProps<T extends Content> {
     contentType?: ContentType; // Add content type for filtering
     onAddNew: () => void;
     onItemClick: (id: string) => void;
+    onSearch: (searchQuery: string) => void;
+    onPageChange: (newPage: number) => void;
+    currentSearch?: string;
+    pageSize?: number;
 }
 
 interface Iprops {
@@ -70,25 +73,18 @@ export function ResourceListPage<T extends Content>({
     title,
     onAddNew,
     onItemClick,
-    basePath,
-    contentType, // Use content type in search params
+    onSearch,
+    onPageChange,
+    currentSearch = '',
+    pageSize = 8,
 }: ResourceListPageProps<T>) {
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState(currentSearch || '');
     const debouncedSearch = useDebounce(searchValue, 300);
-    const navigate = useNavigate()
 
     // Only trigger the search if the debounced value actually changed
     useEffect(() => {
-        navigate({
-            to: basePath,
-            search: (prev) => ({
-                ...prev,
-                search: debouncedSearch,
-                page: 1,
-                ...(contentType ? { type: contentType } : {})
-            })
-        })
-    }, [basePath, contentType, debouncedSearch, navigate]);
+        onSearch(debouncedSearch);
+    }, [debouncedSearch, onSearch]);
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -131,10 +127,10 @@ export function ResourceListPage<T extends Content>({
                         ))}
                     </ResourceGrid>
                     <StyledPagination
-                        count={Math.ceil(total / 8)}
+                        count={Math.ceil(total / pageSize)}
                         page={page}
                         $currentPage={page}
-                        onChange={(_, value) => navigate({ to: basePath, search: (prev) => ({ ...prev, page: value }) })}
+                        onChange={(_, value) => onPageChange(value)}
                         sx={{ alignSelf: 'center', direction: 'ltr' }}
                     />
                 </>
