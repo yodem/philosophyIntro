@@ -8,6 +8,7 @@ import {
   Param,
   Query,
   Logger,
+  UseGuards,
 } from '@nestjs/common';
 import { ContentService } from './content.service';
 import { CreateContentDto } from './dto/create-content.dto';
@@ -15,8 +16,11 @@ import { UpdateContentDto } from './dto/update-content.dto';
 import { LinkContentsDto } from './dto/link-contents.dto';
 import { SearchParamsDto } from '../types/pagination.types';
 import { ContentType } from './entities/content.entity';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Public } from '../auth/decorators/public.decorator';
 
 @Controller('content')
+@UseGuards(JwtAuthGuard)
 export class ContentController {
   private readonly logger = new Logger(ContentController.name);
 
@@ -28,6 +32,7 @@ export class ContentController {
     return this.contentService.create(dto);
   }
 
+  @Public()
   @Get()
   findAll(@Query() searchParams: SearchParamsDto) {
     const { page = 1, limit = 10, search, type } = searchParams;
@@ -37,6 +42,7 @@ export class ContentController {
     return this.contentService.findAll(page, limit, search, type);
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     this.logger.log(`Finding content with id: ${id}`);
@@ -63,6 +69,7 @@ export class ContentController {
     return this.contentService.linkContents(dto);
   }
 
+  @Public()
   @Get(':id/related')
   findRelated(@Param('id') id: string, @Query('type') type?: ContentType) {
     this.logger.log(

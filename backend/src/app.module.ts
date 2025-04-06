@@ -1,12 +1,11 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 import { ContentModule } from './content/content.module';
-import { Content } from './content/entities/content.entity';
-import { ContentRelationship } from './content/entities/contentRelationship.entity';
-import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -15,31 +14,38 @@ import { SeederModule } from './seeder/seeder.module';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get<string>('DATABASE_HOST'),
-        port: configService.get<number>('DATABASE_PORT'),
-        username: configService.get<string>('DATABASE_USERNAME'),
-        password: configService.get<string>('DATABASE_PASSWORD'),
-        database: configService.get<string>('DATABASE_NAME'),
-        entities: [Content, ContentRelationship],
+        host: configService.get('DATABASE_HOST', 'localhost'),
+        port: +configService.get('DATABASE_PORT', 5432),
+        username: configService.get('DATABASE_USERNAME', 'postgres'),
+        password: configService.get('DATABASE_PASSWORD', 'password1'),
+        database: configService.get('DATABASE_NAME', 'philosophy'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
       }),
-      inject: [ConfigService],
     }),
+    AuthModule,
+    UsersModule,
     ContentModule,
-    SeederModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {
-  private readonly logger = new Logger(AppModule.name);
-
-  // constructor(private seederService: SeederService) {}
-
-  // async onModuleInit() {
-  //   const res = await this.seederService.seed();
-  //   this.logger.debug(res);
-  // }
+  constructor(private configService: ConfigService) {
+    const dbConfig = {
+      host: this.configService.get('DATABASE_HOST', 'localhost'),
+      port: this.configService.get('DATABASE_PORT', 5432),
+      username: this.configService.get('DATABASE_USERNAME', 'postgres'),
+      password: this.configService.get('DATABASE_PASSWORD', 'password1'),
+      database: this.configService.get('DATABASE_NAME', 'philosophy'),
+    };
+    console.log('Database Configuration:', dbConfig);
+  }
 }
