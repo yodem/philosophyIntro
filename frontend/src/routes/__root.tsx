@@ -1,9 +1,10 @@
 import * as React from 'react'
-import { Outlet, createRootRoute } from '@tanstack/react-router'
+import { Outlet, createRootRouteWithContext } from '@tanstack/react-router'
 import NavBar from '@/components/NavBar'
 import { SnackbarProvider } from 'notistack'
+import { RouterContext } from '@/main'
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
 })
 

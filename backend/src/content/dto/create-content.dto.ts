@@ -1,29 +1,45 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsNotEmpty,
-  IsEnum,
   IsString,
+  IsEnum,
   IsOptional,
   IsObject,
 } from 'class-validator';
-import { ContentType, ContentMetadata } from '../entities/content.entity';
+import { ContentType } from '../entities/content.entity';
 
 export class CreateContentDto {
-  @IsString()
+  @ApiProperty({
+    description: 'Title of the content',
+    example: "Plato's Republic",
+  })
   @IsNotEmpty()
+  @IsString()
   title: string;
 
-  @IsString()
+  @ApiProperty({
+    description: 'Type of the content',
+    enum: ContentType,
+    example: 'BOOK',
+  })
   @IsNotEmpty()
-  content: string;
-
-  @IsString()
-  @IsNotEmpty() // Making description required
-  description: string;
-
   @IsEnum(ContentType)
   type: ContentType;
 
+  @ApiPropertyOptional({
+    description: 'Description of the content',
+    example:
+      'A philosophical work by Plato that discusses justice and the ideal state',
+  })
   @IsOptional()
-  @IsObject() // Ensure JSON object
-  metadata?: ContentMetadata;
+  @IsString()
+  description?: string;
+
+  @ApiPropertyOptional({
+    description: 'Additional metadata for the content',
+    example: { author: 'Plato', year: '380 BCE' },
+  })
+  @IsOptional()
+  @IsObject()
+  metadata?: Record<string, any>;
 }

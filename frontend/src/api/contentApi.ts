@@ -40,4 +40,12 @@ export const contentApi = {
   delete: async (id: string): Promise<void> => {
     return await api.delete(`content/${id}`);
   },
+
+  getRelated: async (
+    id: string,
+    type?: ContentTypes
+  ): Promise<ContentWithRelations[]> => {
+    const params = type ? { type } : undefined;
+    return await api.get(`content/${id}/related`, { params });
+  },
 };

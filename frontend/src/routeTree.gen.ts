@@ -11,17 +11,25 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
 import { Route as AboutImport } from './routes/about'
-import { Route as AdminImport } from './routes/_admin'
+import { Route as AuthenticatedImport } from './routes/_authenticated'
 import { Route as IndexImport } from './routes/index'
-import { Route as UsersIndexImport } from './routes/users/index'
-import { Route as ContentIndexImport } from './routes/content/index'
-import { Route as UsersIdImport } from './routes/users/$id'
-import { Route as ContentNewImport } from './routes/content/new'
-import { Route as ContentIdImport } from './routes/content/$id'
-import { Route as AdminPanelImport } from './routes/_admin/panel'
+import { Route as AuthenticatedAdminImport } from './routes/_authenticated/_admin'
+import { Route as AuthenticatedUsersIndexImport } from './routes/_authenticated/users/index'
+import { Route as AuthenticatedContentIndexImport } from './routes/_authenticated/content/index'
+import { Route as AuthenticatedUsersIdImport } from './routes/_authenticated/users/$id'
+import { Route as AuthenticatedContentNewImport } from './routes/_authenticated/content/new'
+import { Route as AuthenticatedContentIdImport } from './routes/_authenticated/content/$id'
+import { Route as AuthenticatedAdminPanelImport } from './routes/_authenticated/_admin/panel'
 
 // Create/Update Routes
+
+const LoginRoute = LoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -29,8 +37,8 @@ const AboutRoute = AboutImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AdminRoute = AdminImport.update({
-  id: '/_admin',
+const AuthenticatedRoute = AuthenticatedImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -40,40 +48,45 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UsersIndexRoute = UsersIndexImport.update({
+const AuthenticatedAdminRoute = AuthenticatedAdminImport.update({
+  id: '/_admin',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+
+const AuthenticatedUsersIndexRoute = AuthenticatedUsersIndexImport.update({
   id: '/users/',
   path: '/users/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const ContentIndexRoute = ContentIndexImport.update({
+const AuthenticatedContentIndexRoute = AuthenticatedContentIndexImport.update({
   id: '/content/',
   path: '/content/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const UsersIdRoute = UsersIdImport.update({
+const AuthenticatedUsersIdRoute = AuthenticatedUsersIdImport.update({
   id: '/users/$id',
   path: '/users/$id',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const ContentNewRoute = ContentNewImport.update({
+const AuthenticatedContentNewRoute = AuthenticatedContentNewImport.update({
   id: '/content/new',
   path: '/content/new',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const ContentIdRoute = ContentIdImport.update({
+const AuthenticatedContentIdRoute = AuthenticatedContentIdImport.update({
   id: '/content/$id',
   path: '/content/$id',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
-const AdminPanelRoute = AdminPanelImport.update({
+const AuthenticatedAdminPanelRoute = AuthenticatedAdminPanelImport.update({
   id: '/panel',
   path: '/panel',
-  getParentRoute: () => AdminRoute,
+  getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
 
 // Populate the FileRoutesByPath interface
@@ -87,11 +100,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/_admin': {
-      id: '/_admin'
+    '/_authenticated': {
+      id: '/_authenticated'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AdminImport
+      preLoaderRoute: typeof AuthenticatedImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -101,98 +114,139 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
-    '/_admin/panel': {
-      id: '/_admin/panel'
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
+    '/_authenticated/_admin': {
+      id: '/_authenticated/_admin'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedAdminImport
+      parentRoute: typeof AuthenticatedImport
+    }
+    '/_authenticated/_admin/panel': {
+      id: '/_authenticated/_admin/panel'
       path: '/panel'
       fullPath: '/panel'
-      preLoaderRoute: typeof AdminPanelImport
-      parentRoute: typeof AdminImport
+      preLoaderRoute: typeof AuthenticatedAdminPanelImport
+      parentRoute: typeof AuthenticatedAdminImport
     }
-    '/content/$id': {
-      id: '/content/$id'
+    '/_authenticated/content/$id': {
+      id: '/_authenticated/content/$id'
       path: '/content/$id'
       fullPath: '/content/$id'
-      preLoaderRoute: typeof ContentIdImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedContentIdImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/content/new': {
-      id: '/content/new'
+    '/_authenticated/content/new': {
+      id: '/_authenticated/content/new'
       path: '/content/new'
       fullPath: '/content/new'
-      preLoaderRoute: typeof ContentNewImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedContentNewImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/users/$id': {
-      id: '/users/$id'
+    '/_authenticated/users/$id': {
+      id: '/_authenticated/users/$id'
       path: '/users/$id'
       fullPath: '/users/$id'
-      preLoaderRoute: typeof UsersIdImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedUsersIdImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/content/': {
-      id: '/content/'
+    '/_authenticated/content/': {
+      id: '/_authenticated/content/'
       path: '/content'
       fullPath: '/content'
-      preLoaderRoute: typeof ContentIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedContentIndexImport
+      parentRoute: typeof AuthenticatedImport
     }
-    '/users/': {
-      id: '/users/'
+    '/_authenticated/users/': {
+      id: '/_authenticated/users/'
       path: '/users'
       fullPath: '/users'
-      preLoaderRoute: typeof UsersIndexImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof AuthenticatedUsersIndexImport
+      parentRoute: typeof AuthenticatedImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface AdminRouteChildren {
-  AdminPanelRoute: typeof AdminPanelRoute
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminPanelRoute: typeof AuthenticatedAdminPanelRoute
 }
 
-const AdminRouteChildren: AdminRouteChildren = {
-  AdminPanelRoute: AdminPanelRoute,
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminPanelRoute: AuthenticatedAdminPanelRoute,
 }
 
-const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+  AuthenticatedContentIdRoute: typeof AuthenticatedContentIdRoute
+  AuthenticatedContentNewRoute: typeof AuthenticatedContentNewRoute
+  AuthenticatedUsersIdRoute: typeof AuthenticatedUsersIdRoute
+  AuthenticatedContentIndexRoute: typeof AuthenticatedContentIndexRoute
+  AuthenticatedUsersIndexRoute: typeof AuthenticatedUsersIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+  AuthenticatedContentIdRoute: AuthenticatedContentIdRoute,
+  AuthenticatedContentNewRoute: AuthenticatedContentNewRoute,
+  AuthenticatedUsersIdRoute: AuthenticatedUsersIdRoute,
+  AuthenticatedContentIndexRoute: AuthenticatedContentIndexRoute,
+  AuthenticatedUsersIndexRoute: AuthenticatedUsersIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AdminRouteWithChildren
+  '': typeof AuthenticatedAdminRouteWithChildren
   '/about': typeof AboutRoute
-  '/panel': typeof AdminPanelRoute
-  '/content/$id': typeof ContentIdRoute
-  '/content/new': typeof ContentNewRoute
-  '/users/$id': typeof UsersIdRoute
-  '/content': typeof ContentIndexRoute
-  '/users': typeof UsersIndexRoute
+  '/login': typeof LoginRoute
+  '/panel': typeof AuthenticatedAdminPanelRoute
+  '/content/$id': typeof AuthenticatedContentIdRoute
+  '/content/new': typeof AuthenticatedContentNewRoute
+  '/users/$id': typeof AuthenticatedUsersIdRoute
+  '/content': typeof AuthenticatedContentIndexRoute
+  '/users': typeof AuthenticatedUsersIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AdminRouteWithChildren
+  '': typeof AuthenticatedAdminRouteWithChildren
   '/about': typeof AboutRoute
-  '/panel': typeof AdminPanelRoute
-  '/content/$id': typeof ContentIdRoute
-  '/content/new': typeof ContentNewRoute
-  '/users/$id': typeof UsersIdRoute
-  '/content': typeof ContentIndexRoute
-  '/users': typeof UsersIndexRoute
+  '/login': typeof LoginRoute
+  '/panel': typeof AuthenticatedAdminPanelRoute
+  '/content/$id': typeof AuthenticatedContentIdRoute
+  '/content/new': typeof AuthenticatedContentNewRoute
+  '/users/$id': typeof AuthenticatedUsersIdRoute
+  '/content': typeof AuthenticatedContentIndexRoute
+  '/users': typeof AuthenticatedUsersIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/_admin': typeof AdminRouteWithChildren
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/about': typeof AboutRoute
-  '/_admin/panel': typeof AdminPanelRoute
-  '/content/$id': typeof ContentIdRoute
-  '/content/new': typeof ContentNewRoute
-  '/users/$id': typeof UsersIdRoute
-  '/content/': typeof ContentIndexRoute
-  '/users/': typeof UsersIndexRoute
+  '/login': typeof LoginRoute
+  '/_authenticated/_admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/_admin/panel': typeof AuthenticatedAdminPanelRoute
+  '/_authenticated/content/$id': typeof AuthenticatedContentIdRoute
+  '/_authenticated/content/new': typeof AuthenticatedContentNewRoute
+  '/_authenticated/users/$id': typeof AuthenticatedUsersIdRoute
+  '/_authenticated/content/': typeof AuthenticatedContentIndexRoute
+  '/_authenticated/users/': typeof AuthenticatedUsersIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -201,6 +255,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about'
+    | '/login'
     | '/panel'
     | '/content/$id'
     | '/content/new'
@@ -212,6 +267,7 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/about'
+    | '/login'
     | '/panel'
     | '/content/$id'
     | '/content/new'
@@ -221,37 +277,31 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_admin'
+    | '/_authenticated'
     | '/about'
-    | '/_admin/panel'
-    | '/content/$id'
-    | '/content/new'
-    | '/users/$id'
-    | '/content/'
-    | '/users/'
+    | '/login'
+    | '/_authenticated/_admin'
+    | '/_authenticated/_admin/panel'
+    | '/_authenticated/content/$id'
+    | '/_authenticated/content/new'
+    | '/_authenticated/users/$id'
+    | '/_authenticated/content/'
+    | '/_authenticated/users/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRouteWithChildren
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   AboutRoute: typeof AboutRoute
-  ContentIdRoute: typeof ContentIdRoute
-  ContentNewRoute: typeof ContentNewRoute
-  UsersIdRoute: typeof UsersIdRoute
-  ContentIndexRoute: typeof ContentIndexRoute
-  UsersIndexRoute: typeof UsersIndexRoute
+  LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRouteWithChildren,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   AboutRoute: AboutRoute,
-  ContentIdRoute: ContentIdRoute,
-  ContentNewRoute: ContentNewRoute,
-  UsersIdRoute: UsersIdRoute,
-  ContentIndexRoute: ContentIndexRoute,
-  UsersIndexRoute: UsersIndexRoute,
+  LoginRoute: LoginRoute,
 }
 
 export const routeTree = rootRoute
@@ -265,45 +315,61 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_admin",
+        "/_authenticated",
         "/about",
-        "/content/$id",
-        "/content/new",
-        "/users/$id",
-        "/content/",
-        "/users/"
+        "/login"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/_admin": {
-      "filePath": "_admin.tsx",
+    "/_authenticated": {
+      "filePath": "_authenticated.tsx",
       "children": [
-        "/_admin/panel"
+        "/_authenticated/_admin",
+        "/_authenticated/content/$id",
+        "/_authenticated/content/new",
+        "/_authenticated/users/$id",
+        "/_authenticated/content/",
+        "/_authenticated/users/"
       ]
     },
     "/about": {
       "filePath": "about.tsx"
     },
-    "/_admin/panel": {
-      "filePath": "_admin/panel.tsx",
-      "parent": "/_admin"
+    "/login": {
+      "filePath": "login.tsx"
     },
-    "/content/$id": {
-      "filePath": "content/$id.tsx"
+    "/_authenticated/_admin": {
+      "filePath": "_authenticated/_admin.tsx",
+      "parent": "/_authenticated",
+      "children": [
+        "/_authenticated/_admin/panel"
+      ]
     },
-    "/content/new": {
-      "filePath": "content/new.tsx"
+    "/_authenticated/_admin/panel": {
+      "filePath": "_authenticated/_admin/panel.tsx",
+      "parent": "/_authenticated/_admin"
     },
-    "/users/$id": {
-      "filePath": "users/$id.tsx"
+    "/_authenticated/content/$id": {
+      "filePath": "_authenticated/content/$id.tsx",
+      "parent": "/_authenticated"
     },
-    "/content/": {
-      "filePath": "content/index.tsx"
+    "/_authenticated/content/new": {
+      "filePath": "_authenticated/content/new.tsx",
+      "parent": "/_authenticated"
     },
-    "/users/": {
-      "filePath": "users/index.tsx"
+    "/_authenticated/users/$id": {
+      "filePath": "_authenticated/users/$id.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/content/": {
+      "filePath": "_authenticated/content/index.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/users/": {
+      "filePath": "_authenticated/users/index.tsx",
+      "parent": "/_authenticated"
     }
   }
 }
