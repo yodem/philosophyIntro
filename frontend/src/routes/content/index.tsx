@@ -38,10 +38,17 @@ function ContentComponent() {
 
     // Update URL when debounced search changes
     useEffect(() => {
-        navigate({
-            search: (prev) => ({ ...prev, ...search })
-        });
-    }, [debouncedSearch, navigate, search]);
+        // Only navigate if the debounced search is different from the current URL search
+        if (debouncedSearch !== search.search) {
+            navigate({
+                search: (prev) => ({
+                    ...prev,
+                    search: debouncedSearch,
+                    page: 1 // Reset to first page when search changes
+                })
+            });
+        }
+    }, [debouncedSearch, navigate, search.search]);
 
     const handleSearchChange = (searchQuery: string) => {
         setSearchInput(searchQuery);

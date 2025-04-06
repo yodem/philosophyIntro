@@ -3,7 +3,6 @@ import avatar from '@/assets/avatar_profile.jpg'
 // import { Github, Twitter, Linkedin, Mail } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { LABELS } from '@/constants'
-import { useNavigate } from '@tanstack/react-router'
 
 // const socialLinks = [
 //     { icon: Github, href: LABELS.SOCIAL_URLS.GITHUB, label: LABELS.SOCIAL_LINKS.GITHUB },
@@ -13,7 +12,6 @@ import { useNavigate } from '@tanstack/react-router'
 // ]
 
 function AboutDisplay() {
-    const navigate = useNavigate()
     return (
         <section className="py-16 px-4 bg-slate-50 dark:bg-slate-900/50">
             <div className="max-w-7xl mx-auto">
@@ -79,7 +77,7 @@ function AboutDisplay() {
                                 {LABELS.INTERACTIVE_CONTENT}
                             </p>
                             <div className="pt-4">
-                                <Button onClick={() => navigate({ to: "/philosophers" })} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90">
+                                <Button onClick={() => { }} className="bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:opacity-90">
                                     {LABELS.LEARN_MORE}
                                 </Button>
                             </div>

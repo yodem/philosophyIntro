@@ -7,7 +7,6 @@ import { ContentModule } from './content/content.module';
 import { Content } from './content/entities/content.entity';
 import { ContentRelationship } from './content/entities/contentRelationship.entity';
 import { SeederModule } from './seeder/seeder.module';
-import { SeederService } from './seeder/seeder.service';
 
 @Module({
   imports: [
@@ -37,10 +36,10 @@ import { SeederService } from './seeder/seeder.service';
 export class AppModule {
   private readonly logger = new Logger(AppModule.name);
 
-  constructor(private seederService: SeederService) {}
+  // constructor(private seederService: SeederService) {}
 
-  async onModuleInit() {
-    const res = await this.seederService.seed();
-    this.logger.debug(res);
-  }
+  // async onModuleInit() {
+  //   const res = await this.seederService.seed();
+  //   this.logger.debug(res);
+  // }
 }
