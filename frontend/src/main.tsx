@@ -13,7 +13,7 @@ export interface RouterContext {
   auth: AuthContextType;
 }
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 // Create router with context
 const router = createRouter({

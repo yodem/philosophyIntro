@@ -1,14 +1,10 @@
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
-import { Box, AppBar, Toolbar, Typography, Container, Paper, CircularProgress, Button } from '@mui/material';
+import { Box, Typography, CircularProgress } from '@mui/material';
+import { useAuth } from '@/context/AuthContext';
 
 export const Route = createFileRoute('/_authenticated')({
-    beforeLoad: ({ context, location }) => {
+    beforeLoad: async ({ context, location }) => {
         const { auth } = context;
-
-        if (auth.isLoading) {
-            // Let component handle loading state
-            return;
-        }
 
         if (!auth.isAuthenticated) {
             throw redirect({
@@ -23,8 +19,7 @@ export const Route = createFileRoute('/_authenticated')({
 });
 
 function AuthenticatedLayout() {
-    const { auth } = Route.useRouteContext();
-    const { isLoading, logout } = auth;
+    const { isAuthenticated, isLoading } = useAuth();
 
     if (isLoading) {
         return (
@@ -35,24 +30,11 @@ function AuthenticatedLayout() {
         );
     }
 
-    return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                        Philosophy App
-                    </Typography>
-                    <Box sx={{ display: 'flex', gap: 2 }}>
-                        <Button color="inherit" onClick={logout}>Logout</Button>
-                    </Box>
-                </Toolbar>
-            </AppBar>
+    if (!isAuthenticated) {
+        return null; // Prevent rendering if not authenticated
+    }
 
-            <Container component="main" sx={{ mt: 4, mb: 4, flexGrow: 1 }}>
-                <Paper elevation={3} sx={{ p: 3 }}>
-                    <Outlet />
-                </Paper>
-            </Container>
-        </Box>
+    return (
+        <Outlet />
     );
 }
