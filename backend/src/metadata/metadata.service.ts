@@ -1,5 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { ContentType } from '../content/entities/content.entity';
+import { MetadataSchema } from './entities/metadata-schema.entity';
 
 export interface MetadataDefinition {
   key: string;
@@ -14,7 +17,7 @@ export interface ContentTypeInfo {
 }
 
 @Injectable()
-export class MetadataService {
+export class MetadataService implements OnModuleInit {
   // Map content types to their display names
   private contentTypeDisplayNames: Record<ContentType, string> = {
     [ContentType.PHILOSOPHER]: 'Philosopher',
@@ -22,63 +25,129 @@ export class MetadataService {
     [ContentType.TERM]: 'Term',
   };
 
-  // Define metadata schemas for each content type
-  private metadataSchemas: Record<ContentType, MetadataDefinition[]> = {
-    [ContentType.PHILOSOPHER]: [
+  // Cached schemas
+  private cachedSchemas: Record<ContentType, MetadataDefinition[]> = {
+    [ContentType.PHILOSOPHER]: [],
+    [ContentType.QUESTION]: [],
+    [ContentType.TERM]: [],
+  };
+
+  constructor(
+    @InjectRepository(MetadataSchema)
+    private metadataSchemaRepo: Repository<MetadataSchema>,
+  ) {}
+
+  // Initialize default schemas if none exist
+  async onModuleInit() {
+    const count = await this.metadataSchemaRepo.count();
+    if (count === 0) {
+      await this.initializeDefaultSchemas();
+    }
+
+    // Load schemas into cache
+    await this.loadSchemasIntoCache();
+  }
+
+  // Load all schemas from database into memory cache
+  private async loadSchemasIntoCache() {
+    const allSchemas = await this.metadataSchemaRepo.find({
+      order: { contentType: 'ASC', displayOrder: 'ASC' },
+    });
+
+    // Initialize empty arrays for each content type
+    for (const type of Object.values(ContentType)) {
+      this.cachedSchemas[type] = [];
+    }
+
+    // Group schemas by content type
+    for (const schema of allSchemas) {
+      this.cachedSchemas[schema.contentType].push({
+        key: schema.key,
+        displayName: schema.displayName,
+        dataType: schema.dataType,
+        isRequired: schema.isRequired,
+      });
+    }
+  }
+
+  // Initialize default schemas
+  private async initializeDefaultSchemas() {
+    const defaultSchemas = [
+      // Philosopher schemas
       {
+        contentType: ContentType.PHILOSOPHER,
         key: 'birthDate',
         displayName: 'Birth Date',
-        dataType: 'date',
+        dataType: 'date' as const,
         isRequired: false,
+        displayOrder: 0,
       },
       {
+        contentType: ContentType.PHILOSOPHER,
         key: 'deathDate',
         displayName: 'Death Date',
-        dataType: 'date',
+        dataType: 'date' as const,
         isRequired: false,
+        displayOrder: 1,
       },
       {
+        contentType: ContentType.PHILOSOPHER,
         key: 'era',
         displayName: 'Era',
-        dataType: 'string',
+        dataType: 'string' as const,
         isRequired: false,
+        displayOrder: 2,
       },
       {
+        contentType: ContentType.PHILOSOPHER,
         key: 'nationality',
         displayName: 'Nationality',
-        dataType: 'string',
+        dataType: 'string' as const,
         isRequired: false,
+        displayOrder: 3,
       },
-    ],
-    [ContentType.QUESTION]: [
+
+      // Question schemas
       {
+        contentType: ContentType.QUESTION,
         key: 'category',
         displayName: 'Category',
-        dataType: 'string',
+        dataType: 'string' as const,
         isRequired: false,
+        displayOrder: 0,
       },
       {
+        contentType: ContentType.QUESTION,
         key: 'difficulty',
         displayName: 'Difficulty Level',
-        dataType: 'number',
+        dataType: 'number' as const,
         isRequired: false,
+        displayOrder: 1,
       },
-    ],
-    [ContentType.TERM]: [
+
+      // Term schemas
       {
+        contentType: ContentType.TERM,
         key: 'origin',
         displayName: 'Origin',
-        dataType: 'string',
+        dataType: 'string' as const,
         isRequired: false,
+        displayOrder: 0,
       },
       {
+        contentType: ContentType.TERM,
         key: 'firstUse',
         displayName: 'First Use',
-        dataType: 'date',
+        dataType: 'date' as const,
         isRequired: false,
+        displayOrder: 1,
       },
-    ],
-  };
+    ];
+
+    await this.metadataSchemaRepo.save(
+      defaultSchemas.map((schema) => this.metadataSchemaRepo.create(schema)),
+    );
+  }
 
   // Get all content types with their display names
   getAllContentTypes(): ContentTypeInfo[] {
@@ -89,14 +158,36 @@ export class MetadataService {
   }
 
   // Get metadata schema for a specific content type
-  getMetadataSchema(contentType: ContentType): MetadataDefinition[] {
-    const schema = this.metadataSchemas[contentType];
-    if (!schema) {
+  async getMetadataSchema(
+    contentType: ContentType,
+  ): Promise<MetadataDefinition[]> {
+    // If schema is already in cache, return it
+    if (this.cachedSchemas[contentType]) {
+      return this.cachedSchemas[contentType];
+    }
+
+    // Otherwise, fetch from database
+    const schemas = await this.metadataSchemaRepo.find({
+      where: { contentType },
+      order: { displayOrder: 'ASC' },
+    });
+
+    if (!schemas.length) {
       throw new NotFoundException(
         `Schema not found for content type: ${contentType}`,
       );
     }
-    return schema;
+
+    // Convert to definition format and cache
+    const definitions = schemas.map((schema) => ({
+      key: schema.key,
+      displayName: schema.displayName,
+      dataType: schema.dataType,
+      isRequired: schema.isRequired,
+    }));
+
+    this.cachedSchemas[contentType] = definitions;
+    return definitions;
   }
 
   // Get display name for a content type
@@ -105,11 +196,11 @@ export class MetadataService {
   }
 
   // Validate metadata against schema
-  validateMetadata(
+  async validateMetadata(
     contentType: ContentType,
     metadata: Record<string, any>,
-  ): { isValid: boolean; errors: string[] } {
-    const schema = this.metadataSchemas[contentType];
+  ): Promise<{ isValid: boolean; errors: string[] }> {
+    const schema = await this.getMetadataSchema(contentType);
     const errors: string[] = [];
 
     // Check for required fields
@@ -155,19 +246,114 @@ export class MetadataService {
   }
 
   // Get metadata keys for a content type
-  getMetadataKeys(contentType?: ContentType): string[] {
+  async getMetadataKeys(contentType?: ContentType): Promise<string[]> {
     if (!contentType) {
-      return Object.values(ContentType)
-        .flatMap((type) => this.metadataSchemas[type])
-        .map((def) => def.key)
-        .filter((key, index, self) => self.indexOf(key) === index); // Remove duplicates
+      // Get all keys from all content types
+      const allSchemas = await this.metadataSchemaRepo.find();
+      return [...new Set(allSchemas.map((schema) => schema.key))];
     }
 
-    const schema = this.metadataSchemas[contentType];
-    if (!schema) {
-      return [];
-    }
-
+    const schema = await this.getMetadataSchema(contentType);
     return schema.map((def) => def.key);
+  }
+
+  // Create or update a metadata schema
+  async upsertMetadataSchema(
+    contentType: ContentType,
+    schemaDefinition: Omit<MetadataSchema, 'id' | 'contentType'> & {
+      id?: string;
+    },
+  ): Promise<MetadataSchema> {
+    if (schemaDefinition.id) {
+      // Update existing schema
+      await this.metadataSchemaRepo.update(schemaDefinition.id, {
+        ...schemaDefinition,
+      });
+
+      const updated = await this.metadataSchemaRepo.findOneBy({
+        id: schemaDefinition.id,
+      });
+      if (!updated) {
+        throw new NotFoundException(
+          `Schema with ID ${schemaDefinition.id} not found`,
+        );
+      }
+
+      // Invalidate cache
+      delete this.cachedSchemas[contentType];
+
+      return updated;
+    } else {
+      // Create new schema
+      const newSchema = this.metadataSchemaRepo.create({
+        ...schemaDefinition,
+        contentType,
+      });
+
+      const saved = await this.metadataSchemaRepo.save(newSchema);
+
+      // Invalidate cache
+      delete this.cachedSchemas[contentType];
+
+      return saved;
+    }
+  }
+
+  // Delete a metadata schema
+  async deleteMetadataSchema(id: string): Promise<void> {
+    const schema = await this.metadataSchemaRepo.findOneBy({ id });
+    if (!schema) {
+      throw new NotFoundException(`Schema with ID ${id} not found`);
+    }
+
+    await this.metadataSchemaRepo.remove(schema);
+
+    // Invalidate cache
+    delete this.cachedSchemas[schema.contentType];
+  }
+
+  // Helper method to convert metadata entries to JSON format
+  convertMetadataEntriesToJson(
+    entries: { key: string; value: string }[],
+  ): Record<string, any> {
+    if (!entries || entries.length === 0) return {};
+
+    return entries.reduce(
+      (result, entry) => {
+        // Try to parse numbers and dates
+        let parsedValue: any = entry.value;
+
+        // Parse numbers
+        if (!isNaN(Number(entry.value)) && entry.value.trim() !== '') {
+          parsedValue = Number(entry.value);
+        }
+        // Parse dates based on schema definition
+        else if (this.isDateValue(entry.key, entry.value)) {
+          // Keep as string for date values, frontend will handle formatting
+        }
+
+        result[entry.key] = parsedValue;
+        return result;
+      },
+      {} as Record<string, any>,
+    );
+  }
+
+  // Check if a field is defined as a date type in any schema
+  private isDateValue(key: string, value: string): boolean {
+    // Check cached schemas first
+    for (const type of Object.values(ContentType)) {
+      const schema = this.cachedSchemas[type];
+      if (schema) {
+        const definition = schema.find((def) => def.key === key);
+        if (definition?.dataType === 'date') {
+          // Simple date format validation
+          return /^\d{4}(-\d{2})?(-\d{2})?$/.test(value);
+        }
+      }
+    }
+
+    // If not found in cache, assume it's not a date
+    return false;
   }
 }

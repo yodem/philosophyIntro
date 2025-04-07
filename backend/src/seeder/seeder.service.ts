@@ -91,10 +91,10 @@ export class SeederService {
       } else {
         philosopher = this.contentRepository.create({
           id: philData.id,
-          type: ContentType.PHILOSOPHER,
           title: philData.title,
           content: philData.content,
           description: philData.topicalDescription,
+          type: ContentType.PHILOSOPHER,
           metadata: metadata,
           full_picture: philData.full_picture
             ? `${IMAGE_PREFIX}${philData.full_picture}`
@@ -104,7 +104,11 @@ export class SeederService {
             : undefined,
         });
       }
-      philosophersToSave.push(philosopher);
+
+      // Ensure philosopher is not null before pushing
+      if (philosopher) {
+        philosophersToSave.push(philosopher);
+      }
     }
     await this.contentRepository.save(philosophersToSave);
     this.logger.log(`Saved ${philosophersToSave.length} philosophers.`);
@@ -136,10 +140,10 @@ export class SeederService {
       } else {
         term = this.contentRepository.create({
           id: termData.id,
-          type: ContentType.TERM,
           title: termData.name,
           content: termData.content,
           description: termData.description,
+          type: ContentType.TERM,
           metadata: metadata,
           full_picture: termData.full_picture
             ? `${IMAGE_PREFIX}${termData.full_picture}`
@@ -149,7 +153,11 @@ export class SeederService {
             : undefined,
         });
       }
-      termsToSave.push(term);
+
+      // Ensure term is not null before pushing
+      if (term) {
+        termsToSave.push(term);
+      }
     }
     await this.contentRepository.save(termsToSave);
     this.logger.log(`Saved ${termsToSave.length} terms.`);

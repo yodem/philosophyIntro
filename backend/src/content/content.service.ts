@@ -5,15 +5,16 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, FindManyOptions, ILike, In } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Content, ContentType } from './entities/content.entity';
 import { ContentRelationship } from './entities/contentRelationship.entity';
+import { ContentMetadata } from './entities/content-metadata.entity';
 import { CreateContentDto } from './dto/create-content.dto';
 import { LinkContentsDto } from './dto/link-contents.dto';
 import { PaginatedResponse } from '../types/pagination.types';
-import { UpdateContentDto } from '@/content/dto/update-content.dto';
-import { mapContentToRelations } from '@/utils';
-import { MetadataService } from '@/metadata/metadata.service';
+import { UpdateContentDto } from './dto/update-content.dto';
+import { mapContentToRelations } from '../utils';
+import { MetadataService } from '../metadata/metadata.service';
 
 @Injectable()
 export class ContentService {
@@ -24,6 +25,8 @@ export class ContentService {
     private readonly contentRepo: Repository<Content>,
     @InjectRepository(ContentRelationship)
     private readonly relRepo: Repository<ContentRelationship>,
+    @InjectRepository(ContentMetadata)
+    private readonly metadataRepo: Repository<ContentMetadata>,
     private readonly metadataService: MetadataService,
   ) {}
 
@@ -40,7 +43,19 @@ export class ContentService {
         delete (dto.metadata as any).description;
       }
 
-      return await this.contentRepo.save(this.contentRepo.create(dto));
+      // First save the content without metadata
+      const { metadata, ...contentData } = dto;
+      const createdContent = await this.contentRepo.save(
+        this.contentRepo.create(contentData),
+      );
+
+      // Then add metadata entries if any
+      if (metadata && Object.keys(metadata).length > 0) {
+        await this.updateMetadataEntries(createdContent.id, metadata);
+      }
+
+      // Return the full content with metadata
+      return this.findOne(createdContent.id);
     } catch (error) {
       this.logger.error('Failed to create content', error.stack);
       throw new InternalServerErrorException('Failed to create content');
@@ -57,22 +72,42 @@ export class ContentService {
       `Finding all content - Page: ${page}, Limit: ${limit}, Search: ${search}, Type: ${type}`,
     );
     try {
-      const options: FindManyOptions<Content> = {
-        skip: (page - 1) * limit,
-        take: limit,
-        order: { title: 'ASC' },
-      };
+      const queryBuilder = this.contentRepo
+        .createQueryBuilder('content')
+        .leftJoinAndSelect('content.metadataEntries', 'metadata')
+        .skip((page - 1) * limit)
+        .take(limit)
+        .orderBy('content.title', 'ASC');
 
       if (search) {
-        options.where = { title: ILike(`%${search}%`) };
+        queryBuilder.andWhere('content.title ILIKE :search', {
+          search: `%${search}%`,
+        });
       }
 
       if (type) {
-        options.where = { ...options.where, type };
+        queryBuilder.andWhere('content.type = :type', { type });
       }
 
-      const [items, total] = await this.contentRepo.findAndCount(options);
-      return { items, total, page, limit };
+      const [items, total] = await queryBuilder.getManyAndCount();
+
+      // Convert metadata entries to JSON structure
+      const itemsWithMetadata = items.map((item) => {
+        if (item.metadataEntries?.length) {
+          return {
+            ...item,
+            metadata: this.metadataService.convertMetadataEntriesToJson(
+              item.metadataEntries.map((entry) => ({
+                key: entry.key,
+                value: entry.value,
+              })),
+            ),
+          };
+        }
+        return item;
+      });
+
+      return { items: itemsWithMetadata, total, page, limit };
     } catch (error) {
       this.logger.error('Failed to fetch content list', error.stack);
       throw new InternalServerErrorException('Failed to fetch content list');
@@ -84,7 +119,11 @@ export class ContentService {
   ): Promise<Content & { contentTypeDisplayName?: string }> {
     this.logger.log(`Finding content with id: ${id}`);
     try {
-      const content = await this.contentRepo.findOneBy({ id });
+      const content = await this.contentRepo.findOne({
+        where: { id },
+        relations: ['metadataEntries'],
+      });
+
       if (!content) {
         throw new NotFoundException(`Content with ID ${id} not found`);
       }
@@ -95,9 +134,18 @@ export class ContentService {
         relations: ['content2'],
       });
 
-      // Enhance content with metadata information
+      // Convert metadata entries to a JSON object
+      const metadata = this.metadataService.convertMetadataEntriesToJson(
+        content.metadataEntries?.map((entry) => ({
+          key: entry.key,
+          value: entry.value,
+        })) || [],
+      );
+
+      // Enhance content with metadata and relations
+      const contentWithMetadata = { ...content, metadata };
       const contentWithRelations = mapContentToRelations(
-        content,
+        contentWithMetadata,
         relations.map((r) => r.content2),
       );
 
@@ -120,7 +168,22 @@ export class ContentService {
   async update(id: string, dto: UpdateContentDto): Promise<Content> {
     this.logger.log(`Updating content with id: ${id}`);
     try {
-      const content = await this.findOne(id);
+      const content = await this.contentRepo.findOne({
+        where: { id },
+        relations: ['metadataEntries'],
+      });
+
+      if (!content) {
+        throw new NotFoundException(`Content with ID ${id} not found`);
+      }
+
+      // Handle metadata separately
+      const { metadata, ...contentData } = dto;
+
+      // Update metadata entries if provided
+      if (metadata) {
+        await this.updateMetadataEntries(id, metadata);
+      }
 
       // Collect all related content IDs from various relationship types
       const relatedIds: string[] = [];
@@ -187,8 +250,11 @@ export class ContentService {
       }
 
       // Update the content with the remaining properties
-      Object.assign(content, dto);
-      return await this.contentRepo.save(content);
+      Object.assign(content, contentData);
+      await this.contentRepo.save(content);
+
+      // Return the updated content with all its data
+      return this.findOne(id);
     } catch (error) {
       if (error instanceof NotFoundException) throw error;
       this.logger.error(`Failed to update content with ID ${id}`, error.stack);
@@ -201,9 +267,16 @@ export class ContentService {
   async remove(id: string): Promise<void> {
     this.logger.log(`Removing content with id: ${id}`);
     try {
-      const content = await this.findOne(id);
+      const content = await this.contentRepo.findOneBy({ id });
+      if (!content) {
+        throw new NotFoundException(`Content with ID ${id} not found`);
+      }
+
+      // Remove all relationships
       await this.relRepo.delete({ content1: { id } });
       await this.relRepo.delete({ content2: { id } });
+
+      // Remove content (cascading will remove metadata entries)
       await this.contentRepo.remove(content);
     } catch (error) {
       if (error instanceof NotFoundException) throw error;
@@ -211,6 +284,40 @@ export class ContentService {
       throw new InternalServerErrorException(
         `Failed to remove content with ID ${id}`,
       );
+    }
+  }
+
+  // Helper method to update metadata entries
+  private async updateMetadataEntries(
+    contentId: string,
+    metadata: Record<string, any>,
+  ): Promise<void> {
+    // Find existing content
+    const content = await this.contentRepo.findOne({
+      where: { id: contentId },
+      relations: ['metadataEntries'],
+    });
+
+    if (!content) {
+      throw new NotFoundException(`Content with ID ${contentId} not found`);
+    }
+
+    // Remove all existing metadata entries
+    if (content.metadataEntries?.length) {
+      await this.metadataRepo.remove(content.metadataEntries);
+    }
+
+    // Create new metadata entries
+    const metadataEntries = Object.entries(metadata).map(([key, value]) =>
+      this.metadataRepo.create({
+        key,
+        value: String(value), // Convert all values to string
+        content: { id: contentId },
+      }),
+    );
+
+    if (metadataEntries.length) {
+      await this.metadataRepo.save(metadataEntries);
     }
   }
 

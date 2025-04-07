@@ -79,4 +79,14 @@ export const contentApi = {
     const params = type ? { type } : undefined;
     return await api.get("content/metadata-keys", { params });
   },
+
+  /**
+   * Update metadata for a content item
+   */
+  updateMetadata: async (
+    id: string,
+    metadata: Record<string, unknown>
+  ): Promise<Content> => {
+    return await api.patch(`content/${id}/metadata`, metadata);
+  },
 };

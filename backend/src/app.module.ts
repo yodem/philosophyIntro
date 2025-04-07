@@ -6,6 +6,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ContentModule } from './content/content.module';
+import { MetadataModule } from './metadata/metadata.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { ContentModule } from './content/content.module';
         username: configService.get('DATABASE_USERNAME', 'postgres'),
         password: configService.get('DATABASE_PASSWORD', 'password1'),
         database: configService.get('DATABASE_NAME', 'philosophy'),
+        // migrations: ['src/migrations/*{.ts,.js}'],
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
         synchronize: true,
       }),
@@ -29,6 +31,7 @@ import { ContentModule } from './content/content.module';
     AuthModule,
     UsersModule,
     ContentModule,
+    MetadataModule,
   ],
   providers: [
     {

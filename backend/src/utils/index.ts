@@ -1,31 +1,32 @@
 import { Content } from '@/content/entities/content.entity';
-import { PopulatedContent } from '@/types';
 
-export const mapContentToRelations = (
-  content: Content,
-  relations: Content[],
-): PopulatedContent => {
-  // Group relations by type for more efficient access
-  const mappedRelations = relations.reduce<Record<string, Content[]>>(
-    (acc, relation) => {
-      if (!relation.type) return acc; // Skip if relation.type is undefined or null
+// Map a content entity to its related content items
+export function mapContentToRelations(
+  content: Content & { metadata?: Record<string, any> },
+  relatedContent: Content[],
+): Content & {
+  metadata?: Record<string, any>;
+  [key: string]: any; // Explicit index signature
+} {
+  const result = { ...content };
 
-      // Only include id and title for related entities
-      const simplifiedRelation = {
-        id: relation.id,
-        title: relation.title,
-        type: relation.type,
-      };
-
-      return {
-        ...acc,
-        [relation.type]: [
-          ...(acc[relation.type] || []),
-          simplifiedRelation as Content,
-        ],
-      };
+  // Group related content by type
+  const groupedByType = relatedContent.reduce(
+    (acc, item) => {
+      const type = item.type;
+      if (!acc[type]) {
+        acc[type] = [];
+      }
+      acc[type].push(item);
+      return acc;
     },
-    {},
+    {} as Record<string, Content[]>,
   );
-  return { ...content, ...mappedRelations };
-};
+
+  // Add grouped relations to result
+  Object.entries(groupedByType).forEach(([type, items]) => {
+    result[type as keyof typeof result] = items as any; // Explicit cast to avoid type mismatch
+  });
+
+  return result;
+}

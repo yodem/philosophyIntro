@@ -174,7 +174,9 @@ export class ContentController {
   @ApiResponse({ status: 404, description: 'Content type not found' })
   @Public()
   @Get('types/:type/metadata-schema')
-  getMetadataSchema(@Param('type') type: ContentType): MetadataDefinition[] {
+  async getMetadataSchema(
+    @Param('type') type: ContentType,
+  ): Promise<MetadataDefinition[]> {
     this.logger.log(`Getting metadata schema for content type: ${type}`);
     return this.metadataService.getMetadataSchema(type);
   }
@@ -189,7 +191,7 @@ export class ContentController {
   @ApiResponse({ status: 200, description: 'Returns metadata keys' })
   @Public()
   @Get('metadata-keys')
-  getMetadataKeys(@Query('type') type?: ContentType): string[] {
+  async getMetadataKeys(@Query('type') type?: ContentType): Promise<string[]> {
     this.logger.log(`Getting metadata keys for ${type || 'all types'}`);
     return this.metadataService.getMetadataKeys(type);
   }
@@ -210,7 +212,7 @@ export class ContentController {
     const content = await this.contentService.findOne(id);
 
     // Validate metadata against schema
-    const validation = this.metadataService.validateMetadata(
+    const validation = await this.metadataService.validateMetadata(
       content.type,
       metadata,
     );
