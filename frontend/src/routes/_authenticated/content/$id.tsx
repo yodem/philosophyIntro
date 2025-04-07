@@ -28,7 +28,7 @@ export const contentQueryOptions = (
 ) =>
   queryOptions({
     queryKey: ['content', contentId, contentType],
-    queryFn: () => contentApi.getOne(contentId, contentType),
+    queryFn: () => contentApi.getOne(contentId),
   })
 
 export const Route = createFileRoute('/_authenticated/content/$id')({

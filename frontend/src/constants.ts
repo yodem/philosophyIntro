@@ -110,3 +110,5 @@ export const TEXTS = {
   ABOUT: "אודות",
   ABOUT_DESCRIPTION: "תיאור אודות",
 } as const;
+
+export const AUTH_TOKEN = "auth_token";

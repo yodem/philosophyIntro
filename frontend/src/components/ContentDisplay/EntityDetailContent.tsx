@@ -14,7 +14,7 @@ export function EntityDetailContent({ entity, setIsEditable }: EntityDetailConte
         <Paper elevation={0} sx={{ p: 3 }}>
             <EntityDetailHeader
                 title={entity.title}
-                contentType={entity.type}
+                contentType={entity.contentTypeDisplayName}
                 setIsEditable={setIsEditable}
             />
 

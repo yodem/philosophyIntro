@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from "react";
 import { User, authApi } from "@/api/authApi";
 import { queryClient } from "@/main";
+import { AUTH_TOKEN } from "@/constants";
 
 export interface AuthContextType {
     user: User | null;
@@ -65,7 +66,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setIsLoading(true);
         try {
             const data = await authApi.login({ username, password });
-            localStorage.setItem("auth_token", data.access_token);
+            localStorage.setItem(AUTH_TOKEN, data.access_token);
             localStorage.setItem("user", JSON.stringify(data.user));
             setUser(data.user);
             queryClient.invalidateQueries({ queryKey: ['user'] });

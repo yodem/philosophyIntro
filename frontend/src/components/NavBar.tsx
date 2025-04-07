@@ -1,5 +1,5 @@
 import { RouterButton } from "@/components/routerComponents/RouterButton";
-import { AppBar, Toolbar, IconButton, Box, Button, Typography, Avatar } from "@mui/material";
+import { AppBar, Toolbar, IconButton, Box, Button, Typography, Avatar, Menu, MenuItem } from "@mui/material";
 import { useTheme } from '../contexts/ThemeContext';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -7,6 +7,9 @@ import { useNavigate, useLocation } from "@tanstack/react-router";
 import philosopherIcon from "@/assets/philosopher.png";
 import { ContentTypes } from "@/types";
 import { useAuth } from "@/context/AuthContext";
+import { useState } from "react";
+import { AUTH_TOKEN } from "@/constants";
+import { useSnackbar } from 'notistack';
 
 const NavBar = () => {
     const { mode, toggleMode } = useTheme();
@@ -14,10 +17,36 @@ const NavBar = () => {
     const location = useLocation();
 
     const { user, isAuthenticated, logout } = useAuth();
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const { enqueueSnackbar } = useSnackbar();
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     const handleLogout = async () => {
         await logout();
         navigate({ to: "/login", search: { redirect: location.pathname } });
+        enqueueSnackbar('התנתקת בהצלחה', { variant: 'success' });
+    };
+
+    const handleCopyToken = () => {
+        const accessToken = localStorage.getItem(AUTH_TOKEN)
+        if (accessToken) {
+            navigator.clipboard.writeText(accessToken);
+            enqueueSnackbar('הטוקן הועתק בהצלחה', { variant: 'success' });
+            handleClose();
+        }
+    };
+
+    const handleLoginClick = () => {
+        navigate({ to: "/login", search: { redirect: location.pathname } });
+        enqueueSnackbar('נא התחבר', { variant: 'info' });
     };
 
     return (
@@ -39,20 +68,32 @@ const NavBar = () => {
 
                 {isAuthenticated ? (
                     <Box sx={{ display: 'flex', alignItems: 'center', ml: 2 }}>
-                        <Avatar sx={{ width: 32, height: 32, mr: 1, backgroundColor: 'primary.dark' }}>
+                        <Avatar
+                            sx={{ width: 32, height: 32, mr: 1, backgroundColor: 'primary.dark', cursor: 'pointer' }}
+                            onClick={handleClick}
+                        >
                             {user?.username.charAt(0).toUpperCase()}
                         </Avatar>
-                        <Typography variant="body1" sx={{ mr: 1 }}>
+                        <Typography variant="body1" sx={{ mr: 1, cursor: 'pointer' }} onClick={handleClick}>
                             {user?.username}
                         </Typography>
-                        <Button color="inherit" onClick={handleLogout}>
-                            התנתק
-                        </Button>
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            <MenuItem onClick={handleCopyToken}>העתק טוקן</MenuItem>
+                            <MenuItem onClick={handleLogout}>התנתק</MenuItem>
+                        </Menu>
                     </Box>
                 ) : (
                     <Button
                         color="inherit"
-                        onClick={() => navigate({ to: "/login", search: { redirect: location.pathname } })}
+                        onClick={handleLoginClick}
                     >
                         התחבר
                     </Button>

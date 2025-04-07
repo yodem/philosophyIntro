@@ -11,8 +11,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 function RootComponent() {
   return (
     <React.Fragment>
-      <NavBar />
       <SnackbarProvider maxSnack={3}>
+        <NavBar />
         <Outlet />
       </SnackbarProvider>
     </React.Fragment>

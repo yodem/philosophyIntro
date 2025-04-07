@@ -18,6 +18,7 @@ export interface Content {
   type: ContentTypes;
   full_picture?: string;
   description_picture?: string;
+  contentTypeDisplayName: string;
   content?: string;
   metadata?: Record<string, unknown>;
 }
