@@ -1,28 +1,30 @@
-import { Box, Typography, Button, Divider } from '@mui/material';
-import { Edit } from 'lucide-react';
+import { Box, Typography, IconButton, Tooltip } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface EntityDetailHeaderProps {
     title: string;
+    contentType?: string;
     setIsEditable: (editable: boolean) => void;
 }
 
-export function EntityDetailHeader({ title, setIsEditable }: EntityDetailHeaderProps) {
+export function EntityDetailHeader({ title, contentType, setIsEditable }: EntityDetailHeaderProps) {
     return (
-        <Box sx={{ mb: 4 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1 }}>
-                <Typography variant="h4" component="h1">
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
+            <Box>
+                <Typography variant="h4" component="h1" gutterBottom>
                     {title}
                 </Typography>
-                <Button
-                    variant="text"
-                    startIcon={<Edit size={16} />}
-                    onClick={() => setIsEditable(true)}
-                    size='large'
-                >
-                    עריכה
-                </Button>
+                {contentType && (
+                    <Typography variant="subtitle1" color="text.secondary">
+                        {contentType}
+                    </Typography>
+                )}
             </Box>
-            <Divider sx={{ my: 2 }} />
+            <Tooltip title="ערוך">
+                <IconButton onClick={() => setIsEditable(true)} aria-label="edit">
+                    <EditIcon />
+                </IconButton>
+            </Tooltip>
         </Box>
     );
 }

@@ -1,10 +1,10 @@
-import { Content, ContentWithRelations } from "@/types";
+import { ContentWithRelations } from "@/types";
 
-export type FormInputs = ContentWithRelations;
+export type RelationType = "philosopher" | "question" | "term";
 
 export interface RelationConfig {
-  name: keyof Pick<FormInputs, "philosopher" | "question" | "term">;
+  name: RelationType;
   label: string;
-  options: Content[];
+  options: ContentWithRelations[]; // Replace with your ContentWithRelations type
   baseRoute: string;
 }

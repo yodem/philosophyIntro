@@ -5,9 +5,14 @@ import {
   IsEnum,
   IsObject,
   IsArray,
-  IsUUID,
 } from 'class-validator';
 import { ContentType } from '../entities/content.entity';
+
+interface RelatedContent {
+  id: string;
+  title: string;
+  type: string;
+}
 
 export class UpdateContentDto {
   @ApiPropertyOptional({
@@ -17,6 +22,14 @@ export class UpdateContentDto {
   @IsOptional()
   @IsString()
   title?: string;
+
+  @ApiPropertyOptional({
+    description: 'Updated content of the content',
+    example: '<p>Some HTML content</p>',
+  })
+  @IsOptional()
+  @IsString()
+  content?: string;
 
   @ApiPropertyOptional({
     description: 'Updated type of the content',
@@ -44,15 +57,53 @@ export class UpdateContentDto {
   metadata?: Record<string, any>;
 
   @ApiPropertyOptional({
-    description: 'IDs of related content to link',
-    type: [String],
+    description: 'Updated URL for the full picture',
+    example: 'https://example.com/full.jpg',
+  })
+  @IsOptional()
+  @IsString()
+  full_picture?: string;
+
+  @ApiPropertyOptional({
+    description: 'Updated URL for the description picture',
+    example: 'https://example.com/description.jpg',
+  })
+  @IsOptional()
+  @IsString()
+  description_picture?: string;
+
+  @ApiPropertyOptional({
+    description: 'Updated list of philosophers',
+    type: [Object],
     example: [
-      '123e4567-e89b-12d3-a456-426614174000',
-      '123e4567-e89b-12d3-a456-426614174001',
+      { id: '123', title: 'Philosopher 1', type: 'philosopher' },
+      { id: '456', title: 'Philosopher 2', type: 'philosopher' },
     ],
   })
   @IsOptional()
   @IsArray()
-  @IsUUID(4, { each: true })
-  relatedContentIds?: string[];
+  philosopher?: RelatedContent[];
+
+  @ApiPropertyOptional({
+    description: 'Updated list of terms',
+    type: [Object],
+    example: [
+      { id: '789', title: 'Term 1', type: 'term' },
+      { id: '101', title: 'Term 2', type: 'term' },
+    ],
+  })
+  @IsOptional()
+  @IsArray()
+  term?: RelatedContent[];
+  @ApiPropertyOptional({
+    description: 'Updated list of questions',
+    type: [Object],
+    example: [
+      { id: '789', title: 'Term 1', type: 'question' },
+      { id: '101', title: 'Term 2', type: 'question' },
+    ],
+  })
+  @IsOptional()
+  @IsArray()
+  question?: RelatedContent[];
 }

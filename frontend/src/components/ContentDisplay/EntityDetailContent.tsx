@@ -1,18 +1,22 @@
 import { Box, Typography, Paper, Grid, Divider } from '@mui/material';
-import { Content } from '@/types';
 import RelatedEntitiesList from '../ResourceDislpay/RelatedEntitiesList';
-import { MetadataDisplay } from '../ResourceDislpay/MetadataDisplay';
+import { MetadataForm } from '../Forms/MetadataForm';
 import { EntityDetailHeader } from '@/components/ContentDisplay/EntityDetailHeader';
+import { ContentWithRelations } from '@/types';
 
 interface EntityDetailContentProps {
-    entity: Content;
+    entity: ContentWithRelations;
     setIsEditable: (editable: boolean) => void;
 }
 
 export function EntityDetailContent({ entity, setIsEditable }: EntityDetailContentProps) {
     return (
         <Paper elevation={0} sx={{ p: 3 }}>
-            <EntityDetailHeader title={entity.title} setIsEditable={setIsEditable} />
+            <EntityDetailHeader
+                title={entity.title}
+                contentType={entity.type}
+                setIsEditable={setIsEditable}
+            />
 
             {/* Description section */}
             <Grid container spacing={2} sx={{ mb: 3 }}>
@@ -23,13 +27,16 @@ export function EntityDetailContent({ entity, setIsEditable }: EntityDetailConte
                         </Typography>
                     )}
 
-                    {/* Metadata section - inline at the top */}
+                    {/* Metadata section - using MetadataForm in read-only mode */}
                     {entity.metadata && Object.keys(entity.metadata).length > 0 && (
-                        <MetadataDisplay metadata={entity.metadata || {}} />
+                        <MetadataForm
+                            contentType={entity.type}
+                            metadata={entity.metadata || {}}
+                            isEditable={false}
+                        />
                     )}
                 </Grid>
                 <Grid item xs={12} sm={6}>
-
                     {/* Main Image */}
                     {entity.full_picture && (
                         <Box sx={{ mb: 4, display: 'flex', justifyContent: 'center' }}>

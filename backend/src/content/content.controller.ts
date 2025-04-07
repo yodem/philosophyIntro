@@ -11,6 +11,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ContentService } from './content.service';
+import {
+  MetadataService,
+  ContentTypeInfo,
+  MetadataDefinition,
+} from '../metadata/metadata.service';
 import { CreateContentDto } from './dto/create-content.dto';
 import { UpdateContentDto } from './dto/update-content.dto';
 import { LinkContentsDto } from './dto/link-contents.dto';
@@ -34,7 +39,10 @@ import {
 export class ContentController {
   private readonly logger = new Logger(ContentController.name);
 
-  constructor(private readonly contentService: ContentService) {}
+  constructor(
+    private readonly contentService: ContentService,
+    private readonly metadataService: MetadataService,
+  ) {}
 
   @ApiOperation({ summary: 'Create new content' })
   @ApiResponse({
@@ -143,5 +151,74 @@ export class ContentController {
       `Finding related content for id: ${id} with type filter: ${type || 'none'}`,
     );
     return this.contentService.findRelated(id, type);
+  }
+
+  @ApiOperation({ summary: 'Get all content types' })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns all content types with display names',
+  })
+  @Public()
+  @Get('types')
+  getContentTypes(): ContentTypeInfo[] {
+    this.logger.log('Getting all content types');
+    return this.metadataService.getAllContentTypes();
+  }
+
+  @ApiOperation({ summary: 'Get metadata schema for a content type' })
+  @ApiParam({ name: 'type', description: 'Content type', enum: ContentType })
+  @ApiResponse({
+    status: 200,
+    description: 'Returns metadata schema for the specified content type',
+  })
+  @ApiResponse({ status: 404, description: 'Content type not found' })
+  @Public()
+  @Get('types/:type/metadata-schema')
+  getMetadataSchema(@Param('type') type: ContentType): MetadataDefinition[] {
+    this.logger.log(`Getting metadata schema for content type: ${type}`);
+    return this.metadataService.getMetadataSchema(type);
+  }
+
+  @ApiOperation({ summary: 'Get all metadata keys' })
+  @ApiQuery({
+    name: 'type',
+    required: false,
+    description: 'Content type filter',
+    enum: ContentType,
+  })
+  @ApiResponse({ status: 200, description: 'Returns metadata keys' })
+  @Public()
+  @Get('metadata-keys')
+  getMetadataKeys(@Query('type') type?: ContentType): string[] {
+    this.logger.log(`Getting metadata keys for ${type || 'all types'}`);
+    return this.metadataService.getMetadataKeys(type);
+  }
+
+  @ApiOperation({ summary: 'Update content metadata' })
+  @ApiParam({ name: 'id', description: 'Content ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Content metadata updated successfully',
+  })
+  @ApiResponse({ status: 404, description: 'Content not found' })
+  @Patch(':id/metadata')
+  async updateMetadata(
+    @Param('id') id: string,
+    @Body() metadata: Record<string, any>,
+  ) {
+    this.logger.log(`Updating metadata for content with id: ${id}`);
+    const content = await this.contentService.findOne(id);
+
+    // Validate metadata against schema
+    const validation = this.metadataService.validateMetadata(
+      content.type,
+      metadata,
+    );
+    if (!validation.isValid) {
+      return { success: false, errors: validation.errors };
+    }
+
+    // Update content with new metadata
+    return this.contentService.update(id, { metadata });
   }
 }

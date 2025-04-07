@@ -1,9 +1,9 @@
 import { Container } from '@mui/material';
-import { Content } from '@/types';
+import { ContentWithRelations } from '@/types';
 import { EntityDetailContent } from '../ContentDisplay/EntityDetailContent';
 
 interface EntityDetailDisplayProps {
-    entity: Content;
+    entity: ContentWithRelations; // Updated to ContentWithRelations to include related content
     setIsEditable: (editable: boolean) => void;
 }
 
